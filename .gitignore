@@ -1,5 +1,7 @@
 # Created by https://www.gitignore.io/api/intellij,eclipse,netbeans,java,maven,gradle
 # Edit at https://www.gitignore.io/?templates=intellij,eclipse,netbeans,java,maven,gradle
+/build.xml
+/build.properties
 
 # Apple
 .DS_store

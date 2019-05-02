@@ -2,3 +2,6 @@
 /.metadata/
 *.xml
 *.iml
+*.project
+*.DS_store
+*.classpath

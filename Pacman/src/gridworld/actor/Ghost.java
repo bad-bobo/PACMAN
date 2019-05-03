@@ -16,6 +16,6 @@ public class Ghost extends MovableActor
     @Override
     public void act()
     {
-
+        move();
     }
 }

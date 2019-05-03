@@ -14,8 +14,9 @@
  * @author Cay Horstmann
  */
 
-package gridworld.actor;
+package gridworld.world;
 
+import gridworld.actor.Actor;
 import gridworld.grid.Grid;
 import gridworld.grid.Location;
 import gridworld.world.World;

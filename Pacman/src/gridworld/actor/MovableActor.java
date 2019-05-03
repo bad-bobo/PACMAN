@@ -105,7 +105,7 @@ public abstract class MovableActor extends Actor
             return false;
         Actor neighbor = gr.get( next );
         // return ( neighbor == null ) || ( neighbor instanceof Flower );
-        return ( neighbor == null );
+        return ( !(neighbor instanceof Wall) );
         // ok to move into empty location or onto flower
         // not ok to move onto any other actor
     }

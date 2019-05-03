@@ -8,7 +8,7 @@ public class Wall extends Actor
     public Wall()
     {
         super();
-        setColor( Color.BLACK);
+        setColor( Color.WHITE);
 
     }
 

@@ -74,8 +74,7 @@ public class WorldFrame<T> extends JFrame
     {
         this.world = world;
         count++;
-        resources = ResourceBundle.getBundle(
-                        getClass().getName() + "Resources" );
+        resources = ResourceBundle.getBundle( getClass().getName() + "Resources" );
         try
         {
             System.setProperty( "sun.awt.exception.handler",
@@ -140,12 +139,11 @@ public class WorldFrame<T> extends JFrame
                                 if ( n < 0 )
                                     return false;
                                 // filter out modifier keys; they are neither characters or actions
-                                if ( event.getKeyChar() ==
-                                     KeyEvent.CHAR_UNDEFINED &&
-                                     !event.isActionKey() )
+                                if ( event.getKeyChar() == KeyEvent.CHAR_UNDEFINED && !event
+                                                .isActionKey() )
                                     return false;
-                                text = text.substring( 0, n ) +
-                                       text.substring( n + PRESSED.length() );
+                                text = text.substring( 0, n ) + text.substring(
+                                                n + PRESSED.length() );
                                 boolean consumed = getWorld().keyPressed( text,
                                                 display.getCurrentLocation() );
                                 if ( consumed )
@@ -274,8 +272,8 @@ public class WorldFrame<T> extends JFrame
         }
 
         String reason = resources.getString( "error.reason" );
-        String message = text + "\n" +
-                         MessageFormat.format( reason, new Object[] { t } );
+        String message = text + "\n" + MessageFormat.format( reason,
+                        new Object[] { t } );
 
         JOptionPane.showMessageDialog( this,
                         message,
@@ -303,9 +301,7 @@ public class WorldFrame<T> extends JFrame
 
 
     private void configureMenuItem(
-                    JMenuItem item,
-                    String resource,
-                    ActionListener listener )
+                    JMenuItem item, String resource, ActionListener listener )
     {
         configureAbstractButton( item, resource );
         item.addActionListener( listener );
@@ -334,8 +330,7 @@ public class WorldFrame<T> extends JFrame
 
 
     private void configureAbstractButton(
-                    AbstractButton button,
-                    String resource )
+                    AbstractButton button, String resource )
     {
         String title = resources.getString( resource );
         int i = title.indexOf( '&' );

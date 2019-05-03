@@ -3,19 +3,18 @@ package gridworld.actor;
 import java.awt.*;
 
 
-public class Ghost extends MovableActor
+public class Wall extends Actor
 {
-    public Ghost( Color color )
+    public Wall()
     {
         super();
-        setColor( color );
+        setColor( Color.BLACK);
 
     }
 
-
-    @Override
     public void act()
     {
 
     }
+
 }

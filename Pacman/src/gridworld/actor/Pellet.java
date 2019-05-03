@@ -10,4 +10,9 @@ public class Pellet extends Actor
         super();
         setColor( new Color( 247, 255, 160 ) );
     }
+
+    public void act()
+    {
+
+    }
 }

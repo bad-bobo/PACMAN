@@ -11,8 +11,10 @@ public abstract class MovableActor extends Actor
         super();
     }
 
+
     /**
      * Gets the current direction of this actor.
+     *
      * @return the direction of this actor, an angle between 0 and 359 degrees
      */
     public int getDirection()
@@ -20,18 +22,22 @@ public abstract class MovableActor extends Actor
         return direction;
     }
 
+
     /**
      * Sets the current direction of this actor.
+     *
      * @param newDirection the new direction. The direction of this actor is set
-     * to the angle between 0 and 359 degrees that is equivalent to
-     * <code>newDirection</code>.
+     *                     to the angle between 0 and 359 degrees that is equivalent to
+     *                     <code>newDirection</code>.
      */
-    public void setDirection(int newDirection)
+    public void setDirection( int newDirection )
     {
         direction = newDirection % Location.FULL_CIRCLE;
-        if (direction < 0)
+        if ( direction < 0 )
             direction += Location.FULL_CIRCLE;
     }
+
+
     /**
      * Moves this actor to a new location. If there is another actor at the
      * given location, it is removed. <br />
@@ -40,25 +46,7 @@ public abstract class MovableActor extends Actor
      *
      * @param newLocation the new location
      */
-    public void moveTo( Location newLocation )
-    {
-        if ( grid == null )
-            throw new IllegalStateException( "This actor is not in a grid." );
-        if ( grid.get( location ) != this )
-            throw new IllegalStateException(
-                            "The grid contains a different actor at location " + location + "." );
-        if ( !grid.isValid( newLocation ) )
-            throw new IllegalArgumentException( "Location " + newLocation + " is not valid." );
-
-        if ( newLocation.equals( location ) )
-            return;
-        grid.remove( location );
-        Actor other = grid.get( newLocation );
-        if ( other != null )
-            other.removeSelfFromGrid();
-        location = newLocation;
-        grid.put( location, this );
-    }
+    public abstract void moveTo( Location newLocation );
 
 
     /**
@@ -105,9 +93,8 @@ public abstract class MovableActor extends Actor
             return false;
         Actor neighbor = gr.get( next );
         // return ( neighbor == null ) || ( neighbor instanceof Flower );
-        return ( !(neighbor instanceof Wall) );
-        // ok to move into empty location or onto flower
-        // not ok to move onto any other actor
+        return ( !( neighbor instanceof Wall ) );
+
     }
 
 }

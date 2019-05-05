@@ -10,4 +10,11 @@ public class PowerPellet extends Pellet
         super();
         setColor( new Color( 247, 255, 160 ) );
     }
+
+
+    public void act()
+    {
+
+    }
+
 }

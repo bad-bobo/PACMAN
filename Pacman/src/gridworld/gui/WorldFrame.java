@@ -36,7 +36,7 @@ import java.util.*;
 
 
 /**
- * The WorldFrame displays a World and allows manipulation of its occupants.
+ * The WorldFrame displays a World and allows manipulation of its occupants. This is the JFrame,
  * <br />
  * This code is not tested on the AP CS A and AB exams. It contains GUI
  * implementation details that are not intended to be understood by AP CS
@@ -50,7 +50,7 @@ public class WorldFrame<T> extends JFrame
 
     private GridPanel display;
 
-    private JTextArea messageArea;
+    // private JTextArea messageArea;
 
     private ArrayList<JMenuItem> menuItemsDisabledDuringRun;
 
@@ -107,7 +107,14 @@ public class WorldFrame<T> extends JFrame
         if ( title == null )
             title = resources.getString( "frame.title" );
         setTitle( title );
-        setLocation( 25, 15 );
+        setLocation( 0, 0 );
+        // setLocationRelativeTo( null );
+
+        setPreferredSize( new Dimension( 635,
+                        797 ) );//635 (width),797 (height) pixels for
+        //27 ROW and 24 COL
+        //True for testing
+        setResizable( false );
 
         URL appIconUrl = getClass().getResource( "GridWorld.gif" );
         if ( appIconUrl != null )
@@ -119,6 +126,7 @@ public class WorldFrame<T> extends JFrame
         makeMenus();
 
         JPanel content = new JPanel();
+        //content.setBackground( Color.BLUE );
         content.setBorder( BorderFactory.createEmptyBorder( 15, 15, 15, 15 ) );
         content.setLayout( new BorderLayout() );
         setContentPane( content );
@@ -155,6 +163,7 @@ public class WorldFrame<T> extends JFrame
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setViewport( new PseudoInfiniteViewport( scrollPane ) );
         scrollPane.setViewportView( display );
+
         content.add( scrollPane, BorderLayout.CENTER );
 
         gridClasses = new TreeSet<Class>( new Comparator<Class>()
@@ -181,13 +190,13 @@ public class WorldFrame<T> extends JFrame
 
         control = new GUIController<T>( this, display, displayMap, resources );
         content.add( control.controlPanel(), BorderLayout.SOUTH );
+        //  We dont need this for pacman
 
-        messageArea = new JTextArea( 2, 35 );
-        messageArea.setEditable( false );
-        messageArea.setFocusable( false );
-        messageArea.setBackground( new Color( 0xFAFAD2 ) );
-        content.add( new JScrollPane( messageArea ), BorderLayout.NORTH );
-
+        //        messageArea = new JTextArea( 2, 35 );
+        //        messageArea.setEditable( false );
+        //        messageArea.setFocusable( false );
+        //        messageArea.setBackground( new Color( 0xFAFAD2 ) );
+        //        content.add( new JScrollPane( messageArea ), BorderLayout.NORTH );
         pack();
         repaint(); // to show message
         display.setGrid( gr );
@@ -196,11 +205,12 @@ public class WorldFrame<T> extends JFrame
 
     public void repaint()
     {
-        String message = getWorld().getMessage();
-        if ( message == null )
-            message = resources.getString( "message.default" );
-        messageArea.setText( message );
-        messageArea.repaint();
+        // We don't need this for pacman, looks cleaner.
+        //        String message = getWorld().getMessage();
+        //        if ( message == null )
+        //            message = resources.getString( "message.default" );
+        //        messageArea.setText( message );
+        //        messageArea.repaint();
         display.repaint(); // for applet
         super.repaint();
     }

@@ -1,4 +1,4 @@
-/* 
+/*
  * AP(r) Computer Science GridWorld Case Study:
  * Copyright(c) 2005-2006 Cay S. Horstmann (http://horstmann.com)
  *
@@ -10,7 +10,7 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @author Cay Horstmann
  */
 
@@ -24,6 +24,7 @@ import java.text.NumberFormat;
 import javax.swing.JFormattedTextField;
 import javax.swing.JPanel;
 
+
 /**
  * A property editor for the Location type. <br />
  * This code is not tested on the AP CS A and AB exams. It contains GUI
@@ -32,39 +33,46 @@ import javax.swing.JPanel;
  */
 public class LocationEditor extends PropertyEditorSupport
 {
-    private JFormattedTextField rowField = new JFormattedTextField(NumberFormat
-            .getIntegerInstance());
-    private JFormattedTextField colField = new JFormattedTextField(NumberFormat
-            .getIntegerInstance());
+    private JFormattedTextField rowField = new JFormattedTextField( NumberFormat
+                    .getIntegerInstance() );
+
+    private JFormattedTextField colField = new JFormattedTextField( NumberFormat
+                    .getIntegerInstance() );
+
     private JPanel panel = new JPanel();
+
 
     public LocationEditor()
     {
-        rowField.setColumns(5);
-        colField.setColumns(5);
+        rowField.setColumns( 5 );
+        colField.setColumns( 5 );
 
-        panel.add(rowField);
-        panel.add(colField);
+        panel.add( rowField );
+        panel.add( colField );
     }
+
 
     public Object getValue()
     {
-        int row = ((Number) rowField.getValue()).intValue();
-        int col = ((Number) colField.getValue()).intValue();
-        return new Location(row, col);
+        int row = ( (Number)rowField.getValue() ).intValue();
+        int col = ( (Number)colField.getValue() ).intValue();
+        return new Location( row, col );
     }
 
-    public void setValue(Object newValue)
+
+    public void setValue( Object newValue )
     {
-        Location loc = (Location) newValue;
-        rowField.setValue(new Integer(loc.getRow()));
-        colField.setValue(new Integer(loc.getCol()));
+        Location loc = (Location)newValue;
+        rowField.setValue( new Integer( loc.getRow() ) );
+        colField.setValue( new Integer( loc.getCol() ) );
     }
+
 
     public boolean supportsCustomEditor()
     {
         return true;
     }
+
 
     public Component getCustomEditor()
     {

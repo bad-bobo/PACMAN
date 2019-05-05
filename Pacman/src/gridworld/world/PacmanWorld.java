@@ -56,10 +56,7 @@ public class PacmanWorld extends ActorWorld
             {
                 Pacman pacman = ( (Pacman)grid.get( l ) );
                 pacman.setDirection( loc );
-                if(pacman.canMove())
-                {
-                    pacman.move();
-                }
+                
             }
         }
 

@@ -53,7 +53,7 @@ public class GridPanel extends JPanel
 
     private static final int TIP_DELAY = 1000; //1000 original
 
-    private final Color blue = Color.BLUE;
+    private final Color blue = new Color( 0, 0, 0 );
 
     private Grid<?> grid;
 
@@ -159,18 +159,16 @@ public class GridPanel extends JPanel
         Rectangle curClip = g2.getClip().getBounds();
         int top = getInsets().top, left = getInsets().left;
 
-        int miny = Math.max( 0, ( curClip.y - top ) / ( cellSize + 1 ) ) *
-                   ( cellSize + 1 ) + top;
-        int minx = Math.max( 0, ( curClip.x - left ) / ( cellSize + 1 ) ) *
-                   ( cellSize + 1 ) + left;
+        int miny = Math.max( 0,
+                        ( curClip.y - top ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + top;
+        int minx = Math.max( 0,
+                        ( curClip.x - left ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + left;
         int maxy = Math.min( numRows,
-                        ( curClip.y + curClip.height - top + cellSize ) /
-                        ( cellSize + 1 ) ) * ( cellSize + 1 ) + top;
+                        ( curClip.y + curClip.height - top + cellSize ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + top;
         int maxx = Math.min( numCols,
-                        ( curClip.x + curClip.width - left + cellSize ) /
-                        ( cellSize + 1 ) ) * ( cellSize + 1 ) + left;
+                        ( curClip.x + curClip.width - left + cellSize ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + left;
 
-        g2.setColor( Color.GRAY );
+        g2.setColor( Color.GRAY ); //
         for ( int y = miny; y <= maxy; y += cellSize + 1 )
             for ( int x = minx; x <= maxx; x += cellSize + 1 )
             {
@@ -180,7 +178,7 @@ public class GridPanel extends JPanel
                     g2.fillRect( x + 1, y + 1, cellSize, cellSize );
             }
 
-        g2.setColor( Color.BLACK );
+        g2.setColor( new Color( 0, 34, 255 ) ); //Grid lines color
         for ( int y = miny; y <= maxy; y += cellSize + 1 )
             // draw horizontal lines
             g2.drawLine( minx, y, maxx, y );
@@ -368,8 +366,7 @@ public class GridPanel extends JPanel
      */
     public Dimension getMinimumSize()
     {
-        return new Dimension(
-                        numCols * ( MIN_CELL_SIZE + 1 ) + 1 + extraWidth(),
+        return new Dimension( numCols * ( MIN_CELL_SIZE + 1 ) + 1 + extraWidth(),
                         numRows * ( MIN_CELL_SIZE + 1 ) + 1 + extraHeight() );
     }
 
@@ -406,8 +403,7 @@ public class GridPanel extends JPanel
         JViewport vp = getEnclosingViewport();
         if ( vp != null )
         {
-            if ( !isPannableUnbounded() ||
-                 !( vp instanceof PseudoInfiniteViewport ) )
+            if ( !isPannableUnbounded() || !( vp instanceof PseudoInfiniteViewport ) )
                 vp.setViewPosition( pointForLocation( loc ) );
             else
                 showPanTip();
@@ -437,7 +433,7 @@ public class GridPanel extends JPanel
     }
 
 
-    // private helpers to convert between (x,y) and (row,col)
+    // private helpers to convert between (x,y) and (ROW,COL)
     private int xCoordToCol( int xCoord )
     {
         return ( xCoord - 1 - getInsets().left ) / ( cellSize + 1 ) + originCol;
@@ -641,11 +637,8 @@ public class GridPanel extends JPanel
         {
             JViewport vp = getEnclosingViewport();
             Dimension viewableSize = ( vp != null ) ? vp.getSize() : getSize();
-            int desiredCellSize =
-                            Math.min( ( viewableSize.height - extraHeight() ) /
-                                      numRows,
-                                            ( viewableSize.width -
-                                              extraWidth() ) / numCols ) - 1;
+            int desiredCellSize = Math.min( ( viewableSize.height - extraHeight() ) / numRows,
+                            ( viewableSize.width - extraWidth() ) / numCols ) - 1;
             // now we want to approximate this with 
             // DEFAULT_CELL_SIZE * Math.pow(2, k)
             cellSize = DEFAULT_CELL_SIZE;
@@ -653,8 +646,8 @@ public class GridPanel extends JPanel
                 while ( 2 * cellSize <= desiredCellSize )
                     cellSize *= 2;
             else
-                while ( cellSize / 2 >=
-                        Math.max( desiredCellSize, MIN_CELL_SIZE ) )
+                while ( cellSize / 2 >= Math.max( desiredCellSize,
+                                MIN_CELL_SIZE ) )
                     cellSize /= 2;
         }
         revalidate();
@@ -703,11 +696,8 @@ public class GridPanel extends JPanel
 
     public Dimension getPreferredScrollableViewportSize()
     {
-        return new Dimension(
-                        DEFAULT_CELL_COUNT * ( DEFAULT_CELL_SIZE + 1 ) + 1 +
-                        extraWidth(),
-                        DEFAULT_CELL_COUNT * ( DEFAULT_CELL_SIZE + 1 ) + 1 +
-                        extraHeight() );
+        return new Dimension( DEFAULT_CELL_COUNT * ( DEFAULT_CELL_SIZE + 1 ) + 1 + extraWidth(),
+                        DEFAULT_CELL_COUNT * ( DEFAULT_CELL_SIZE + 1 ) + 1 + extraHeight() );
     }
 
     // GridPanel implements the PseudoInfiniteViewport.Pannable interface to
@@ -725,8 +715,7 @@ public class GridPanel extends JPanel
 
     public boolean isPannableUnbounded()
     {
-        return grid != null &&
-               ( grid.getNumRows() == -1 || grid.getNumCols() == -1 );
+        return grid != null && ( grid.getNumRows() == -1 || grid.getNumCols() == -1 );
     }
 
 

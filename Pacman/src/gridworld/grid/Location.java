@@ -20,14 +20,22 @@
 
 package gridworld.grid;
 
+import gridworld.actor.MovableActor;
+import gridworld.actor.Wall;
+import project.Main;
+
+import java.util.ArrayList;
+import java.util.Set;
+
+
 /**
- * A <code>Location</code> object represents the ROW and column of a location
+ * A <code>Location</code> object represents the row and column of a location
  * in a two-dimensional grid. <br />
  * The API of this class is testable on the AP CS A and AB exams.
  */
 public class Location implements Comparable
 {
-    private int row; // ROW location in grid
+    private int row; // row location in grid
 
     private int col; // column location in grid
 
@@ -108,9 +116,9 @@ public class Location implements Comparable
 
 
     /**
-     * Constructs a location with given ROW and column coordinates.
+     * Constructs a location with given row and column coordinates.
      *
-     * @param r the ROW
+     * @param r the row
      * @param c the column
      */
     public Location( int r, int c )
@@ -121,9 +129,9 @@ public class Location implements Comparable
 
 
     /**
-     * Gets the ROW coordinate.
+     * Gets the row coordinate.
      *
-     * @return the ROW of this location
+     * @return the row of this location
      */
     public int getRow()
     {
@@ -195,6 +203,8 @@ public class Location implements Comparable
      * Returns the direction from this location toward another location. The
      * direction is rounded to the nearest compass direction.
      *
+     *
+     *
      * @param target a location that is different from this location
      * @return the closest compass direction from this location toward
      * <code>target</code>
@@ -215,8 +225,17 @@ public class Location implements Comparable
         if ( compassAngle < 0 )
             compassAngle += FULL_CIRCLE;
         // round to nearest multiple of 45
-        return ( compassAngle / HALF_RIGHT ) * HALF_RIGHT;
+        int result = ( compassAngle / HALF_RIGHT ) * HALF_RIGHT;
+
+
+
+        return result;
     }
+
+
+
+
+
 
 
     /**
@@ -225,7 +244,7 @@ public class Location implements Comparable
      *
      * @param other the other location to test
      * @return <code>true</code> if <code>other</code> is a
-     * <code>Location</code> with the same ROW and column as this location;
+     * <code>Location</code> with the same row and column as this location;
      * <code>false</code> otherwise
      */
     public boolean equals( Object other )
@@ -253,7 +272,7 @@ public class Location implements Comparable
      * Compares this location to <code>other</code> for ordering. Returns a
      * negative integer, zero, or a positive integer as this location is less
      * than, equal to, or greater than <code>other</code>. Locations are
-     * ordered in ROW-major order. <br />
+     * ordered in row-major order. <br />
      * (Precondition: <code>other</code> is a <code>Location</code> object.)
      *
      * @param other the other location to test
@@ -276,11 +295,13 @@ public class Location implements Comparable
     }
 
 
+
+
     /**
      * Creates a string that describes this location.
      *
-     * @return a string with the ROW and column of this location, in the format
-     * (ROW, COL)
+     * @return a string with the row and column of this location, in the format
+     * (row, col)
      */
     public String toString()
     {

@@ -1,20 +1,8 @@
-package gridworld.actor;
+package project;
 
-import gridworld.grid.Location;
-import project.Main;
-
-
-/**
- * Class for creating maps
- */
-public class gridActor extends Actor
+public class MainTest
 {
-
-    public static String[][] map;
-
-    static
-    {
-        map = new String[][] {
+    private static String[][]map = new String[][] {
                         { "N_00.00", "N_00.01", "N_00.02", "N_00.03", "N_00.04",
                                         "N_00.05", "N_00.06", "N_00.07",
                                         "N_00.08", "N_00.09", "N_00.10",
@@ -121,8 +109,8 @@ public class gridActor extends Actor
                                         "O_12.23", },
                         { "X_13.00", "O_13.01", "O_13.02", "O_13.03", "X_13.04",
                                         "O_13.05", "X_13.06", "O_13.07",
-                                        "X_13.08", "X_13.09", "G_13.10",
-                                        "G_13.11", "G_13.12", "G_13.13",
+                                        "X_13.08", "X_13.09", "N_13.10",
+                                        "N_13.11", "N_13.12", "N_13.13",
                                         "X_13.14", "X_13.15", "O_13.16",
                                         "X_13.17", "O_13.18", "X_13.19",
                                         "O_13.20", "O_13.21", "O_13.22",
@@ -231,28 +219,31 @@ public class gridActor extends Actor
                                         "N_26.17", "N_26.18", "N_26.19",
                                         "N_26.20", "N_26.21", "N_26.22",
                                         "N_26.23", } };
-    }
 
-    @Override public void act()
+    private static int[][] maze = new int[map.length][map[0].length];
+
+
+
+    public static void main(String[] args)
     {
-        Location loc = getLocation();
-        map[loc.getRow()][loc.getCol()] = "X" + map[loc.getRow()][loc.getCol()].substring(
-                        1 );
+        for(int r = 0; r < map.length; r++)
+        {
+            for(int c = 0; c < map[0].length; c++)
+            {
+                if(map[r][c].contains( "X"))
+                {
+                    maze[r][c] = 1;
+                }
+
+            }
+        }
+
+        printArrayValue(maze);
 
     }
 
 
-    @Override public void removeSelfFromGrid()
-    {
-        Location loc = getLocation();
-        map[loc.getRow()][loc.getCol()] = "O" + map[loc.getRow()][loc.getCol()].substring(
-                        1 );
-        super.removeSelfFromGrid();
-
-    }
-
-
-    public void printArr()
+    public static void printArrayValue(int[][] map)
     {
         for ( int i = 0; i < map[0].length; i++ )
             System.out.print( "=" );
@@ -262,7 +253,7 @@ public class gridActor extends Actor
             System.out.print( "{" );
             for ( int c = 0; c < map[0].length; c++ )
             {
-                System.out.print( "\"" + map[r][c] + "\"," + " " );
+                System.out.print( map[r][c] + "," + " " );
             }
             System.out.println( "}," );
         }
@@ -271,35 +262,5 @@ public class gridActor extends Actor
         System.out.println();
     }
 
-
-    public static void printArrMapHelper()
-    {
-
-        String[][] map = new String[Main.ROW][Main.COL];
-        for ( int r = 0; r < Main.ROW; r++ )
-        {
-            for ( int c = 0; c < Main.COL; c++ )
-            {
-                String rowNum = String.format( "%02d", r );
-                String colNum = String.format( "%02d", c );
-                map[r][c] = "\"" + "O_" + rowNum + "." + colNum + "\"" + ",";
-            }
-        }
-
-        for ( int r = 0; r < map.length; r++ )
-        {
-            System.out.print( "{" );
-            for ( int c = 0; c < map[0].length; c++ )
-            {
-                System.out.print( map[r][c] + " " );
-            }
-            System.out.println( "}," );
-        }
-
-    }
-    @Override public String toString()
-    {
-        return "X";
-    }
 
 }

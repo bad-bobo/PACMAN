@@ -19,15 +19,10 @@
 
 package gridworld.gui;
 
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Component;
+import java.awt.*;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
-import java.awt.Graphics2D;
-import java.awt.RenderingHints;
 import java.awt.geom.Rectangle2D;
-import java.awt.Rectangle;
 
 
 /**
@@ -57,32 +52,23 @@ public class DefaultDisplay implements Display
      * @param rect rectangle in which to draw
      */
     public void draw(
-                    Object obj,
-                    Component comp,
-                    Graphics2D g2,
-                    Rectangle rect )
+                    Object obj, Component comp, Graphics2D g2, Rectangle rect )
     {
-        Color color = (Color)AbstractDisplay.getProperty( obj, "color" );
-        if ( color == null && obj instanceof Color )
-            color = (Color)obj;
-        Color textColor = (Color)AbstractDisplay.getProperty( obj,
-                        "textColor" );
-        if ( textColor == null )
-            textColor = Color.BLACK;
+        //Heavily Modified for pacman
+        Color color = Color.BLACK;
+        Color textColor = Color.YELLOW;
+
         if ( color != null )
         {
             g2.setPaint( color );
             g2.fill( rect );
 
-            if ( color.equals( textColor ) )
-            {
-                textColor = new Color( 255 - textColor.getRed(),
-                                255 - textColor.getGreen(),
-                                255 - textColor.getBlue() );
-            }
         }
+
         String text = (String)AbstractDisplay.getProperty( obj, "text" );
+
         if ( text == null && !( obj instanceof Color ) )
+
         {
             text = "" + obj;
         }
@@ -90,7 +76,9 @@ public class DefaultDisplay implements Display
             return;
         if ( text.length() > MAX_TEXT_LENGTH )
             text = text.substring( 0, MAX_TEXT_LENGTH ) + "...";
-        paintCenteredText( g2, text, rect, 0.8, textColor );
+
+        paintCenteredText( g2, text, rect, 2, textColor );
+
     }
 
 

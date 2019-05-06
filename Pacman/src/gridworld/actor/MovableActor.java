@@ -4,6 +4,9 @@ import gridworld.grid.Grid;
 import gridworld.grid.Location;
 
 
+/**
+ *
+ */
 public abstract class MovableActor extends Actor
 {
     public MovableActor()

@@ -178,7 +178,7 @@ public class GridPanel extends JPanel
                     g2.fillRect( x + 1, y + 1, cellSize, cellSize );
             }
 
-        g2.setColor( new Color( 0, 34, 255 ) ); //Grid lines color
+        g2.setColor( new Color( 0, 0, 0 ) ); //Grid lines color CHANGE TO BLACK
         for ( int y = miny; y <= maxy; y += cellSize + 1 )
             // draw horizontal lines
             g2.drawLine( minx, y, maxx, y );
@@ -199,7 +199,7 @@ public class GridPanel extends JPanel
         ArrayList<Location> occupantLocs = grid.getOccupiedLocations();
         for ( int index = 0; index < occupantLocs.size(); index++ )
         {
-            Location loc = (Location)occupantLocs.get( index );
+            Location loc = occupantLocs.get( index );
 
             int xleft = colToXCoord( loc.getCol() );
             int ytop = rowToYCoord( loc.getRow() );
@@ -336,6 +336,7 @@ public class GridPanel extends JPanel
 
     // private helpers to calculate extra width/height needs for borders/insets.
     private int extraWidth()
+
     {
         return getInsets().left + getInsets().right;
     }
@@ -482,11 +483,10 @@ public class GridPanel extends JPanel
         Object f = grid.get( loc );
         if ( f != null )
             return MessageFormat.format( resources.getString(
-                            "cell.tooltip.nonempty" ),
-                            new Object[] { loc, f } );
+                            "cell.tooltip.nonempty" ), loc, f );
         else
             return MessageFormat.format( resources.getString(
-                            "cell.tooltip.empty" ), new Object[] { loc, f } );
+                            "cell.tooltip.empty" ), loc, f );
     }
 
 
@@ -629,27 +629,28 @@ public class GridPanel extends JPanel
      */
     private void recalculateCellSize( int minSize )
     {
-        if ( numRows == 0 || numCols == 0 )
-        {
-            cellSize = 0;
-        }
-        else
-        {
-            JViewport vp = getEnclosingViewport();
-            Dimension viewableSize = ( vp != null ) ? vp.getSize() : getSize();
-            int desiredCellSize = Math.min( ( viewableSize.height - extraHeight() ) / numRows,
-                            ( viewableSize.width - extraWidth() ) / numCols ) - 1;
-            // now we want to approximate this with 
-            // DEFAULT_CELL_SIZE * Math.pow(2, k)
-            cellSize = DEFAULT_CELL_SIZE;
-            if ( cellSize <= desiredCellSize )
-                while ( 2 * cellSize <= desiredCellSize )
-                    cellSize *= 2;
-            else
-                while ( cellSize / 2 >= Math.max( desiredCellSize,
-                                MIN_CELL_SIZE ) )
-                    cellSize /= 2;
-        }
+        //        if ( numRows == 0 || numCols == 0 )
+        //        {
+        //            cellSize = 0;
+        //        }
+        //        else
+        //        {
+        //            JViewport vp = getEnclosingViewport();
+        //            Dimension viewableSize = ( vp != null ) ? vp.getSize() : getSize();
+        //            int desiredCellSize = Math.min( ( viewableSize.height - extraHeight() ) / numRows,
+        //                            ( viewableSize.width - extraWidth() ) / numCols ) - 1;
+        //            // now we want to approximate this with
+        //            // DEFAULT_CELL_SIZE * Math.pow(2, k)
+        //            cellSize = DEFAULT_CELL_SIZE;
+        //            if ( cellSize <= desiredCellSize )
+        //                while ( 2 * cellSize <= desiredCellSize )
+        //                    cellSize *= 2;
+        //            else
+        //                while ( cellSize / 2 >= Math.max( desiredCellSize,
+        //                                MIN_CELL_SIZE ) )
+        //                    cellSize /= 2;
+        //        }
+        cellSize = 25;
         revalidate();
     }
 

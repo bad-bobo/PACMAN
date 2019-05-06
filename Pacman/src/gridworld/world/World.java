@@ -26,8 +26,6 @@ import java.util.Random;
 import java.util.Set;
 import java.util.TreeSet;
 
-import javax.swing.JFrame;
-
 
 /**
  * A <code>World</code> is the mediator between a grid and the GridWorld GUI.

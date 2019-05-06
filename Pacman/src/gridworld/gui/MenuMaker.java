@@ -19,8 +19,10 @@ package gridworld.gui;
 import gridworld.grid.Grid;
 import gridworld.grid.Location;
 
-import java.awt.Color;
-import java.awt.Component;
+import javax.swing.*;
+import javax.swing.event.DocumentEvent;
+import javax.swing.event.DocumentListener;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
@@ -31,25 +33,7 @@ import java.beans.PropertyEditorSupport;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.ResourceBundle;
-import javax.swing.JComboBox;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuItem;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JPopupMenu;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
+import java.util.*;
 
 
 /**
@@ -130,7 +114,7 @@ public class MenuMaker<T>
             else
                 menu.addSeparator();
             Class cl = iter.next();
-            Constructor[] cons = (Constructor[])cl.getConstructors();
+            Constructor[] cons = cl.getConstructors();
             for ( int i = 0; i < cons.length; i++ )
             {
                 menu.add( new OccupantConstructorItem( cons[i] ) );

@@ -18,12 +18,11 @@
 
 package gridworld.gui;
 
-import java.awt.Rectangle;
-import java.beans.*;
-import java.lang.reflect.*;
-import java.awt.Component;
-import java.awt.Graphics2D;
-import java.awt.BasicStroke;
+import java.awt.*;
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
+import java.lang.reflect.Method;
 
 
 /**
@@ -62,10 +61,7 @@ public abstract class AbstractDisplay implements Display
      * @param rect rectangle in which to draw
      */
     public void draw(
-                    Object obj,
-                    Component comp,
-                    Graphics2D g2,
-                    Rectangle rect )
+                    Object obj, Component comp, Graphics2D g2, Rectangle rect )
     {
         float scaleFactor = Math.min( rect.width, rect.height );
         g2 = (Graphics2D)g2.create();

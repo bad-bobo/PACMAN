@@ -16,15 +16,9 @@
 
 package gridworld.gui;
 
-import java.awt.Color;
-import java.awt.Component;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
-import java.awt.Rectangle;
+import javax.swing.*;
+import java.awt.*;
 import java.beans.PropertyEditorSupport;
-
-import javax.swing.Icon;
-import javax.swing.JComboBox;
 
 
 /**

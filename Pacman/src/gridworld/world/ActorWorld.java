@@ -19,7 +19,6 @@ package gridworld.world;
 import gridworld.actor.Actor;
 import gridworld.grid.Grid;
 import gridworld.grid.Location;
-import gridworld.world.World;
 
 import java.util.ArrayList;
 

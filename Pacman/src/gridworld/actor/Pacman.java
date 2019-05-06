@@ -8,6 +8,8 @@ public class Pacman extends MovableActor
 {
     //    private static Pacman SINGLE_INSTANCE = null;
 
+    protected static int count = 0;
+
 
     public Pacman()
     {
@@ -52,22 +54,48 @@ public class Pacman extends MovableActor
 
         if ( newLocation.equals( location ) )
             return;
-        grid.remove( location );
+
         Actor other = grid.get( newLocation );
+        if(other instanceof Ghost )
+        {
+            this.removeSelfFromGrid();
+            return;
+        }
         if ( other != null )
             other.removeSelfFromGrid();
+
+        if ( count % 2 == 0 )
+        {
+            Pacman p = new Pacman();
+            p.setDirection( this.getDirection() );
+            p.putSelfInGrid( grid, newLocation );
+
+
+            //            grid.put( newLocation, p); AVOID THIS
+        }
+        else
+        {
+            PacmanClosed p = new PacmanClosed();
+            p.setDirection( this.getDirection() );
+            p.putSelfInGrid( grid, newLocation );
+            //            grid.put( newLocation,  p); AVOID THIS
+        }
+        grid.remove( location );
         location = newLocation;
-        grid.put( location, this );
+        count++;
+
     }
 
 
     public void act()
     {
-        if(canMove())
+        if ( canMove() )
         {
             move();
         }
 
     }
+
+
 
 }

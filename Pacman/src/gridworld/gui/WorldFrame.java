@@ -19,15 +19,19 @@
 
 package gridworld.gui;
 
+import gridworld.actor.Actor;
+import gridworld.actor.Pacman;
+import gridworld.actor.Score;
 import gridworld.grid.Grid;
 import gridworld.grid.Location;
 import gridworld.world.World;
+import project.Main;
 
 import javax.swing.*;
-import javax.swing.event.HyperlinkEvent;
-import javax.swing.event.HyperlinkListener;
 import java.awt.*;
-import java.awt.event.*;
+import java.awt.event.KeyEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URL;
@@ -62,7 +66,6 @@ public class WorldFrame<T> extends JFrame
 
     private Set<Class> gridClasses;
 
-    private JMenu newGridMenu;
 
 
     /**
@@ -107,11 +110,15 @@ public class WorldFrame<T> extends JFrame
         if ( title == null )
             title = resources.getString( "frame.title" );
         setTitle( title );
-        setLocation( 0, 0 );
-        // setLocationRelativeTo( null );
+        setLocation( 400, 100 );
+        //         setLocationRelativeTo( null );
+        //        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
+        //        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
+        //        this.pack();
+        //        this.setLocationRelativeTo(null);
 
-        setPreferredSize( new Dimension( 635,
-                        797 ) );//635 (width),797 (height) pixels for
+        setPreferredSize( new Dimension( 629,
+                        772 ) );//629 (width),794 (height) pixels for
         //27 ROW and 24 COL
         //True for testing
         setResizable( false );
@@ -123,11 +130,12 @@ public class WorldFrame<T> extends JFrame
             setIconImage( appIcon.getImage() );
         }
 
-        makeMenus();
+        //        makeMenus();
 
         JPanel content = new JPanel();
-        //content.setBackground( Color.BLUE );
-        content.setBorder( BorderFactory.createEmptyBorder( 15, 15, 15, 15 ) );
+//        content.setBackground( Color.BLUE );
+        //        content.setBorder( BorderFactory.createEmptyBorder( 15, 15, 15, 15 ) );
+        content.setBorder( BorderFactory.createEmptyBorder( 0, 0, 0, 0 ) );
         content.setLayout( new BorderLayout() );
         setContentPane( content );
 
@@ -186,33 +194,30 @@ public class WorldFrame<T> extends JFrame
         Grid<T> gr = world.getGrid();
         gridClasses.add( gr.getClass() );
 
-        makeNewGridMenu();
 
         control = new GUIController<T>( this, display, displayMap, resources );
         content.add( control.controlPanel(), BorderLayout.SOUTH );
-        //  We dont need this for pacman
 
-        //        messageArea = new JTextArea( 2, 35 );
-        //        messageArea.setEditable( false );
-        //        messageArea.setFocusable( false );
-        //        messageArea.setBackground( new Color( 0xFAFAD2 ) );
-        //        content.add( new JScrollPane( messageArea ), BorderLayout.NORTH );
         pack();
         repaint(); // to show message
         display.setGrid( gr );
+
     }
 
 
+    /**
+     * Repaints the frame, but can also be used as a gameloop
+     */
     public void repaint()
     {
-        // We don't need this for pacman, looks cleaner.
-        //        String message = getWorld().getMessage();
-        //        if ( message == null )
-        //            message = resources.getString( "message.default" );
-        //        messageArea.setText( message );
-        //        messageArea.repaint();
         display.repaint(); // for applet
         super.repaint();
+
+        if ( Score.score == 250 )
+        {
+            //TODO: End game message
+        }
+
     }
 
 
@@ -282,8 +287,7 @@ public class WorldFrame<T> extends JFrame
         }
 
         String reason = resources.getString( "error.reason" );
-        String message = text + "\n" + MessageFormat.format( reason,
-                        new Object[] { t } );
+        String message = text + "\n" + MessageFormat.format( reason, t );
 
         JOptionPane.showMessageDialog( this,
                         message,
@@ -291,314 +295,6 @@ public class WorldFrame<T> extends JFrame
                         JOptionPane.ERROR_MESSAGE );
     }
 
-    // Creates the drop-down menus on the frame.
-
-
-    private JMenu makeMenu( String resource )
-    {
-        JMenu menu = new JMenu();
-        configureAbstractButton( menu, resource );
-        return menu;
-    }
-
-
-    private JMenuItem makeMenuItem( String resource, ActionListener listener )
-    {
-        JMenuItem item = new JMenuItem();
-        configureMenuItem( item, resource, listener );
-        return item;
-    }
-
-
-    private void configureMenuItem(
-                    JMenuItem item, String resource, ActionListener listener )
-    {
-        configureAbstractButton( item, resource );
-        item.addActionListener( listener );
-        try
-        {
-            String accel = resources.getString( resource + ".accel" );
-            String metaPrefix = "@";
-            if ( accel.startsWith( metaPrefix ) )
-            {
-                int menuMask = getToolkit().getMenuShortcutKeyMask();
-                KeyStroke key = KeyStroke.getKeyStroke( KeyStroke.getKeyStroke(
-                                accel.substring( metaPrefix.length() ) )
-                                .getKeyCode(), menuMask );
-                item.setAccelerator( key );
-            }
-            else
-            {
-                item.setAccelerator( KeyStroke.getKeyStroke( accel ) );
-            }
-        }
-        catch ( MissingResourceException ex )
-        {
-            // no accelerator
-        }
-    }
-
-
-    private void configureAbstractButton(
-                    AbstractButton button, String resource )
-    {
-        String title = resources.getString( resource );
-        int i = title.indexOf( '&' );
-        int mnemonic = 0;
-        if ( i >= 0 )
-        {
-            mnemonic = title.charAt( i + 1 );
-            title = title.substring( 0, i ) + title.substring( i + 1 );
-            button.setText( title );
-            button.setMnemonic( Character.toUpperCase( mnemonic ) );
-            button.setDisplayedMnemonicIndex( i );
-        }
-        else
-            button.setText( title );
-    }
-
-
-    private void makeMenus()
-    {
-        JMenuBar mbar = new JMenuBar();
-        JMenu menu;
-
-        menuItemsDisabledDuringRun = new ArrayList<JMenuItem>();
-
-        mbar.add( menu = makeMenu( "menu.file" ) );
-
-        newGridMenu = makeMenu( "menu.file.new" );
-        menu.add( newGridMenu );
-        menuItemsDisabledDuringRun.add( newGridMenu );
-
-        menu.add( makeMenuItem( "menu.file.quit", new ActionListener()
-        {
-            public void actionPerformed( ActionEvent e )
-            {
-                System.exit( 0 );
-            }
-        } ) );
-
-        mbar.add( menu = makeMenu( "menu.view" ) );
-
-        menu.add( makeMenuItem( "menu.view.up", new ActionListener()
-        {
-            public void actionPerformed( ActionEvent e )
-            {
-                display.moveLocation( -1, 0 );
-            }
-        } ) );
-        menu.add( makeMenuItem( "menu.view.down", new ActionListener()
-        {
-            public void actionPerformed( ActionEvent e )
-            {
-                display.moveLocation( 1, 0 );
-            }
-        } ) );
-        menu.add( makeMenuItem( "menu.view.left", new ActionListener()
-        {
-            public void actionPerformed( ActionEvent e )
-            {
-                display.moveLocation( 0, -1 );
-            }
-        } ) );
-        menu.add( makeMenuItem( "menu.view.right", new ActionListener()
-        {
-            public void actionPerformed( ActionEvent e )
-            {
-                display.moveLocation( 0, 1 );
-            }
-        } ) );
-
-        JMenuItem viewEditMenu;
-        menu.add( viewEditMenu = makeMenuItem( "menu.view.edit",
-                        new ActionListener()
-                        {
-                            public void actionPerformed( ActionEvent e )
-                            {
-                                control.editLocation();
-                            }
-                        } ) );
-        menuItemsDisabledDuringRun.add( viewEditMenu );
-
-        JMenuItem viewDeleteMenu;
-        menu.add( viewDeleteMenu = makeMenuItem( "menu.view.delete",
-                        new ActionListener()
-                        {
-                            public void actionPerformed( ActionEvent e )
-                            {
-                                control.deleteLocation();
-                            }
-                        } ) );
-        menuItemsDisabledDuringRun.add( viewDeleteMenu );
-
-        menu.add( makeMenuItem( "menu.view.zoomin", new ActionListener()
-        {
-            public void actionPerformed( ActionEvent e )
-            {
-                display.zoomIn();
-            }
-        } ) );
-
-        menu.add( makeMenuItem( "menu.view.zoomout", new ActionListener()
-        {
-            public void actionPerformed( ActionEvent e )
-            {
-                display.zoomOut();
-            }
-        } ) );
-
-        mbar.add( menu = makeMenu( "menu.help" ) );
-        menu.add( makeMenuItem( "menu.help.about", new ActionListener()
-        {
-            public void actionPerformed( ActionEvent e )
-            {
-                showAboutPanel();
-            }
-        } ) );
-        menu.add( makeMenuItem( "menu.help.help", new ActionListener()
-        {
-            public void actionPerformed( ActionEvent e )
-            {
-                showHelp();
-            }
-        } ) );
-        menu.add( makeMenuItem( "menu.help.license", new ActionListener()
-        {
-            public void actionPerformed( ActionEvent e )
-            {
-                showLicense();
-            }
-        } ) );
-
-        setRunMenuItemsEnabled( true );
-        setJMenuBar( mbar );
-    }
-
-
-    private void makeNewGridMenu()
-    {
-        newGridMenu.removeAll();
-        MenuMaker<T> maker = new MenuMaker<T>( this, resources, displayMap );
-        maker.addConstructors( newGridMenu, gridClasses );
-    }
-
-
-    /**
-     * Sets the enabled status of those menu items that are disabled when
-     * running.
-     *
-     * @param enable true to enable the menus
-     */
-    public void setRunMenuItemsEnabled( boolean enable )
-    {
-        for ( JMenuItem item : menuItemsDisabledDuringRun )
-            item.setEnabled( enable );
-    }
-
-
-    /**
-     * Brings up a simple dialog with some general information.
-     */
-    private void showAboutPanel()
-    {
-        String html = MessageFormat.format( resources.getString(
-                        "dialog.about.text" ),
-                        new Object[] { resources.getString( "version.id" ) } );
-        String[] props = { "java.version", "java.vendor", "java.home",
-                        "os.name", "os.arch", "os.version", "user.name",
-                        "user.home", "user.dir" };
-        html += "<table border='1'>";
-        for ( String prop : props )
-        {
-            try
-            {
-                String value = System.getProperty( prop );
-                html += "<tr><td>" + prop + "</td><td>" + value + "</td></tr>";
-            }
-            catch ( SecurityException ex )
-            {
-                // oh well...
-            }
-        }
-        html += "</table>";
-        html = "<html>" + html + "</html>";
-        JOptionPane.showMessageDialog( this,
-                        new JLabel( html ),
-                        resources.getString( "dialog.about.title" ),
-                        JOptionPane.INFORMATION_MESSAGE );
-    }
-
-
-    /**
-     * Brings up a window with a scrolling text pane that display the help
-     * information.
-     */
-    private void showHelp()
-    {
-        JDialog dialog = new JDialog( this,
-                        resources.getString( "dialog.help.title" ) );
-        final JEditorPane helpText = new JEditorPane();
-        try
-        {
-            URL url = getClass().getResource( "GridWorldHelp.html" );
-
-            helpText.setPage( url );
-        }
-        catch ( Exception e )
-        {
-            helpText.setText( resources.getString( "dialog.help.error" ) );
-        }
-        helpText.setEditable( false );
-        helpText.addHyperlinkListener( new HyperlinkListener()
-        {
-            public void hyperlinkUpdate( HyperlinkEvent ev )
-            {
-                if ( ev.getEventType() == HyperlinkEvent.EventType.ACTIVATED )
-                    try
-                    {
-                        helpText.setPage( ev.getURL() );
-                    }
-                    catch ( Exception ex )
-                    {
-                    }
-            }
-        } );
-        JScrollPane sp = new JScrollPane( helpText );
-        sp.setPreferredSize( new Dimension( 650, 500 ) );
-        dialog.getContentPane().add( sp );
-        dialog.setLocation( getX() + getWidth() - 200, getY() + 50 );
-        dialog.pack();
-        dialog.setVisible( true );
-    }
-
-
-    /**
-     * Brings up a dialog that displays the license.
-     */
-    private void showLicense()
-    {
-        JDialog dialog = new JDialog( this,
-                        resources.getString( "dialog.license.title" ) );
-        final JEditorPane text = new JEditorPane();
-        try
-        {
-            URL url = getClass().getResource( "GNULicense.txt" );
-
-            text.setPage( url );
-        }
-        catch ( Exception e )
-        {
-            text.setText( resources.getString( "dialog.license.error" ) );
-        }
-        text.setEditable( false );
-        JScrollPane sp = new JScrollPane( text );
-        sp.setPreferredSize( new Dimension( 650, 500 ) );
-        dialog.getContentPane().add( sp );
-        dialog.setLocation( getX() + getWidth() - 200, getY() + 50 );
-        dialog.pack();
-        dialog.setVisible( true );
-    }
 
 
     /**

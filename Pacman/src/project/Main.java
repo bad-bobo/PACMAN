@@ -10,11 +10,14 @@ import java.awt.*;
 
 public class Main
 {
-
+	public Main()
+	{
+		
+	}
+	
     private static final int row = 30;
 
     private static final int col = 30;
-
 
     public static void main( String[] args )
     {

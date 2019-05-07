@@ -1,6 +1,6 @@
-/* 
+/*
  * AP(r) Computer Science GridWorld Case Study:
- * Copyright(c) 2002-2006 College Entrance Examination Board 
+ * Copyright(c) 2002-2006 College Entrance Examination Board
  * (http://www.collegeboard.com).
  *
  * This code is free software; you can redistribute it and/or modify
@@ -11,16 +11,15 @@
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU General Public License for more details.
- * 
+ *
  * @author Alyce Brady
  * @author Cay Horstmann
  */
 
 package gridworld.gui;
 
-import java.awt.Graphics2D;
-import java.awt.Component;
-import java.awt.Rectangle;
+import java.awt.*;
+
 
 /**
  * The <code>Display</code> interface contains the method needed to display a
@@ -33,10 +32,11 @@ public interface Display
 {
     /**
      * Method invoked to draw an object.
-     * @param obj object we want to draw
-     * @param c comp component on which to draw
-     * @param g2 drawing surface
+     *
+     * @param obj  object we want to draw
+     * @param c    comp component on which to draw
+     * @param g2   drawing surface
      * @param rect rectangle in which to draw
      */
-    void draw(Object obj, Component c, Graphics2D g2, Rectangle rect);
+    void draw( Object obj, Component c, Graphics2D g2, Rectangle rect );
 }

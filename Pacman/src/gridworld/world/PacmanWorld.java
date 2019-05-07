@@ -1,7 +1,6 @@
 package gridworld.world;
 
 import gridworld.actor.Actor;
-import gridworld.world.ActorWorld;
 import gridworld.actor.Pacman;
 import gridworld.grid.Grid;
 import gridworld.grid.Location;
@@ -47,6 +46,13 @@ public class PacmanWorld extends ActorWorld
     }
 
 
+    private void score()
+    {
+        ArrayList<Location> actors = getGrid().getOccupiedLocations();
+
+    }
+
+
     private void pacmanKeyHelper(
                     ArrayList<Location> actors, Grid<Actor> grid, int loc )
     {
@@ -56,10 +62,7 @@ public class PacmanWorld extends ActorWorld
             {
                 Pacman pacman = ( (Pacman)grid.get( l ) );
                 pacman.setDirection( loc );
-                if(pacman.canMove())
-                {
-                    pacman.move();
-                }
+
             }
         }
 

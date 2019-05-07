@@ -48,10 +48,9 @@ public class GUIController<T>
 {
     public static final int INDEFINITE = 0, FIXED_STEPS = 1, PROMPT_STEPS = 2;
 
-    private static final int MIN_DELAY_MSECS = 10, MAX_DELAY_MSECS = 1000;
+    private static final int MIN_DELAY_MSECS = 10, MAX_DELAY_MSECS = 500;
 
-    private static final int INITIAL_DELAY =
-                    MIN_DELAY_MSECS + ( MAX_DELAY_MSECS - MIN_DELAY_MSECS ) / 2;
+    private static final int INITIAL_DELAY = MIN_DELAY_MSECS + ( MAX_DELAY_MSECS - MIN_DELAY_MSECS ) / 2;
 
     private Timer timer;
 
@@ -179,7 +178,7 @@ public class GUIController<T>
     public void run()
     {
         display.setToolTipsEnabled( false ); // hide tool tips while running
-        parentFrame.setRunMenuItemsEnabled( false );
+        //        parentFrame.setRunMenuItemsEnabled( false );
         stopButton.setEnabled( true );
         stepButton.setEnabled( false );
         runButton.setEnabled( false );
@@ -195,7 +194,7 @@ public class GUIController<T>
     public void stop()
     {
         display.setToolTipsEnabled( true );
-        parentFrame.setRunMenuItemsEnabled( true );
+        //        parentFrame.setRunMenuItemsEnabled( true );
         timer.stop();
         stopButton.setEnabled( false );
         runButton.setEnabled( true );
@@ -217,6 +216,7 @@ public class GUIController<T>
     private void makeControls()
     {
         controlPanel = new JPanel();
+        controlPanel.setBackground( new Color( 255, 235, 45 ) );
         stepButton = new JButton( resources.getString( "button.gui.step" ) );
         runButton = new JButton( resources.getString( "button.gui.run" ) );
         stopButton = new JButton( resources.getString( "button.gui.stop" ) );

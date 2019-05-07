@@ -19,13 +19,13 @@ package gridworld.actor;
 import gridworld.grid.Grid;
 import gridworld.grid.Location;
 
-import java.awt.Color;
+import java.awt.*;
 
 
 /**
  * An <code>Actor</code> is an entity with a color and direction that can act.
  * <br />
- * The API of this class is testable on the AP CS A and AB exams.
+
  */
 public abstract class Actor
 {
@@ -37,9 +37,11 @@ public abstract class Actor
 
     protected Color color;
 
+    protected Color textColor;
+
 
     /**
-     * Constructs a blue actor that is facing north.
+     * Constructs a Yellow actor that is facing north.
      */
     public Actor()
     {
@@ -140,8 +142,7 @@ public abstract class Actor
 
 
     /**
-     * Reverses the direction of this actor. Override this method in subclasses
-     * of <code>Actor</code> to define types of actors with different behavior
+     * To be overrode in subclasses
      */
     public abstract void act();
 

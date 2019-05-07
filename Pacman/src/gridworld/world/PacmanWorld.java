@@ -21,8 +21,7 @@ public class PacmanWorld extends ActorWorld
     {
         ArrayList<Location> actors = getGrid().getOccupiedLocations();
         Grid<Actor> grid = getGrid();
-        System.out.println( "PacmanWorld.keyPressed: " + KeyStroke.getKeyStroke(
-                        description ) );
+//        System.out.println( "PacmanWorld.keyPressed: " + KeyStroke.getKeyStroke( description ) );
         switch ( KeyStroke.getKeyStroke( description ).toString() )
         {
             case "pressed W":

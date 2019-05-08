@@ -1,5 +1,6 @@
 package gridworld.actor;
 
+import gridworld.grid.Grid;
 import gridworld.grid.Location;
 
 
@@ -93,6 +94,25 @@ public class Pacman extends MovableActor
         {
             move();
         }
+
+    }
+
+
+    public boolean canMove()
+    {
+        Grid<Actor> gr = getGrid();
+        if ( gr == null )
+            return false;
+        Location loc = getLocation();
+        Location next = loc.getAdjacentLocation( getDirection() );
+        if (gr.get(next) instanceof Edible){
+            ((Edible) gr.get(next)).action(gr);
+        }
+        if ( !gr.isValid( next ) )
+            return false;
+        Actor neighbor = gr.get( next );
+        // return ( neighbor == null ) || ( neighbor instanceof Flower );
+        return ( !( neighbor instanceof Wall ) );
 
     }
 

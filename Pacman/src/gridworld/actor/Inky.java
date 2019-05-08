@@ -85,8 +85,8 @@ public class Inky extends Ghost
         int size = path.size();
         if ( size < 2 )
         {
-            System.out.println( path );
-            System.out.println( count );
+            //System.out.println( path );
+            //System.out.println( count );
             return location;
         }
         else
@@ -105,10 +105,10 @@ public class Inky extends Ghost
     private boolean searchPath(
                     int[][] maze, int x, int y, List<Point> path )
     {
-        System.out.println( "Inky.searchPath: " + "(" + x + "," + y + ")" );
+        //System.out.println( "Inky.searchPath: " + "(" + x + "," + y + ")" );
         if ( !grid.isValid( new Location( x, y ) ) )
         {
-            System.out.println( "Inky.searchPath: Location is not valid" );
+            ///System.out.println( "Inky.searchPath: Location is not valid" );
             return false;
         }
         //Target
@@ -154,7 +154,7 @@ public class Inky extends Ghost
             }
 
         }
-        System.out.println("Inky.searchPath: Path not found");
+        //System.out.println("Inky.searchPath: Path not found");
         //Hello
         return false;
 

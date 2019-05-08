@@ -20,18 +20,23 @@ public class Score extends Actor
     public Score()
     {
         super();
-        ArrayList<Location> actors = Main.grid.getOccupiedLocations();
-        int count = 0;
-        for ( Location loc : actors )
-        {
-            if ( Main.grid.get( loc ) instanceof Pellet )
-            {
-                count++;
-            }
-        }
+        //ArrayList<Location> actors = Main.grid.getOccupiedLocations();
+//        int count = 0;
+//        for ( Location loc : actors )
+//        {
+//            if ( Main.grid.get( loc ) instanceof Pellet )
+//            {
+//                count++;
+//            }
+//        }
+//
+//        score = 250 - count;
 
-        score = 250 - count;
 
+    }
+
+    public static void inc(){
+    score++;
     }
 
 

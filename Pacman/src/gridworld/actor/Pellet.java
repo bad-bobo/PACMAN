@@ -1,9 +1,11 @@
 package gridworld.actor;
 
+import gridworld.grid.Grid;
+
 import java.awt.*;
 
 
-public class Pellet extends Actor
+public class Pellet extends Actor implements Edible
 {
     public Pellet()
     {
@@ -15,6 +17,10 @@ public class Pellet extends Actor
     public void act()
     {
 
+    }
+
+    public void action(Grid grid){
+    Score.inc();
     }
 
 }

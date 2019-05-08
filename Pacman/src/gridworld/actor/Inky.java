@@ -159,6 +159,7 @@ public class Inky extends Ghost
 
         }
         System.out.println("Inky.searchPath: Path not found");
+        //Hello
         return false;
 
     }

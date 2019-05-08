@@ -125,20 +125,12 @@ public class Inky extends Ghost
 
             //Need something that executes these if statements at random
             //Searching one down
+
             if ( searchPath( maze, x - 1, y, path ) )
             {
                 path.add( new Point( x, y ) );
                 return true;
             }
-
-            //Searching one right
-            if ( searchPath( maze, x, y + 1, path ) )
-            {
-                path.add( new Point( x, y ) );
-                return true;
-            }
-
-
 
             //Searching one up
             if ( searchPath( maze, x + 1, y, path ) )
@@ -154,8 +146,12 @@ public class Inky extends Ghost
                 return true;
             }
 
-
-
+            //Searching one right
+            if ( searchPath( maze, x, y + 1, path ) )
+            {
+                path.add( new Point( x, y ) );
+                return true;
+            }
 
         }
         System.out.println("Inky.searchPath: Path not found");

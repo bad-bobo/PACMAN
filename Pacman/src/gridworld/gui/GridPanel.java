@@ -25,6 +25,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.font.FontRenderContext;
 import java.awt.font.LineMetrics;
@@ -76,17 +77,36 @@ public class GridPanel extends JPanel
     private JToolTip tip;
 
     private JPanel glassPane;
-
+    Point mousePos;
+    private JFrame parent;
 
     /**
      * Construct a new GridPanel object with no grid. The view will be
      * empty.
      */
-    public GridPanel( DisplayMap map, ResourceBundle res )
+    public GridPanel( DisplayMap map, ResourceBundle res , JFrame topWindow)
     {
+    parent=topWindow;
         displayMap = map;
         resources = res;
         setToolTipsEnabled( true );
+        /////
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mousePressed(MouseEvent e) {
+                mousePos = e.getPoint(); // update the position
+            }
+        });
+        addMouseMotionListener(new MouseAdapter() {
+            @Override
+            public void mouseDragged(MouseEvent e) {
+                Point newPoint = e.getLocationOnScreen();
+                newPoint.translate(-mousePos.x,
+                                   -mousePos.y); // Moves the point by given
+                // values from its location
+                parent.setLocation(newPoint); // set the new location
+            }
+        });
     }
 
 

@@ -11,6 +11,9 @@ public class Pacman extends MovableActor
 
     protected static int count = 0;
 
+    public static int currentDirection=0;
+    public static int newDirection=0;
+
 
     public Pacman()
     {
@@ -100,12 +103,16 @@ public class Pacman extends MovableActor
 
     public boolean canMove()
     {
+        Location loc = getLocation();
+        Location afterTurn= loc.getAdjacentLocation(newDirection);
         Grid<Actor> gr = getGrid();
         if ( gr == null )
             return false;
-        Location loc = getLocation();
+if (gr.isValid(afterTurn)&& !(gr.get(afterTurn)instanceof Wall)){
+    currentDirection=newDirection;
+}
         Location next = loc.getAdjacentLocation( getDirection() );
-        if (gr.get(next) instanceof Edible){
+        if (gr.isValid(next)&&gr.get(next) instanceof Edible){
             ((Edible) gr.get(next)).action(gr);
         }
         if ( !gr.isValid( next ) )
@@ -115,7 +122,9 @@ public class Pacman extends MovableActor
         return ( !( neighbor instanceof Wall ) );
 
     }
-
+public int getDirection(){
+return currentDirection;
+}
 
 
 }

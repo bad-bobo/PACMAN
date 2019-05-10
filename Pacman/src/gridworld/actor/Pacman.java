@@ -48,9 +48,9 @@ public class Pacman extends MovableActor
     {
         if ( grid == null )
             throw new IllegalStateException( "This actor is not in a grid." );
-        if ( grid.get( location ) != this )
-            throw new IllegalStateException(
-                            "The grid contains a different actor at location " + location + "." );
+//        if ( grid.get( location ) != this )
+//            throw new IllegalStateException(
+//                            "The grid contains a different actor at location " + location + "." );
         if ( !grid.isValid( newLocation ) )
         {
             throw new IllegalArgumentException( "Location " + newLocation + " is not valid." );

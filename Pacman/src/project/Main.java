@@ -55,6 +55,7 @@ public class Main
         //Pacman name
         String[] pacman = { "P", "A", "C", "M", "A", "N" };
         int i = 9;
+
         for ( String m : pacman )
         {
             TextCell t = new TextCell( m );
@@ -70,8 +71,12 @@ public class Main
 
     //}
 
-        LevelPellet level1=new LevelPellet(0);
+        LevelPellet level1=new LevelPellet("level1");
         level1.putSelfInGrid(grid,new Location(5,5));
+        LevelPellet level2=new LevelPellet("level2");
+        level2.putSelfInGrid(grid,new Location(20,10));
+        LevelPellet level3=new LevelPellet("level3");
+        level3.putSelfInGrid(grid,new Location(15,22));
 
 
 

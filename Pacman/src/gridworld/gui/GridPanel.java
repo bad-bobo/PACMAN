@@ -298,7 +298,7 @@ public class GridPanel extends JPanel
             ToolTipManager.sharedInstance().registerComponent( this );
         else
             ToolTipManager.sharedInstance().unregisterComponent( this );
-        toolTipsEnabled = flag;
+        toolTipsEnabled = false;
     }
 
 

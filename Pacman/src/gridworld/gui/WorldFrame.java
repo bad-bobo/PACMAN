@@ -110,19 +110,19 @@ public class WorldFrame<T> extends JFrame
         if ( title == null )
             title = resources.getString( "frame.title" );
         setTitle( title );
-        setLocation( 400, 100 );
+        setLocation( 25, 25 );
         //         setLocationRelativeTo( null );
         //        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         //        this.setLocation(dim.width/2-this.getSize().width/2, dim.height/2-this.getSize().height/2);
         //        this.pack();
         //        this.setLocationRelativeTo(null);
 
-        setPreferredSize( new Dimension( 629,
-                        772 ) );//629 (width),794 (height) pixels for
+        setPreferredSize( new Dimension( 628,
+                        746 ) );//656 (width),794 (height) pixels for
         //27 ROW and 24 COL
         //True for testing
         setResizable( false );
-
+setUndecorated(true);
         URL appIconUrl = getClass().getResource( "GridWorld.gif" );
         if ( appIconUrl != null )
         {

@@ -40,11 +40,10 @@ public class LevelPellet extends Pellet implements Edible
         ArrayList<Location> locActors = grid.getOccupiedLocations();
         for ( Location loc : locActors )
         {
-            if ( grid.get( loc ) instanceof Pacman || grid.get( loc ) instanceof Edible )
-            {
+
                 Actor actor = (Actor)( grid.get( loc ) );
                 actor.removeSelfFromGrid();
-            }
+
         }
 
         try
@@ -97,6 +96,16 @@ public class LevelPellet extends Pellet implements Edible
         //After new level
         Pacman pacman = new Pacman();
         pacman.putSelfInGrid( grid, new Location( 19, 15 ) );
+
+        String[] strPacman = { "P", "A", "C", "M", "A", "N" };
+        int i = 9;
+
+        for ( String m : strPacman )
+        {
+            TextCell t = new TextCell( m );
+            t.putSelfInGrid( grid, new Location( 0, i ) );
+            i++;
+        }
 
     }
 

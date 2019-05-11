@@ -21,6 +21,7 @@ public class Main
 
     static
     {
+        //just for safekeeping
         map = new int[][] { { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
                         { 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, },
                         { 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, },
@@ -62,8 +63,28 @@ public class Main
         LevelPellet lp = new LevelPellet("level1");
 
         Pacman p = new Pacman();
+
         p.putSelfInGrid( grid, new Location(0,0) );
+
         world.show();
+
+
+//        for(int[] row: map)
+//        {
+//            for(int col: row)
+//            {
+//                String str = "";
+//                if(col == 1)
+//                {
+//                    str = "x";
+//                }
+//                else{
+//                    str = "o";
+//                }
+//                System.out.print( str );
+//            }
+//            System.out.println(  );
+//        }
 
 
 
@@ -96,16 +117,18 @@ public class Main
         TextCell t = new TextCell( "Level" );
         t.putSelfInGrid( grid, new Location( 3, 6 ) );
         TextCell y = new TextCell( "Select" );
-        y.putSelfInGrid( grid, new Location( 4, 6 ) );
+        y.putSelfInGrid( grid, new Location( 3, 8 ) );
+
+        LevelPellet level4 = new LevelPellet( "level1" );
+        level4.putSelfInGrid( grid, new Location( 3, 7 ) );
 
 
-
-        LevelPellet level1 = new LevelPellet( "level1" );
-        level1.putSelfInGrid( grid, new Location( 5, 5 ) );
-        LevelPellet level2 = new LevelPellet( "level2" );
-        level2.putSelfInGrid( grid, new Location( 20, 10 ) );
-        LevelPellet level3 = new LevelPellet( "level3" );
-        level3.putSelfInGrid( grid, new Location( 15, 22 ) );
+//        LevelPellet level1 = new LevelPellet( "level1" );
+//        level1.putSelfInGrid( grid, new Location( 5, 5 ) );
+//        LevelPellet level2 = new LevelPellet( "level2" );
+//        level2.putSelfInGrid( grid, new Location( 20, 10 ) );
+//        LevelPellet level3 = new LevelPellet( "level3" );
+//        level3.putSelfInGrid( grid, new Location( 15, 22 ) );
 
     }
 

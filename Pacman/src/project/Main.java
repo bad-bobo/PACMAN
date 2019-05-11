@@ -1,6 +1,7 @@
 package project;
 
 import gridworld.actor.LevelPellet;
+import gridworld.actor.Pacman;
 import gridworld.actor.TextCell;
 import gridworld.grid.BoundedGrid;
 import gridworld.grid.Location;
@@ -58,8 +59,15 @@ public class Main
         PacmanWorld world = new PacmanWorld( grid );
 
         initGrid( grid );
+        LevelPellet lp = new LevelPellet("level1");
 
+        Pacman p = new Pacman();
+        p.putSelfInGrid( grid, new Location(0,0) );
         world.show();
+
+
+
+
 
     }
 

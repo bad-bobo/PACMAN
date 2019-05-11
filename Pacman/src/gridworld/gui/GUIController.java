@@ -84,10 +84,13 @@ public class GUIController<T>
     (
                     WorldFrame<T> parent, GridPanel disp, DisplayMap displayMap, ResourceBundle res )
     {
+        //Initializing the parameters
         resources = res;
         display = disp;
         parentFrame = parent;
         this.displayMap = displayMap;
+
+
         makeControls();
 
         occupantClasses = new TreeSet<Class>( new Comparator<Class>()
@@ -146,10 +149,17 @@ public class GUIController<T>
         controlPanel = new JPanel();
         Color yello = new Color( 255, 235, 45 );
         controlPanel.setBackground( yello );
+
+        //Run Button
         runButton = new JButton( resources.getString( "button.gui.run" ) );
 
+        //Stop Button
         stopButton = new JButton( resources.getString( "button.gui.stop" ) );
-        JButton exitButton = new JButton( "\u274C" );
+
+        //Exit Button
+//        JButton exitButton = new JButton( "\u274C" ); Whats this?
+        JButton exitButton = new JButton( "Exit" );
+
         controlPanel.setLayout( new BoxLayout( controlPanel, BoxLayout.X_AXIS ) );
         controlPanel.setBorder( BorderFactory.createEtchedBorder() );
 
@@ -158,13 +168,16 @@ public class GUIController<T>
         controlPanel.add( Box.createRigidArea( spacer ) );
         controlPanel.add( runButton );
         controlPanel.add( stopButton );
-        Dimension shams = new Dimension( 50, exitButton.getHeight() );
+        Dimension brad = new Dimension( 50, exitButton.getHeight() );
         controlPanel.add( Box.createRigidArea( spacer ) );
-        runButton.setPreferredSize( shams );
-        stopButton.setPreferredSize( shams );
+        runButton.setPreferredSize( brad );
+        stopButton.setPreferredSize( brad );
         controlPanel.add( exitButton );
 
-        runButton.setEnabled( false );
+        //This line was not there in original brad commit
+        runButton.setVisible( true );
+
+        runButton.setEnabled( true ); //was false, why false?
         stopButton.setEnabled( false );
         stopButton.setVisible( true );///was false, why false?
 
@@ -189,6 +202,8 @@ public class GUIController<T>
         controlPanel.add( new JLabel( resources.getString( "slider.gui.fast" ) ) );
 
         controlPanel.add( Box.createRigidArea( spacer ) );
+
+
         runButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
@@ -198,6 +213,8 @@ public class GUIController<T>
                 stopButton.setVisible( true );
             }
         } );
+
+
         stopButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
@@ -207,6 +224,8 @@ public class GUIController<T>
                 stopButton.setVisible( false );
             }
         } );
+
+
         speedSlider.addChangeListener( new ChangeListener()
         {
             public void stateChanged( ChangeEvent evt )
@@ -214,6 +233,7 @@ public class GUIController<T>
                 timer.setDelay( MAX_DELAY_MSECS + MIN_DELAY_MSECS - ( (JSlider)evt.getSource() ).getValue() );
             }
         } );
+
         exitButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
@@ -221,6 +241,7 @@ public class GUIController<T>
                 System.exit( 0 );
             }
         } );
+
         exitButton.addChangeListener( new ChangeListener()
         {
             public void stateChanged( ChangeEvent e )
@@ -237,20 +258,27 @@ public class GUIController<T>
                 }
             }
         } );
+
         speedSlider.setBackground( yello );
+
         runButton.setBorder( BorderFactory.createEmptyBorder( 3, 5, 3, 5 ) );
-        runButton.setFocusPainted( false );
-        runButton.setForeground( yello );
-        runButton.setBackground( Color.black );
+        runButton.setFocusPainted( true );// was false
+//        runButton.setForeground( yello );
+        runButton.setForeground( Color.BLACK );
+//        runButton.setBackground( Color.PINK );
+
         stopButton.setBorder( BorderFactory.createEmptyBorder( 3, 5, 3, 5 ) );
         stopButton.setFocusPainted( false );
-        stopButton.setForeground( yello );
+//        stopButton.setForeground( yello );
+        stopButton.setForeground( Color.BLACK );
         stopButton.setBackground( Color.black );
+
         exitButton.setBorder( BorderFactory.createEmptyBorder( 3, 7, 3, 7 ) );
         exitButton.setFocusPainted( false );
         exitButton.setForeground( Color.red );
         exitButton.setBackground( Color.blue );
         exitButton.setRolloverEnabled( true );
+
         speedSlider.setFocusable( false );
         speedSlider.setInverted( false );
     }

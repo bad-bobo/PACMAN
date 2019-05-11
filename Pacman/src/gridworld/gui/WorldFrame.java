@@ -114,7 +114,7 @@ public class WorldFrame<T> extends JFrame
         //        this.pack();
         //        this.setLocationRelativeTo(null);
 
-        setPreferredSize( new Dimension( 630, 746 ) );//656 (width),794 (height) pixels for
+        setPreferredSize( new Dimension( 630, 750 ) );//656 (width),794 (height) pixels for
         //27 ROW and 24 COL
         //True for testing
         setResizable( false );

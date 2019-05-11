@@ -20,14 +20,6 @@
 
 package gridworld.grid;
 
-import gridworld.actor.MovableActor;
-import gridworld.actor.Wall;
-import project.Main;
-
-import java.util.ArrayList;
-import java.util.Set;
-
-
 /**
  * A <code>Location</code> object represents the row and column of a location
  * in a two-dimensional grid. <br />
@@ -203,8 +195,6 @@ public class Location implements Comparable
      * Returns the direction from this location toward another location. The
      * direction is rounded to the nearest compass direction.
      *
-     *
-     *
      * @param target a location that is different from this location
      * @return the closest compass direction from this location toward
      * <code>target</code>
@@ -227,15 +217,8 @@ public class Location implements Comparable
         // round to nearest multiple of 45
         int result = ( compassAngle / HALF_RIGHT ) * HALF_RIGHT;
 
-
-
         return result;
     }
-
-
-
-
-
 
 
     /**
@@ -293,8 +276,6 @@ public class Location implements Comparable
             return 1;
         return 0;
     }
-
-
 
 
     /**

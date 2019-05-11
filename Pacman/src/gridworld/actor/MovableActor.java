@@ -5,7 +5,7 @@ import gridworld.grid.Location;
 
 
 /**
- *
+ * Subclass of actors. Represents an actors that can move.
  */
 public abstract class MovableActor extends Actor
 {
@@ -65,7 +65,7 @@ public abstract class MovableActor extends Actor
      * Moves the bug forward, putting a flower into the location it previously
      * occupied.
      */
-    public void move()
+    void move()
     {
         Grid<Actor> gr = getGrid();
         if ( gr == null )

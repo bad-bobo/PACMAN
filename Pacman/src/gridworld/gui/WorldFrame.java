@@ -42,7 +42,8 @@ import java.util.*;
  * implementation details that are not intended to be understood by AP CS
  * students.
  */
-public class WorldFrame<T> extends JFrame {
+public class WorldFrame<T> extends JFrame
+{
     private static int count = 0;
 
     private GUIController<T> control;
@@ -60,6 +61,7 @@ public class WorldFrame<T> extends JFrame {
     private DisplayMap displayMap;
 
     private Set<Class> gridClasses;
+
     private Point mousePos;
 
 
@@ -68,35 +70,43 @@ public class WorldFrame<T> extends JFrame {
      *
      * @param world the world to display
      */
-    public WorldFrame(World<T> world) {
+    public WorldFrame( World<T> world )
+    {
         this.world = world;
         count++;
-        resources = ResourceBundle.getBundle(
-                getClass().getName() + "Resources");
-        try {
-            System.setProperty("sun.awt.exception.handler",
-                               GUIExceptionHandler.class.getName());
-        } catch (SecurityException ex) {
+        resources = ResourceBundle.getBundle( getClass().getName() + "Resources" );
+        try
+        {
+            System.setProperty( "sun.awt.exception.handler", GUIExceptionHandler.class.getName() );
+        }
+        catch ( SecurityException ex )
+        {
             // will fail in an applet
         }
 
-        addWindowListener(new WindowAdapter() {
-            public void windowClosing(WindowEvent event) {
+        addWindowListener( new WindowAdapter()
+        {
+            public void windowClosing( WindowEvent event )
+            {
                 count--;
-                if (count == 0) System.exit(0);
+                if ( count == 0 )
+                    System.exit( 0 );
             }
-        });
+        } );
 
         displayMap = new DisplayMap();
         String title = null;
         try // won't work in applets
         {
-            System.getProperty("gridworld.gui.frametitle");
-        } catch (SecurityException ex) {
+            System.getProperty( "gridworld.gui.frametitle" );
         }
-        if (title == null) title = resources.getString("frame.title");
-        setTitle(title);
-        setLocation(25, 25);
+        catch ( SecurityException ex )
+        {
+        }
+        if ( title == null )
+            title = resources.getString( "frame.title" );
+        setTitle( title );
+        setLocation( 25, 25 );
         //         setLocationRelativeTo( null );
         //        Dimension dim = Toolkit.getDefaultToolkit().getScreenSize();
         //        this.setLocation(dim.width/2-this.getSize().width/2, dim
@@ -104,126 +114,136 @@ public class WorldFrame<T> extends JFrame {
         //        this.pack();
         //        this.setLocationRelativeTo(null);
 
-        setPreferredSize(
-                new Dimension(628, 746));//656 (width),794 (height) pixels for
+        setPreferredSize( new Dimension( 630, 746 ) );//656 (width),794 (height) pixels for
         //27 ROW and 24 COL
         //True for testing
-        setResizable(false);
+        setResizable( false );
 
-        setUndecorated(true);
+        setUndecorated( true );
 
-
-/////DRAG ON YELLOW BAR AT BOTTOM TO MOVE
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
+        /////DRAG ON YELLOW BAR AT BOTTOM TO MOVE
+        addMouseListener( new MouseAdapter()
+        {
+            @Override public void mousePressed( MouseEvent e )
+            {
                 mousePos = e.getPoint(); // update the position
             }
-        });
-        addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
+        } );
+        addMouseMotionListener( new MouseAdapter()
+        {
+            @Override public void mouseDragged( MouseEvent e )
+            {
                 Point newPoint = e.getLocationOnScreen();
-                newPoint.translate(-mousePos.x,
-                                   -mousePos.y); // Moves the point by given
-                                   // values from its location
-                setLocation(newPoint); // set the new location
+                newPoint.translate( -mousePos.x, -mousePos.y ); // Moves the point by given
+                // values from its location
+                setLocation( newPoint ); // set the new location
             }
-        });
-/////
-        URL appIconUrl = getClass().getResource("GridWorld.gif");
-        if (appIconUrl != null) {
-            ImageIcon appIcon = new ImageIcon(appIconUrl);
-            setIconImage(appIcon.getImage());
+        } );
+        /////
+        URL appIconUrl = getClass().getResource( "GridWorld.gif" );
+        if ( appIconUrl != null )
+        {
+            ImageIcon appIcon = new ImageIcon( appIconUrl );
+            setIconImage( appIcon.getImage() );
         }
 
         //        makeMenus();
 
         JPanel content = new JPanel();
-//        content.setBackground( Color.BLUE );
+        //        content.setBackground( Color.BLUE );
         //        content.setBorder( BorderFactory.createEmptyBorder( 15, 15,
         // 15, 15 ) );
-        content.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-        content.setLayout(new BorderLayout());
-        setContentPane(content);
+        content.setBorder( BorderFactory.createEmptyBorder( 0, 0, 0, 0 ) );
+        content.setLayout( new BorderLayout() );
+        setContentPane( content );
 
-        display = new GridPanel(displayMap, resources,this);
+        display = new GridPanel( displayMap, resources, this );
 
-        KeyboardFocusManager.getCurrentKeyboardFocusManager()
-                .addKeyEventDispatcher(new KeyEventDispatcher() {
-                    public boolean dispatchKeyEvent(KeyEvent event) {
-                        if (getFocusOwner() == null) return false;
-                        String text = KeyStroke.getKeyStrokeForEvent(event)
-                                .toString();
-                        final String PRESSED = "pressed ";
-                        int n = text.indexOf(PRESSED);
-                        if (n < 0) return false;
-                        // filter out modifier keys; they are neither
-                        // characters or actions
-                        if (event.getKeyChar() == KeyEvent.CHAR_UNDEFINED &&
-                                !event.isActionKey()) return false;
-                        text = text.substring(0, n) + text.substring(
-                                n + PRESSED.length());
-                        boolean consumed = getWorld().keyPressed(text,
-                                                                 display
-                                                                 .getCurrentLocation());
-                        if (consumed) repaint();
-                        return consumed;
-                    }
-                });
+        KeyboardFocusManager.getCurrentKeyboardFocusManager().addKeyEventDispatcher( new KeyEventDispatcher()
+        {
+            public boolean dispatchKeyEvent( KeyEvent event )
+            {
+                if ( getFocusOwner() == null )
+                    return false;
+                String text = KeyStroke.getKeyStrokeForEvent( event ).toString();
+                final String PRESSED = "pressed ";
+                int n = text.indexOf( PRESSED );
+                if ( n < 0 )
+                    return false;
+                // filter out modifier keys; they are neither
+                // characters or actions
+                if ( event.getKeyChar() == KeyEvent.CHAR_UNDEFINED && !event.isActionKey() )
+                    return false;
+                text = text.substring( 0, n ) + text.substring( n + PRESSED.length() );
+                boolean consumed = getWorld().keyPressed( text, display.getCurrentLocation() );
+                if ( consumed )
+                    repaint();
+                return consumed;
+            }
+        } );
 
         JScrollPane scrollPane = new JScrollPane();
-        scrollPane.setViewport(new PseudoInfiniteViewport(scrollPane));
-        scrollPane.setViewportView(display);
+        scrollPane.setViewport( new PseudoInfiniteViewport( scrollPane ) );
+        scrollPane.setViewportView( display );
 
-        content.add(scrollPane, BorderLayout.CENTER);
+        content.add( scrollPane, BorderLayout.CENTER );
 
-        gridClasses = new TreeSet<Class>(new Comparator<Class>() {
-            public int compare(Class a, Class b) {
-                return a.getName().compareTo(b.getName());
+        gridClasses = new TreeSet<Class>( new Comparator<Class>()
+        {
+            public int compare( Class a, Class b )
+            {
+                return a.getName().compareTo( b.getName() );
             }
-        });
-        for (String name : world.getGridClasses())
-            try {
-                gridClasses.add(Class.forName(name));
-            } catch (Exception ex) {
+        } );
+        for ( String name : world.getGridClasses() )
+            try
+            {
+                gridClasses.add( Class.forName( name ) );
+            }
+            catch ( Exception ex )
+            {
                 ex.printStackTrace();
             }
 
         Grid<T> gr = world.getGrid();
-        gridClasses.add(gr.getClass());
+        gridClasses.add( gr.getClass() );
 
-
-        control = new GUIController<T>(this, display, displayMap, resources);
-        content.add(control.controlPanel(), BorderLayout.SOUTH);
+        control = new GUIController<T>( this, display, displayMap, resources );
+        content.add( control.controlPanel(), BorderLayout.SOUTH );
 
         pack();
         repaint(); // to show message
-        display.setGrid(gr);
+        display.setGrid( gr );
 
     }
+
 
     /**
      * Gets the world that this frame displays
      *
      * @return the world
      */
-    public World<T> getWorld() {
+    public World<T> getWorld()
+    {
         return world;
     }
+
 
     /**
      * Repaints the frame, but can also be used as a gameloop
      */
-    public void repaint() {
+    public void repaint()
+    {
         display.repaint(); // for applet
         super.repaint();
 
-        if (Score.score == 250) {
+        if ( Score.score == 250 )
+        {
             //TODO: End game message
         }
 
     }
+
 
     /**
      * Sets a new grid for this world. Occupants are transferred from
@@ -231,18 +251,21 @@ public class WorldFrame<T> extends JFrame {
      *
      * @param newGrid the new grid
      */
-    public void setGrid(Grid<T> newGrid) {
+    public void setGrid( Grid<T> newGrid )
+    {
         Grid<T> oldGrid = world.getGrid();
         Map<Location, T> occupants = new HashMap<Location, T>();
-        for (Location loc : oldGrid.getOccupiedLocations())
-            occupants.put(loc, world.remove(loc));
+        for ( Location loc : oldGrid.getOccupiedLocations() )
+            occupants.put( loc, world.remove( loc ) );
 
-        world.setGrid(newGrid);
-        for (Location loc : occupants.keySet()) {
-            if (newGrid.isValid(loc)) world.add(loc, occupants.get(loc));
+        world.setGrid( newGrid );
+        for ( Location loc : occupants.keySet() )
+        {
+            if ( newGrid.isValid( loc ) )
+                world.add( loc, occupants.get( loc ) );
         }
 
-        display.setGrid(newGrid);
+        display.setGrid( newGrid );
         repaint();
     }
 
@@ -254,26 +277,32 @@ public class WorldFrame<T> extends JFrame {
      * @param resource the resource whose .text/.title strings
      *                 should be used in the dialog
      */
-    public void showError(Throwable t, String resource) {
+    public void showError( Throwable t, String resource )
+    {
         String text;
-        try {
-            text = resources.getString(resource + ".text");
-        } catch (MissingResourceException e) {
-            text = resources.getString("error.text");
+        try
+        {
+            text = resources.getString( resource + ".text" );
+        }
+        catch ( MissingResourceException e )
+        {
+            text = resources.getString( "error.text" );
         }
 
         String title;
-        try {
-            title = resources.getString(resource + ".title");
-        } catch (MissingResourceException e) {
-            title = resources.getString("error.title");
+        try
+        {
+            title = resources.getString( resource + ".title" );
+        }
+        catch ( MissingResourceException e )
+        {
+            title = resources.getString( "error.title" );
         }
 
-        String reason = resources.getString("error.reason");
-        String message = text + "\n" + MessageFormat.format(reason, t);
+        String reason = resources.getString( "error.reason" );
+        String message = text + "\n" + MessageFormat.format( reason, t );
 
-        JOptionPane.showMessageDialog(this, message, title,
-                                      JOptionPane.ERROR_MESSAGE);
+        JOptionPane.showMessageDialog( this, message, title, JOptionPane.ERROR_MESSAGE );
     }
 
 
@@ -283,26 +312,28 @@ public class WorldFrame<T> extends JFrame {
      * stack trace to the console.
      */
 
-    public class GUIExceptionHandler {
-        public void handle(Throwable e) {
+    public class GUIExceptionHandler
+    {
+        public void handle( Throwable e )
+        {
             e.printStackTrace();
 
-            JTextArea area = new JTextArea(10, 40);
+            JTextArea area = new JTextArea( 10, 40 );
             StringWriter writer = new StringWriter();
-            e.printStackTrace(new PrintWriter(writer));
-            area.setText(writer.toString());
-            area.setCaretPosition(0);
-            String copyOption = resources.getString("dialog.error.copy");
-            JOptionPane pane = new JOptionPane(new JScrollPane(area),
-                                               JOptionPane.ERROR_MESSAGE,
-                                               JOptionPane.YES_NO_OPTION, null,
-                                               new String[]{copyOption,
-                                                       resources.getString(
-                                                               "cancel")});
-            pane.createDialog(WorldFrame.this, e.toString()).setVisible(true);
-            if (copyOption.equals(pane.getValue())) {
-                area.setSelectionStart(0);
-                area.setSelectionEnd(area.getText().length());
+            e.printStackTrace( new PrintWriter( writer ) );
+            area.setText( writer.toString() );
+            area.setCaretPosition( 0 );
+            String copyOption = resources.getString( "dialog.error.copy" );
+            JOptionPane pane = new JOptionPane( new JScrollPane( area ),
+                            JOptionPane.ERROR_MESSAGE,
+                            JOptionPane.YES_NO_OPTION,
+                            null,
+                            new String[] { copyOption, resources.getString( "cancel" ) } );
+            pane.createDialog( WorldFrame.this, e.toString() ).setVisible( true );
+            if ( copyOption.equals( pane.getValue() ) )
+            {
+                area.setSelectionStart( 0 );
+                area.setSelectionEnd( area.getText().length() );
                 area.copy(); // copy to clipboard
             }
         }

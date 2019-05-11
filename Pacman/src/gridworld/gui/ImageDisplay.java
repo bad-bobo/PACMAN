@@ -45,10 +45,7 @@ public class ImageDisplay extends AbstractDisplay
 
     private static final String imageExtension = ".gif";
 
-    private Map<String, Image> tintedVersions = new LinkedHashMap<String, Image>(
-                    128,
-                    0.75F,
-                    true )
+    private Map<String, Image> tintedVersions = new LinkedHashMap<String, Image>( 128, 0.75F, true )
     {
         protected boolean removeEldestEntry( Map.Entry<String, Image> eldest )
         {
@@ -67,8 +64,7 @@ public class ImageDisplay extends AbstractDisplay
     {
         this.cl = cl;
         imageFilename = cl.getName().replace( '.', '/' );
-        URL url = cl.getClassLoader()
-                        .getResource( imageFilename + imageExtension );
+        URL url = cl.getClassLoader().getResource( imageFilename + imageExtension );
 
         if ( url == null )
             throw new FileNotFoundException( imageFilename + imageExtension + " not found." );
@@ -103,8 +99,7 @@ public class ImageDisplay extends AbstractDisplay
             {
                 try
                 {
-                    URL url = cl.getClassLoader()
-                                    .getResource( imageFilename + imageSuffix + imageExtension );
+                    URL url = cl.getClassLoader().getResource( imageFilename + imageSuffix + imageExtension );
                     if ( url == null )
                         throw new FileNotFoundException( imageFilename + imageSuffix + imageExtension + " not found." );
                     untinted = ImageIO.read( url );
@@ -119,8 +114,7 @@ public class ImageDisplay extends AbstractDisplay
                 tinted = untinted;
             else
             {
-                FilteredImageSource src = new FilteredImageSource( untinted.getSource(),
-                                new TintFilter( color ) );
+                FilteredImageSource src = new FilteredImageSource( untinted.getSource(), new TintFilter( color ) );
                 tinted = comp.createImage( src );
                 // Cache tinted image in map by color, we're likely to need it
                 // again.

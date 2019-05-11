@@ -19,7 +19,6 @@
 
 package gridworld.grid;
 
-import java.awt.*;
 import java.util.ArrayList;
 
 
@@ -66,8 +65,7 @@ public class BoundedGrid<E> extends AbstractGrid<E>
 
     public boolean isValid( Location loc )
     {
-        return 0 <= loc.getRow() && loc.getRow() < getNumRows() && 0 <= loc.getCol() && loc
-                        .getCol() < getNumCols();
+        return 0 <= loc.getRow() && loc.getRow() < getNumRows() && 0 <= loc.getCol() && loc.getCol() < getNumCols();
     }
 
 
@@ -123,6 +121,5 @@ public class BoundedGrid<E> extends AbstractGrid<E>
         occupantArray[loc.getRow()][loc.getCol()] = null;
         return r;
     }
-
 
 }

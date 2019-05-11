@@ -43,8 +43,7 @@ import java.util.ResourceBundle;
  * students.
  */
 
-public class GridPanel extends JPanel
-                implements Scrollable, PseudoInfiniteViewport.Pannable
+public class GridPanel extends JPanel implements Scrollable, PseudoInfiniteViewport.Pannable
 {
     private static final int MIN_CELL_SIZE = 12; //12 original
 
@@ -77,36 +76,40 @@ public class GridPanel extends JPanel
     private JToolTip tip;
 
     private JPanel glassPane;
+
     Point mousePos;
+
     private JFrame parent;
+
 
     /**
      * Construct a new GridPanel object with no grid. The view will be
      * empty.
      */
-    public GridPanel( DisplayMap map, ResourceBundle res , JFrame topWindow)
+    public GridPanel( DisplayMap map, ResourceBundle res, JFrame topWindow )
     {
-    parent=topWindow;
+        parent = topWindow;
         displayMap = map;
         resources = res;
         setToolTipsEnabled( true );
-        /////
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mousePressed(MouseEvent e) {
+
+        addMouseListener( new MouseAdapter()
+        {
+            @Override public void mousePressed( MouseEvent e )
+            {
                 mousePos = e.getPoint(); // update the position
             }
-        });
-        addMouseMotionListener(new MouseAdapter() {
-            @Override
-            public void mouseDragged(MouseEvent e) {
+        } );
+        addMouseMotionListener( new MouseAdapter()
+        {
+            @Override public void mouseDragged( MouseEvent e )
+            {
                 Point newPoint = e.getLocationOnScreen();
-                newPoint.translate(-mousePos.x,
-                                   -mousePos.y); // Moves the point by given
+                newPoint.translate( -mousePos.x, -mousePos.y ); // Moves the point by given
                 // values from its location
-                parent.setLocation(newPoint); // set the new location
+                parent.setLocation( newPoint ); // set the new location
             }
-        });
+        } );
     }
 
 
@@ -125,10 +128,7 @@ public class GridPanel extends JPanel
 
         Insets insets = getInsets();
         g2.setColor( backgroundColor );
-        g2.fillRect( insets.left,
-                        insets.top,
-                        numCols * ( cellSize + 1 ) + 1,
-                        numRows * ( cellSize + 1 ) + 1 );
+        g2.fillRect( insets.left, insets.top, numCols * ( cellSize + 1 ) + 1, numRows * ( cellSize + 1 ) + 1 );
 
         drawWatermark( g2 );
         drawGridlines( g2 );
@@ -179,10 +179,8 @@ public class GridPanel extends JPanel
         Rectangle curClip = g2.getClip().getBounds();
         int top = getInsets().top, left = getInsets().left;
 
-        int miny = Math.max( 0,
-                        ( curClip.y - top ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + top;
-        int minx = Math.max( 0,
-                        ( curClip.x - left ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + left;
+        int miny = Math.max( 0, ( curClip.y - top ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + top;
+        int minx = Math.max( 0, ( curClip.x - left ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + left;
         int maxy = Math.min( numRows,
                         ( curClip.y + curClip.height - top + cellSize ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + top;
         int maxx = Math.min( numCols,
@@ -192,8 +190,7 @@ public class GridPanel extends JPanel
         for ( int y = miny; y <= maxy; y += cellSize + 1 )
             for ( int x = minx; x <= maxx; x += cellSize + 1 )
             {
-                Location loc = locationForPoint( new Point( x + cellSize / 2,
-                                y + cellSize / 2 ) );
+                Location loc = locationForPoint( new Point( x + cellSize / 2, y + cellSize / 2 ) );
                 if ( loc != null && !grid.isValid( loc ) )
                     g2.fillRect( x + 1, y + 1, cellSize, cellSize );
             }
@@ -247,10 +244,7 @@ public class GridPanel extends JPanel
         if ( currentLocation != null )
         {
             Point p = pointForLocation( currentLocation );
-            g2.drawRect( p.x - cellSize / 2 - 2,
-                            p.y - cellSize / 2 - 2,
-                            cellSize + 3,
-                            cellSize + 3 );
+            g2.drawRect( p.x - cellSize / 2 - 2, p.y - cellSize / 2 - 2, cellSize + 3, cellSize + 3 );
         }
     }
 
@@ -277,15 +271,12 @@ public class GridPanel extends JPanel
         }
 
         g2 = (Graphics2D)g2.create();
-        g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_ON );
+        g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         Rectangle rect = getBounds();
         //  g2.setPaint(new Color(0xE3, 0xD3, 0xD3));
         g2.setPaint( Color.YELLOW );
         final int WATERMARK_FONT_SIZE = 100;
-        g2.setFont( new Font( "Courier",
-                        Font.BOLD,
-                        WATERMARK_FONT_SIZE ) ); //Find pacman font
+        g2.setFont( new Font( "Courier", Font.BOLD, WATERMARK_FONT_SIZE ) ); //Find pacman font
         FontRenderContext frc = g2.getFontRenderContext();
         Rectangle2D bounds = g2.getFont().getStringBounds( versionId, frc );
         float centerX = rect.x + rect.width / 2;
@@ -449,8 +440,7 @@ public class GridPanel extends JPanel
 
     public Point pointForLocation( Location loc )
     {
-        return new Point( colToXCoord( loc.getCol() ) + cellSize / 2,
-                        rowToYCoord( loc.getRow() ) + cellSize / 2 );
+        return new Point( colToXCoord( loc.getCol() ) + cellSize / 2, rowToYCoord( loc.getRow() ) + cellSize / 2 );
     }
 
 
@@ -502,11 +492,9 @@ public class GridPanel extends JPanel
             return null;
         Object f = grid.get( loc );
         if ( f != null )
-            return MessageFormat.format( resources.getString(
-                            "cell.tooltip.nonempty" ), loc, f );
+            return MessageFormat.format( resources.getString( "cell.tooltip.nonempty" ), loc, f );
         else
-            return MessageFormat.format( resources.getString(
-                            "cell.tooltip.empty" ), loc, f );
+            return MessageFormat.format( resources.getString( "cell.tooltip.empty" ), loc, f );
     }
 
 
@@ -540,8 +528,7 @@ public class GridPanel extends JPanel
      */
     public void moveLocation( int dr, int dc )
     {
-        Location newLocation = new Location( currentLocation.getRow() + dr,
-                        currentLocation.getCol() + dc );
+        Location newLocation = new Location( currentLocation.getRow() + dr, currentLocation.getCol() + dc );
         if ( !grid.isValid( newLocation ) )
             return;
 
@@ -567,10 +554,7 @@ public class GridPanel extends JPanel
             int dx = 0;
             int dy = 0;
             Point p = pointForLocation( currentLocation );
-            Rectangle locRect = new Rectangle( p.x - cellSize / 2,
-                            p.y - cellSize / 2,
-                            cellSize + 1,
-                            cellSize + 1 );
+            Rectangle locRect = new Rectangle( p.x - cellSize / 2, p.y - cellSize / 2, cellSize + 1, cellSize + 1 );
 
             Rectangle viewRect = viewPort.getViewRect();
             if ( !viewRect.contains( locRect ) )
@@ -591,8 +575,7 @@ public class GridPanel extends JPanel
             }
         }
         repaint();
-        showTip( getToolTipText( currentLocation ),
-                        pointForLocation( currentLocation ) );
+        showTip( getToolTipText( currentLocation ), pointForLocation( currentLocation ) );
     }
 
 

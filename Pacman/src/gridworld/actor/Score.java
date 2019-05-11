@@ -3,9 +3,10 @@ package gridworld.actor;
 import gridworld.grid.Location;
 import project.Main;
 
-import java.util.ArrayList;
 
-
+/**
+ * The Score of the Game, max is 250.
+ */
 public class Score extends Actor
 {
     //250 pellets at start
@@ -20,26 +21,21 @@ public class Score extends Actor
     public Score()
     {
         super();
-        //ArrayList<Location> actors = Main.grid.getOccupiedLocations();
-//        int count = 0;
-//        for ( Location loc : actors )
-//        {
-//            if ( Main.grid.get( loc ) instanceof Pellet )
-//            {
-//                count++;
-//            }
-//        }
-//
-//        score = 250 - count;
-
-
-    }
-
-    public static void inc(){
-    score++;
     }
 
 
+    /**
+     * Increments the score by 1.
+     */
+    public static void inc()
+    {
+        score++;
+    }
+
+
+    /**
+     * Deletes the old score and puts the new score
+     */
     @Override public void act()
     {
         removeSelfFromGrid();
@@ -49,6 +45,11 @@ public class Score extends Actor
     }
 
 
+    /**
+     * Displays the score at an int, to be called when the object is created.
+     *
+     * @return String representation of score.
+     */
     @Override public String toString()
     {
         String scr = String.valueOf( score );

@@ -148,10 +148,9 @@ public class ColorEditor extends PropertyEditorSupport
 
     private JComboBox combo;
 
-    private static Color[] colorValues = { Color.BLACK, Color.BLUE, Color.CYAN,
-                    Color.DARK_GRAY, Color.GRAY, Color.GREEN, Color.LIGHT_GRAY,
-                    Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED,
-                    Color.WHITE, Color.YELLOW };
+    private static Color[] colorValues = { Color.BLACK, Color.BLUE, Color.CYAN, Color.DARK_GRAY, Color.GRAY,
+                    Color.GREEN, Color.LIGHT_GRAY, Color.MAGENTA, Color.ORANGE, Color.PINK, Color.RED, Color.WHITE,
+                    Color.YELLOW };
 
     private static ColorIcon[] colorIcons;
 

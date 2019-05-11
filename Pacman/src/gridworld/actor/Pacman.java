@@ -4,36 +4,30 @@ import gridworld.grid.Grid;
 import gridworld.grid.Location;
 
 
-//Singleton class
+/**
+ * Extends MovableActor. A Pacman eats pellets and tries to avoid Ghosts.
+ */
 public class Pacman extends MovableActor
 {
-    //    private static Pacman SINGLE_INSTANCE = null;
 
+    /**
+     * If the count is even that the pacman in moveTo should be a closedPacman.
+     * If the count is odd it should be a openPacman (regular)
+     */
     protected static int count = 0;
 
-    public static int currentDirection=0;
-    public static int newDirection=0;
+    public static int currentDirection = 0;
+
+    public static int newDirection = 0;
 
 
+    /**
+     * Default Constructor
+     */
     public Pacman()
     {
         super();
     }
-
-    //    public static Pacman getInstance()
-    //    {
-    //        if ( SINGLE_INSTANCE == null )
-    //        {
-    //            synchronized ( Pacman.class )
-    //            {
-    //                if ( SINGLE_INSTANCE == null )
-    //                {
-    //                    SINGLE_INSTANCE = new Pacman();
-    //                }
-    //            }
-    //        }
-    //        return SINGLE_INSTANCE;
-    //    }
 
 
     /**
@@ -48,9 +42,7 @@ public class Pacman extends MovableActor
     {
         if ( grid == null )
             throw new IllegalStateException( "This actor is not in a grid." );
-//        if ( grid.get( location ) != this )
-//            throw new IllegalStateException(
-//                            "The grid contains a different actor at location " + location + "." );
+
         if ( !grid.isValid( newLocation ) )
         {
             throw new IllegalArgumentException( "Location " + newLocation + " is not valid." );
@@ -60,7 +52,7 @@ public class Pacman extends MovableActor
             return;
 
         Actor other = grid.get( newLocation );
-        if(other instanceof Ghost )
+        if ( other instanceof Ghost )
         {
             this.removeSelfFromGrid();
             return;
@@ -73,7 +65,6 @@ public class Pacman extends MovableActor
             Pacman p = new Pacman();
             p.setDirection( this.getDirection() );
             p.putSelfInGrid( grid, newLocation );
-
 
             //            grid.put( newLocation, p); AVOID THIS
         }
@@ -91,6 +82,9 @@ public class Pacman extends MovableActor
     }
 
 
+    /**
+     * If the Pacman can move, moves the pacman. See PacmanWorld keyPressed for more info
+     */
     public void act()
     {
         if ( canMove() )
@@ -101,19 +95,29 @@ public class Pacman extends MovableActor
     }
 
 
+    /**
+     * A Pacman can move if the if the grid Location is valid and the Actor is an instance of edible. Cannot turn if
+     * the Actor is an instance of Wall
+     *
+     * @return true if can move, false otherwise.
+     */
     public boolean canMove()
     {
         Location loc = getLocation();
-        Location afterTurn= loc.getAdjacentLocation(newDirection);
+        Location afterTurn = loc.getAdjacentLocation( newDirection );
         Grid<Actor> gr = getGrid();
         if ( gr == null )
             return false;
-if (gr.isValid(afterTurn)&& !(gr.get(afterTurn)instanceof Wall)){
-    currentDirection=newDirection;
-}
+        //TODO: BRAD: comment the afterTurn
+        if ( gr.isValid( afterTurn ) && !( gr.get( afterTurn ) instanceof Wall ) )
+        {
+            currentDirection = newDirection;
+        }
         Location next = loc.getAdjacentLocation( getDirection() );
-        if (gr.isValid(next)&&gr.get(next) instanceof Edible){
-            ((Edible) gr.get(next)).action(gr);
+
+        if ( gr.isValid( next ) && gr.get( next ) instanceof Edible )
+        {
+            ( (Edible)gr.get( next ) ).action( gr );
         }
         if ( !gr.isValid( next ) )
             return false;
@@ -122,9 +126,16 @@ if (gr.isValid(afterTurn)&& !(gr.get(afterTurn)instanceof Wall)){
         return ( !( neighbor instanceof Wall ) );
 
     }
-public int getDirection(){
-return currentDirection;
-}
 
+
+    /**
+     * Gets the Direction
+     *
+     * @return the currentDirection
+     */
+    public int getDirection()
+    {
+        return currentDirection;
+    }
 
 }

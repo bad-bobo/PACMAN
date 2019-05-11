@@ -25,7 +25,6 @@ import java.awt.*;
 /**
  * An <code>Actor</code> is an entity with a color and direction that can act.
  * <br />
-
  */
 public abstract class Actor
 {
@@ -110,8 +109,7 @@ public abstract class Actor
     public void putSelfInGrid( Grid<Actor> gr, Location loc )
     {
         if ( grid != null )
-            throw new IllegalStateException(
-                            "This actor is already contained in a grid." );
+            throw new IllegalStateException( "This actor is already contained in a grid." );
 
         Actor actor = gr.get( loc );
         if ( actor != null )
@@ -129,11 +127,9 @@ public abstract class Actor
     public void removeSelfFromGrid()
     {
         if ( grid == null )
-            throw new IllegalStateException(
-                            "This actor is not contained in a grid." );
+            throw new IllegalStateException( "This actor is not contained in a grid." );
         if ( grid.get( location ) != this )
-            throw new IllegalStateException(
-                            "The grid contains a different actor at location " + location + "." );
+            throw new IllegalStateException( "The grid contains a different actor at location " + location + "." );
 
         grid.remove( location );
         grid = null;

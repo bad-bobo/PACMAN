@@ -1,5 +1,8 @@
 package gridworld.actor;
 
-public class PacmanClosed extends Pacman
+/**
+ * This class is only here for the closed pacman image
+ */
+class PacmanClosed extends Pacman
 {
 }

@@ -74,9 +74,7 @@ public abstract class AbstractDisplay implements Display
         if ( obj != null )
         {
             Integer direction = (Integer)getProperty( obj, "direction" );
-            int rotationInDegrees = direction == null ?
-                            0 :
-                            direction.intValue();
+            int rotationInDegrees = direction == null ? 0 : direction.intValue();
             g2.rotate( Math.toRadians( rotationInDegrees ) );
         }
         // Scale to size of rectangle, adjust stroke back to 1-pixel wide

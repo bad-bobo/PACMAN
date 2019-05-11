@@ -53,9 +53,7 @@ public class MenuMaker<T>
      * @param displayMap the display map
      */
     public MenuMaker(
-                    WorldFrame<T> parent,
-                    ResourceBundle resources,
-                    DisplayMap displayMap )
+                    WorldFrame<T> parent, ResourceBundle resources, DisplayMap displayMap )
     {
         this.parent = parent;
         this.resources = resources;
@@ -265,17 +263,14 @@ public class MenuMaker<T>
     {
         public ConstructorItem( Constructor c )
         {
-            setText( getDisplayString( null,
-                            c.getDeclaringClass().getName(),
-                            c.getParameterTypes() ) );
+            setText( getDisplayString( null, c.getDeclaringClass().getName(), c.getParameterTypes() ) );
             this.c = c;
         }
 
 
         public Object invokeConstructor()
         {
-            @SuppressWarnings("unchecked")
-            Class[] types = c.getParameterTypes();
+            @SuppressWarnings("unchecked") Class[] types = c.getParameterTypes();
             Object[] values = new Object[types.length];
 
             for ( int i = 0; i < types.length; i++ )
@@ -314,8 +309,7 @@ public class MenuMaker<T>
     }
 
 
-    private class OccupantConstructorItem extends ConstructorItem
-                    implements ActionListener
+    private class OccupantConstructorItem extends ConstructorItem implements ActionListener
     {
         public OccupantConstructorItem( Constructor c )
         {
@@ -334,8 +328,7 @@ public class MenuMaker<T>
     }
 
 
-    private class GridConstructorItem extends ConstructorItem
-                    implements ActionListener
+    private class GridConstructorItem extends ConstructorItem implements ActionListener
     {
         public GridConstructorItem( Constructor c )
         {
@@ -347,8 +340,7 @@ public class MenuMaker<T>
 
         public void actionPerformed( ActionEvent event )
         {
-            @SuppressWarnings("unchecked")
-            Grid<T> newGrid = (Grid<T>)invokeConstructor();
+            @SuppressWarnings("unchecked") Grid<T> newGrid = (Grid<T>)invokeConstructor();
             parent.setGrid( newGrid );
         }
     }
@@ -358,9 +350,7 @@ public class MenuMaker<T>
     {
         public MethodItem( Method m )
         {
-            setText( getDisplayString( m.getReturnType(),
-                            m.getName(),
-                            m.getParameterTypes() ) );
+            setText( getDisplayString( m.getReturnType(), m.getName(), m.getParameterTypes() ) );
             this.m = m;
             addActionListener( this );
             setIcon( displayMap.getIcon( m.getDeclaringClass(), 16, 16 ) );
@@ -401,8 +391,7 @@ public class MenuMaker<T>
                         resultObject = resultString;
                     else
                     {
-                        int rows = Math.min( MAX_HEIGHT,
-                                        1 + resultString.length() / MAX_LENGTH );
+                        int rows = Math.min( MAX_HEIGHT, 1 + resultString.length() / MAX_LENGTH );
                         JTextArea pane = new JTextArea( rows, MAX_LENGTH );
                         pane.setText( resultString );
                         pane.setLineWrap( true );

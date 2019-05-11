@@ -93,15 +93,10 @@ public class DefaultDisplay implements Display
      * @param color      the color in which to draw the text
      */
     protected void paintCenteredText(
-                    Graphics2D g2,
-                    String s,
-                    Rectangle rect,
-                    double fontHeight,
-                    Color color )
+                    Graphics2D g2, String s, Rectangle rect, double fontHeight, Color color )
     {
         g2 = (Graphics2D)g2.create();
-        g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING,
-                        RenderingHints.VALUE_ANTIALIAS_ON );
+        g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         g2.setPaint( color );
         Rectangle2D bounds = null;
         LineMetrics lm = null;
@@ -109,9 +104,7 @@ public class DefaultDisplay implements Display
         // shrink font in increments of sqrt(2)/2 until string fits
         while ( !done )
         {
-            g2.setFont( new Font( "SansSerif",
-                            Font.BOLD,
-                            (int)( fontHeight * rect.height ) ) );
+            g2.setFont( new Font( "SansSerif", Font.BOLD, (int)( fontHeight * rect.height ) ) );
             FontRenderContext frc = g2.getFontRenderContext();
             bounds = g2.getFont().getStringBounds( s, frc );
             if ( bounds.getWidth() > rect.getWidth() )

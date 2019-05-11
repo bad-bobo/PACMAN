@@ -152,13 +152,7 @@ public class DisplayMap
         {
             Graphics2D g2 = (Graphics2D)g;
             AffineTransform savedTransform = g2.getTransform(); // save current
-            displayObj.draw( null,
-                            comp,
-                            g2,
-                            new Rectangle( x,
-                                            y,
-                                            getIconWidth(),
-                                            getIconHeight() ) );
+            displayObj.draw( null, comp, g2, new Rectangle( x, y, getIconWidth(), getIconHeight() ) );
             g2.setTransform( savedTransform ); // restore coordinate system
         }
     }

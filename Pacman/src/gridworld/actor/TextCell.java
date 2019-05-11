@@ -1,10 +1,5 @@
 package gridworld.actor;
 
-import java.awt.Color;
-
-import gridworld.actor.Actor;
-
-
 /**
  * TextCell is the "Actor pretender" class.  It inherits from Actor.
  * Without the minimal TextCellDisplay class, TextCells objects

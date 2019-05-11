@@ -195,7 +195,7 @@ public class GridPanel extends JPanel implements Scrollable, PseudoInfiniteViewp
                     g2.fillRect( x + 1, y + 1, cellSize, cellSize );
             }
 
-        g2.setColor( new Color( 0, 0, 0 ) ); //Grid lines color CHANGE TO BLACK
+        g2.setColor( new Color( 0, 34, 255 ) ); //Grid lines color CHANGE TO BLACK
         for ( int y = miny; y <= maxy; y += cellSize + 1 )
             // draw horizontal lines
             g2.drawLine( minx, y, maxx, y );

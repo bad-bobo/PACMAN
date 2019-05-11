@@ -1,11 +1,14 @@
 package project;
 
-import gridworld.actor.LevelPellet;
-import gridworld.actor.Pacman;
-import gridworld.actor.TextCell;
+import gridworld.actor.*;
 import gridworld.grid.BoundedGrid;
 import gridworld.grid.Location;
 import gridworld.world.PacmanWorld;
+
+import java.io.BufferedReader;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 
 
 public class Main
@@ -64,7 +67,7 @@ public class Main
 
         Pacman p = new Pacman();
 
-        p.putSelfInGrid( grid, new Location(0,0) );
+        p.putSelfInGrid( grid, new Location(4,12) );
 
         world.show();
 
@@ -98,6 +101,50 @@ public class Main
 
 
 
+        try
+        {
+
+            File level = new File(
+                            "/Users/Shams/Documents/GitHub/PACMAN/Pacman/src/Levels/level0.txt" );
+            String line;
+            BufferedReader br = new BufferedReader( new FileReader( level ) );
+
+            for ( int i = 0; i < Main.ROW - 1; i++ )
+            {
+                do
+                {
+                    //find next good line
+                    line = br.readLine();
+                    line = line.replaceAll( "[^a-z]",
+                                    "" );
+
+                } while ( line.length() <= 0 );
+                System.out.println( "*" + line );
+                for ( int j = 0; j < Main.COL ; j++ )
+
+                {
+                    if ( line.charAt( j ) == 'x' )
+                    {
+                        Wall w = new Wall();
+                        w.putSelfInGrid( grid, new Location( i , j ) );
+                        // Dont need i + 2 because the +2 in already incorppprated
+                        // in the og map, we can change the og map and then  +2
+                    }
+                    else if ( line.charAt( j ) == 'o' )
+                    {
+                        Pellet p = new Pellet();
+                        p.putSelfInGrid( grid, new Location( i , j ) );
+                    }
+                }
+            }
+        }
+        catch ( IOException e )
+        {
+            e.printStackTrace();
+            System.err.println( "Brad says \"shet2\"" );
+            System.exit( -1 );
+        }
+
 
         //Pacman name
         String[] pacman = { "P", "A", "C", "M", "A", "N" };
@@ -112,23 +159,18 @@ public class Main
 
 
 
-        String levelselect = "select a level";
 
-        TextCell t = new TextCell( "Level" );
-        t.putSelfInGrid( grid, new Location( 3, 6 ) );
-        TextCell y = new TextCell( "Select" );
-        y.putSelfInGrid( grid, new Location( 3, 8 ) );
+        LevelPellet level1 = new LevelPellet( "level1" );
+        level1.putSelfInGrid( grid, new Location( 20, 4 ) );
 
-        LevelPellet level4 = new LevelPellet( "level1" );
-        level4.putSelfInGrid( grid, new Location( 3, 7 ) );
+        LevelPellet level2 = new LevelPellet( "level2" );
+        level2.putSelfInGrid( grid, new Location( 20, 12 ) );
 
 
-//        LevelPellet level1 = new LevelPellet( "level1" );
-//        level1.putSelfInGrid( grid, new Location( 5, 5 ) );
-//        LevelPellet level2 = new LevelPellet( "level2" );
-//        level2.putSelfInGrid( grid, new Location( 20, 10 ) );
-//        LevelPellet level3 = new LevelPellet( "level3" );
-//        level3.putSelfInGrid( grid, new Location( 15, 22 ) );
+        LevelPellet level3 = new LevelPellet( "level3" );
+        level3.putSelfInGrid( grid, new Location( 20, 19 ) );
+
+
 
     }
 

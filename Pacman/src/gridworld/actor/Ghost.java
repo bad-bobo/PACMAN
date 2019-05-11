@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 
 
-public  class Ghost extends MovableActor
+public  abstract class Ghost extends MovableActor
 {
 
     /** The previous cell*/
@@ -111,8 +111,5 @@ public  class Ghost extends MovableActor
     }
 
 
-    @Override public void act()
-    {
 
-    }
 }

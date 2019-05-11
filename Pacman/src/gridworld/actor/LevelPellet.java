@@ -12,7 +12,7 @@ import java.util.ArrayList;
 
 
 /**
- * TODO: BRAD
+ * TODO: Brad
  */
 public class LevelPellet extends Pellet implements Edible
 {
@@ -48,12 +48,10 @@ public class LevelPellet extends Pellet implements Edible
 
         try
         {
-            //File level = new File( "Pacman/src/Levels/" + levelName + ".txt" );
-            //TODO: FOR SOME REASON THAT PATH DOESNT WORK ON MY COMPUTER, SO I PUT THE LINE BELOW FOR TESING
-            File level = new File(
-                            "/Users/Shams/Documents/GitHub/PACMAN/Pacman/src/Levels/level4.txt" );
+            Main m = new Main();
+            File file = m.getFileFromResources( levelName + ".txt" );
             String line;
-            BufferedReader br = new BufferedReader( new FileReader( level ) );
+            BufferedReader br = new BufferedReader( new FileReader( file ) );
 
             for ( int i = 0; i < Main.ROW; i++ )
             {
@@ -95,17 +93,9 @@ public class LevelPellet extends Pellet implements Edible
 
         //After new level
         Pacman pacman = new Pacman();
-        pacman.putSelfInGrid( grid, new Location( 19, 15 ) );
+        pacman.putSelfInGrid( grid, new Location( 0, 0 ) );
 
-        String[] strPacman = { "P", "A", "C", "M", "A", "N" };
-        int i = 9;
-
-        for ( String m : strPacman )
-        {
-            TextCell t = new TextCell( m );
-            t.putSelfInGrid( grid, new Location( 0, i ) );
-            i++;
-        }
+        Pacman.drawPacmanName();
 
     }
 

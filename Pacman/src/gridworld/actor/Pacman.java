@@ -2,6 +2,7 @@ package gridworld.actor;
 
 import gridworld.grid.Grid;
 import gridworld.grid.Location;
+import project.Main;
 
 
 /**
@@ -138,4 +139,20 @@ public class Pacman extends MovableActor
         return currentDirection;
     }
 
+
+    /**
+     * Draws a "P A C M A N" at the top of the grid
+     */
+    public static void drawPacmanName()
+    {
+        String[] pacman = { "P", "A", "C", "M", "A", "N" };
+        int i = 9;
+
+        for ( String m : pacman )
+        {
+            TextCell t = new TextCell( m );
+            t.putSelfInGrid( Main.grid, new Location( 0, i ) );
+            i++;
+        }
+    }
 }

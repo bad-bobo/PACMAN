@@ -262,15 +262,15 @@ public class GUIController<T>
         speedSlider.setBackground( yello );
 
         runButton.setBorder( BorderFactory.createEmptyBorder( 3, 5, 3, 5 ) );
-        runButton.setFocusPainted( true );// was false
-//        runButton.setForeground( yello );
-        runButton.setForeground( Color.BLACK );
-//        runButton.setBackground( Color.PINK );
+        runButton.setFocusPainted( false );// was false
+        runButton.setForeground( yello );
+        //runButton.setForeground( Color.BLACK );
+       runButton.setBackground( Color.BLACK );
 
         stopButton.setBorder( BorderFactory.createEmptyBorder( 3, 5, 3, 5 ) );
         stopButton.setFocusPainted( false );
 //        stopButton.setForeground( yello );
-        stopButton.setForeground( Color.BLACK );
+        stopButton.setForeground( yello );
         stopButton.setBackground( Color.black );
 
         exitButton.setBorder( BorderFactory.createEmptyBorder( 3, 7, 3, 7 ) );

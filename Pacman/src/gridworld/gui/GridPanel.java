@@ -176,33 +176,33 @@ public class GridPanel extends JPanel implements Scrollable, PseudoInfiniteViewp
      */
     private void drawGridlines( Graphics2D g2 )
     {
-        Rectangle curClip = g2.getClip().getBounds();
-        int top = getInsets().top, left = getInsets().left;
-
-        int miny = Math.max( 0, ( curClip.y - top ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + top;
-        int minx = Math.max( 0, ( curClip.x - left ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + left;
-        int maxy = Math.min( numRows,
-                        ( curClip.y + curClip.height - top + cellSize ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + top;
-        int maxx = Math.min( numCols,
-                        ( curClip.x + curClip.width - left + cellSize ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + left;
-
-        g2.setColor( Color.GRAY ); //
-        for ( int y = miny; y <= maxy; y += cellSize + 1 )
-            for ( int x = minx; x <= maxx; x += cellSize + 1 )
-            {
-                Location loc = locationForPoint( new Point( x + cellSize / 2, y + cellSize / 2 ) );
-                if ( loc != null && !grid.isValid( loc ) )
-                    g2.fillRect( x + 1, y + 1, cellSize, cellSize );
-            }
-
-        g2.setColor( new Color( 0, 34, 255 ) ); //Grid lines color CHANGE TO BLACK
-        for ( int y = miny; y <= maxy; y += cellSize + 1 )
-            // draw horizontal lines
-            g2.drawLine( minx, y, maxx, y );
-
-        for ( int x = minx; x <= maxx; x += cellSize + 1 )
-            // draw vertical lines
-            g2.drawLine( x, miny, x, maxy );
+//        Rectangle curClip = g2.getClip().getBounds();
+//        int top = getInsets().top, left = getInsets().left;
+//
+//        int miny = Math.max( 0, ( curClip.y - top ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + top;
+//        int minx = Math.max( 0, ( curClip.x - left ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + left;
+//        int maxy = Math.min( numRows,
+//                        ( curClip.y + curClip.height - top + cellSize ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + top;
+//        int maxx = Math.min( numCols,
+//                        ( curClip.x + curClip.width - left + cellSize ) / ( cellSize + 1 ) ) * ( cellSize + 1 ) + left;
+//
+//        g2.setColor( Color.GRAY ); //
+//        for ( int y = miny; y <= maxy; y += cellSize + 1 )
+//            for ( int x = minx; x <= maxx; x += cellSize + 1 )
+//            {
+//                Location loc = locationForPoint( new Point( x + cellSize / 2, y + cellSize / 2 ) );
+//                if ( loc != null && !grid.isValid( loc ) )
+//                    g2.fillRect( x + 1, y + 1, cellSize, cellSize );
+//            }
+//
+//        g2.setColor( new Color( 0, 34, 255 ) ); //Grid lines color CHANGE TO BLACK
+//        for ( int y = miny; y <= maxy; y += cellSize + 1 )
+//            // draw horizontal lines
+//            g2.drawLine( minx, y, maxx, y );
+//
+//        for ( int x = minx; x <= maxx; x += cellSize + 1 )
+//            // draw vertical lines
+//            g2.drawLine( x, miny, x, maxy );
     }
 
 

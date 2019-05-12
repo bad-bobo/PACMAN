@@ -60,7 +60,8 @@ public  abstract class Ghost extends MovableActor
         if ( grid == null )
             throw new IllegalStateException( "This actor is not in a grid." );
         if ( grid.get( location ) != this )
-            throw new IllegalStateException( "The grid contains a different actor at location " + location + "." );
+            throw new IllegalStateException(
+                            "The grid contains a different actor at location " + location + "." );
         if ( !grid.isValid( newLocation ) )
         {
             throw new IllegalArgumentException( "Location " + newLocation + " is not valid." );
@@ -72,6 +73,26 @@ public  abstract class Ghost extends MovableActor
         Actor other = grid.get( newLocation );
         if ( other != null )
         {
+            if ( other instanceof PowerPellet )
+            {
+                PowerPellet p = new PowerPellet();
+                other.removeSelfFromGrid();
+                //  grid.put( location, p ); DONT USE THIS, <bold>use</bold>  putSelfInGrid
+                p.putSelfInGrid( grid, location );
+                grid.put( newLocation, this );
+                location = newLocation;
+                return;
+            }
+            if ( other instanceof Pellet )
+            {
+                Pellet p = new Pellet();
+                other.removeSelfFromGrid();
+                //  grid.put( location, p ); DONT USE THIS, <bold>use</bold>  putSelfInGrid
+                p.putSelfInGrid( grid, location );
+                grid.put( newLocation, this );
+                location = newLocation;
+                return;
+            }
 
             other.removeSelfFromGrid();
 
@@ -80,6 +101,7 @@ public  abstract class Ghost extends MovableActor
         location = newLocation;
         grid.put( location, this );
     }
+
 
 
     /**

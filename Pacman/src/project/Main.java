@@ -1,14 +1,17 @@
 package project;
 
-import gridworld.actor.*;
+import gridworld.actor.LevelPellet;
+import gridworld.actor.Pacman;
+import gridworld.actor.Pellet;
+import gridworld.actor.Wall;
 import gridworld.grid.BoundedGrid;
 import gridworld.grid.Location;
 import gridworld.world.PacmanWorld;
 
-import java.io.*;
-import java.net.URL;
-
-import static com.sun.javafx.scene.control.skin.Utils.getResource;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 
 
 public class Main
@@ -84,8 +87,6 @@ public class Main
             InputStream in = m.getClass().getResourceAsStream("/level0.txt");
             BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String line;
-
-
 
             for ( int i = 0; i < Main.ROW - 1; i++ )
             {

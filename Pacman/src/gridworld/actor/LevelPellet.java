@@ -36,14 +36,11 @@ public class LevelPellet extends Pellet implements Edible
      */
     public void action( Grid grid )
     {
-        //Removes all instances of pacman and edible to setup for new level, should also be ghost and everything right?
         ArrayList<Location> locActors = grid.getOccupiedLocations();
         for ( Location loc : locActors )
         {
-
                 Actor actor = (Actor)( grid.get( loc ) );
                 actor.removeSelfFromGrid();
-
         }
 
         try
@@ -57,14 +54,11 @@ public class LevelPellet extends Pellet implements Edible
             {
                 do
                 {
-                    //find next good line
                     line = br.readLine();
                     line = line.replaceAll( "[^A-Za-z0-9]",
-                                    "" );//clean up string
-                    // (remove commas or spaces and stuff)
+                                    "" );
 
                 } while ( line.length() <= 0 );
-                System.out.println( "*" + line );
                 for ( int j = 0; j < Main.COL; j++ )
 
                 {
@@ -72,8 +66,7 @@ public class LevelPellet extends Pellet implements Edible
                     {
                         Wall w = new Wall();
                         w.putSelfInGrid( grid, new Location( i , j ) );
-                        // Dont need i + 2 because the +2 in already incorppprated
-                        // in the og map, we can change the og map and then  +2
+
                     }
                     else if ( line.charAt( j ) == 'o' )
                     {
@@ -81,7 +74,6 @@ public class LevelPellet extends Pellet implements Edible
                         p.putSelfInGrid( grid, new Location( i , j ) );
                     }
                 }
-                //System.out.println();
             }
         }
         catch ( IOException e )
@@ -93,7 +85,10 @@ public class LevelPellet extends Pellet implements Edible
 
         //After new level
         Pacman pacman = new Pacman();
-        pacman.putSelfInGrid( grid, new Location( 0, 0 ) );
+        pacman.putSelfInGrid( grid, new Location( 5, 5 ) );
+
+        Inky inky = new Inky();
+        inky.putSelfInGrid( grid, new Location(10,10) );
 
         Pacman.drawPacmanName();
 

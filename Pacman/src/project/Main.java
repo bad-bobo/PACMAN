@@ -99,7 +99,6 @@ public class Main
                                     "" );
 
                 } while ( line.length() <= 0 );
-                System.out.println( "*" + line );
                 for ( int j = 0; j < Main.COL ; j++ )
 
                 {

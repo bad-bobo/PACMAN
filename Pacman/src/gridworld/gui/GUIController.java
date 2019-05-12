@@ -179,7 +179,7 @@ public class GUIController<T>
 
         runButton.setEnabled( true ); //was false, why false?
         stopButton.setEnabled( false );
-        stopButton.setVisible( true );///was false, why false?
+        stopButton.setVisible( false );
 
         controlPanel.add( Box.createGlue() );
         controlPanel.add( new JLabel( resources.getString( "slider.gui.slow" ) ) );

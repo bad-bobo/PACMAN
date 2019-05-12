@@ -4,10 +4,7 @@ import gridworld.grid.Grid;
 import gridworld.grid.Location;
 import project.Main;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 
 
@@ -46,9 +43,9 @@ public class LevelPellet extends Pellet implements Edible
         try
         {
             Main m = new Main();
-            File file = m.getFileFromResources( levelName + ".txt" );
+            InputStream in = m.getClass().getResourceAsStream("/" + levelName + ".txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String line;
-            BufferedReader br = new BufferedReader( new FileReader( file ) );
 
             for ( int i = 0; i < Main.ROW; i++ )
             {

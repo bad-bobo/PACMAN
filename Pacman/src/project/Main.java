@@ -5,10 +5,7 @@ import gridworld.grid.BoundedGrid;
 import gridworld.grid.Location;
 import gridworld.world.PacmanWorld;
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
 
 import static com.sun.javafx.scene.control.skin.Utils.getResource;
@@ -84,10 +81,11 @@ public class Main
         try
         {
 
-            File file = m.getFileFromResources("level0.txt");
+            InputStream in = m.getClass().getResourceAsStream("/level0.txt");
+            BufferedReader br = new BufferedReader(new InputStreamReader(in));
             String line;
 
-            BufferedReader br = new BufferedReader( new FileReader( file ) );
+
 
             for ( int i = 0; i < Main.ROW - 1; i++ )
             {
@@ -142,20 +140,6 @@ public class Main
 
     }
 
-    public  File getFileFromResources(String fileName)
-    {
 
-        ClassLoader classLoader = getClass().getClassLoader();
-
-        URL resource = classLoader.getResource( fileName );
-        if ( resource == null )
-        {
-            throw new IllegalArgumentException( "file is not found!" );
-        }
-        else
-        {
-            return new File( resource.getFile() );
-        }
-    }
 
 }

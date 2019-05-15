@@ -34,7 +34,6 @@ import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
 
-//TODO: ASk brad
 /**
  * The GUIController controls the behavior in a WorldFrame. <br />
  * This code is not tested on the AP CS A and AB exams. It contains GUI
@@ -263,14 +262,14 @@ public class GUIController<T>
 
         runButton.setBorder( BorderFactory.createEmptyBorder( 3, 5, 3, 5 ) );
         runButton.setFocusPainted( false );// was false
-        runButton.setForeground( yello );
+        runButton.setForeground( Color.BLACK );
         //runButton.setForeground( Color.BLACK );
        runButton.setBackground( Color.BLACK );
 
         stopButton.setBorder( BorderFactory.createEmptyBorder( 3, 5, 3, 5 ) );
         stopButton.setFocusPainted( false );
+        stopButton.setForeground( Color.BLACK );
 //        stopButton.setForeground( yello );
-        stopButton.setForeground( yello );
         stopButton.setBackground( Color.black );
 
         exitButton.setBorder( BorderFactory.createEmptyBorder( 3, 7, 3, 7 ) );

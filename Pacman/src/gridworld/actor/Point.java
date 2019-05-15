@@ -4,7 +4,7 @@ package gridworld.actor;
 
  * Created because Java Point Class in double. For use in Depth first and breath first search algorithm
  */
-public class Point
+public class Point implements Comparable
 {
     /**
      * X coordinate (row)
@@ -39,5 +39,11 @@ public class Point
     public int getY()
     {
         return y;
+    }
+
+
+    @Override public int compareTo( Object o )
+    {
+        return 0;
     }
 }

@@ -41,6 +41,16 @@ public class Pacman extends MovableActor
      */
     public void moveTo( Location newLocation )
     {
+        if ( newLocation.equals( new Location( 12, 1 ) ) )
+        {
+            grid.remove( location );
+            location = new Location( 12, 23 );
+            Pacman p = new Pacman();
+            p.setDirection( this.getDirection() );
+            p.putSelfInGrid( grid, location );
+            return;
+
+        }
         if ( grid == null )
             throw new IllegalStateException( "This actor is not in a grid." );
 
@@ -76,6 +86,7 @@ public class Pacman extends MovableActor
             p.putSelfInGrid( grid, newLocation );
             //            grid.put( newLocation,  p); AVOID THIS
         }
+
         grid.remove( location );
         location = newLocation;
         count++;

@@ -8,16 +8,18 @@ import java.awt.*;
 import java.util.ArrayList;
 
 
-
-public  abstract class Ghost extends MovableActor
+public abstract class Ghost extends MovableActor
 {
 
-    /** The previous cell*/
+    /**
+     * The previous cell
+     */
     protected Location oldLocation = location;
 
 
     /**
      * Creates a new Ghost, sets color to color.
+     *
      * @param color The Color for Ghost.
      */
     public Ghost( Color color )
@@ -29,9 +31,10 @@ public  abstract class Ghost extends MovableActor
 
     /**
      * Gets the currrent Location of Pacman
+     *
      * @return
      */
-    protected Location getPacmanLocation()
+    public static Location getPacmanLocation()
     {
         ArrayList<Location> actors = Main.grid.getOccupiedLocations();
         for ( Location loc : actors )
@@ -46,6 +49,7 @@ public  abstract class Ghost extends MovableActor
 
     }
 
+
     /**
      * Moves the Ghost the the new Location by
      * 1) deleting this Ghost
@@ -59,9 +63,7 @@ public  abstract class Ghost extends MovableActor
     {
         if ( grid == null )
             throw new IllegalStateException( "This actor is not in a grid." );
-        if ( grid.get( location ) != this )
-            throw new IllegalStateException(
-                            "The grid contains a different actor at location " + location + "." );
+
         if ( !grid.isValid( newLocation ) )
         {
             throw new IllegalArgumentException( "Location " + newLocation + " is not valid." );
@@ -80,6 +82,7 @@ public  abstract class Ghost extends MovableActor
                 //  grid.put( location, p ); DONT USE THIS, <bold>use</bold>  putSelfInGrid
                 p.putSelfInGrid( grid, location );
                 grid.put( newLocation, this );
+                oldLocation = location;
                 location = newLocation;
                 return;
             }
@@ -90,6 +93,7 @@ public  abstract class Ghost extends MovableActor
                 //  grid.put( location, p ); DONT USE THIS, <bold>use</bold>  putSelfInGrid
                 p.putSelfInGrid( grid, location );
                 grid.put( newLocation, this );
+                oldLocation = location;
                 location = newLocation;
                 return;
             }
@@ -103,11 +107,11 @@ public  abstract class Ghost extends MovableActor
     }
 
 
-
     /**
      * A Ghost  can move anywhere except if the next location has a wall or another Ghost
-     * @param next  The next Location
-     * @return  True if can move, false otherwise.
+     *
+     * @param next The next Location
+     * @return True if can move, false otherwise.
      */
     public boolean canMove( Location next )
     {
@@ -130,8 +134,24 @@ public  abstract class Ghost extends MovableActor
         }
 
         return !( neighbor instanceof Ghost );
+//        return true;
     }
 
 
+    public void visualizePath( ArrayList<Point> path )
+    {
+        for ( int i = 1; i < path.size(); i++ )
+        {
+            Path x = new Path();
+            x.setColor( this.getColor() );
+
+            Location loc = new Location( path.get( i ).getX(), path.get( i ).getY() );
+            if ( grid.get( loc ) instanceof Pellet || !( grid.get( loc ) instanceof Actor ) )
+            {
+                x.putSelfInGrid( grid, loc );
+            }
+
+        }
+    }
 
 }

@@ -3,9 +3,6 @@ package gridworld.actor;
 import gridworld.grid.Location;
 
 import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.LinkedList;
 
 
 /**
@@ -15,83 +12,83 @@ import java.util.LinkedList;
 public class Inky extends Ghost
 {
 
-    /**
-     * Keeps a list of upto 13 old locations, these location the ghost cannot go to. See check old loc for more
-     */
-    private ArrayList<Location> listOldLocs;
-    private final int OLD_LOC_CAPACITY = 10;
-
-
     public Inky()
     {
         super( Color.BLUE );
-        listOldLocs = new ArrayList<Location>( );
-    }
-
-
-    @Override public void act()
-    {
-        inkyMove();
-        System.out.println( "Inly.act: " + oldLocation );
-
 
     }
 
-    public void inkyMove()
+    /**
+     * Moves the Ghost the the new Location by
+     * 1) deleting this Ghost
+     * 2) If the new Location hold no Actor, creates a new Ghost there
+     * 2) If there is a pellet in the new Location, deletes the pellet and puts a pellet in this location
+     * 3) Put a new Ghost in the new Location
+     *
+     * @param newLocation the new location
+     */
+    public void moveTo( Location newLocation )
     {
-        //Down
-        Location loc = new Location( location.getRow() + 1, location.getCol() );
-        if ( canMove( loc ) && !listOldLocs.contains( loc ) )
+        if(grid.get( newLocation ) instanceof Ghost)
         {
-            moveTo( loc );
-            checkOldList();
-            return;
+            removeSelfFromGrid();
         }
-        //Left
-        loc = new Location( location.getRow() , location.getCol()  - 1);
-        if ( canMove( loc ) && !listOldLocs.contains( loc ) )
-        {
-            moveTo( loc );
-            listOldLocs.add( loc );
-            checkOldList();
-            return;
-
-        }
-        //Right
-        loc = new Location( location.getRow(), location.getCol() + 1 );
-        if ( canMove( loc ) && !listOldLocs.contains( loc ) )
-        {
-            moveTo( loc );
-            listOldLocs.add( loc );
-            checkOldList();
-            return;
-        }
-        //Up
-        loc = new Location( location.getRow() - 1, location.getCol()  );
-        if ( canMove( loc ) && !listOldLocs.contains( loc ) )
-        {
-            moveTo( loc );
-            listOldLocs.add( loc );
-            checkOldList();
-            return;
-        }
+        super.moveTo( newLocation );
     }
 
 
     /**
-     * resizes the old Loc list
+     * Randomly chooses a location to move
      */
-    public void checkOldList()
+    @Override public void act()
     {
-        while ( listOldLocs.size() > OLD_LOC_CAPACITY )
+        while ( true )
         {
+            int rand = (int)( Math.random() * ( 4 ) );
 
-           Location loc = listOldLocs.remove( 0 );
+            switch ( rand )
+            {
+                case 0:
+                    if ( canMove( new Location( location.getRow() + 1,
+                                    location.getCol() ) ) )
+                    {
+                        moveTo( new Location( location.getRow() + 1,
+                                        location.getCol() ) );
+                        return;
+                    }
+                    break;
 
+                case 1:
+                    if ( canMove( new Location( location.getRow() - 1,
+                                    location.getCol() ) ) )
+                    {
+                        moveTo( new Location( location.getRow() - 1,
+                                        location.getCol() ) );
+                        return;
+                    }
+                    break;
+                case 2:
+                    if ( canMove( new Location( location.getRow(),
+                                    location.getCol() + 1 ) ) )
+                    {
+                        moveTo( new Location( location.getRow(),
+                                        location.getCol() + 1 ) );
+                        return;
+                    }
+                    break;
+                case 3:
+                    if ( canMove( new Location( location.getRow(),
+                                    location.getCol() - 1 ) ) )
+                    {
+                        moveTo( new Location( location.getRow(),
+                                        location.getCol() - 1 ) );
+                        return;
+                    }
+                    break;
 
+            }
         }
+
     }
-
-
 
 }

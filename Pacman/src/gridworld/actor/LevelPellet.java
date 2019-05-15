@@ -4,7 +4,10 @@ import gridworld.grid.Grid;
 import gridworld.grid.Location;
 import project.Main;
 
-import java.io.*;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
 
 
@@ -36,15 +39,16 @@ public class LevelPellet extends Pellet implements Edible
         ArrayList<Location> locActors = grid.getOccupiedLocations();
         for ( Location loc : locActors )
         {
-                Actor actor = (Actor)( grid.get( loc ) );
-                actor.removeSelfFromGrid();
+            Actor actor = (Actor)( grid.get( loc ) );
+            actor.removeSelfFromGrid();
         }
 
         try
         {
             Main m = new Main();
-            InputStream in = m.getClass().getResourceAsStream("/" + levelName + ".txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
+            InputStream in = m.getClass()
+                            .getResourceAsStream( "/" + levelName + ".txt" );
+            BufferedReader br = new BufferedReader( new InputStreamReader( in ) );
             String line;
 
             for ( int i = 0; i < Main.ROW; i++ )
@@ -52,8 +56,7 @@ public class LevelPellet extends Pellet implements Edible
                 do
                 {
                     line = br.readLine();
-                    line = line.replaceAll( "[^A-Za-z0-9]",
-                                    "" );
+                    line = line.replaceAll( "[^A-Za-z0-9]", "" );
 
                 } while ( line.length() <= 0 );
                 for ( int j = 0; j < Main.COL; j++ )
@@ -62,13 +65,14 @@ public class LevelPellet extends Pellet implements Edible
                     if ( line.charAt( j ) == 'x' )
                     {
                         Wall w = new Wall();
-                        w.putSelfInGrid( grid, new Location( i , j ) );
+                        w.putSelfInGrid( grid, new Location( i, j ) );
+
 
                     }
                     else if ( line.charAt( j ) == 'o' )
                     {
                         Pellet p = new Pellet();
-                        p.putSelfInGrid( grid, new Location( i , j ) );
+                        p.putSelfInGrid( grid, new Location( i, j ) );
                     }
                 }
             }
@@ -81,13 +85,44 @@ public class LevelPellet extends Pellet implements Edible
         }
 
         //After new level
-        Pacman pacman = new Pacman();
-        pacman.putSelfInGrid( grid, new Location( 5, 5 ) );
+        if ( levelName.equals( "level1" ) )
+        {
 
-        Inky inky = new Inky();
-        inky.putSelfInGrid( grid, new Location(10,10) );
+            Main.currentLevel = 1;
+            Pacman pacman = new Pacman();
+            pacman.putSelfInGrid( grid, new Location( 20, 11 ) );
+            Score score = new Score();
+            score.putSelfInGrid( grid, new Location( 0,0 ) );
+//            Inky inky = new Inky();
+//            inky.putSelfInGrid( grid, new Location( 10, 8 ) );
 
-        Pacman.drawPacmanName();
+            Casper casper = new Casper(1);
+            casper.putSelfInGrid( grid, new Location( 17, 16 ) );
+
+            Oogy oogy = new Oogy(1);
+            oogy.putSelfInGrid( grid, new Location( 3, 1) );
+
+            Phantom phantom = new Phantom(1);
+            phantom.putSelfInGrid( grid, new Location( 3, 22 ) );
+
+            Pacman.drawPacmanName();
+        }
+
+        if(levelName.equals( "level2" ))
+        {
+            Main.currentLevel = 2;
+
+            Pacman pacman = new Pacman();
+            pacman.putSelfInGrid( grid, new Location( 10, 10 ) );
+
+            Casper casper = new Casper(2);
+            casper.putSelfInGrid( grid, new Location( 1, 1 ) );
+
+
+
+        }
+
+
 
     }
 

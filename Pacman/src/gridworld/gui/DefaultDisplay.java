@@ -55,8 +55,10 @@ public class DefaultDisplay implements Display
                     Object obj, Component comp, Graphics2D g2, Rectangle rect )
     {
         //Heavily Modified for pacman
-        Color color = Color.BLACK;
-        Color textColor = Color.YELLOW;
+
+        Color color = new Color(100, 144, 234); //background of a actor color
+        Color textColor = new Color( 255, 215, 0 );
+
 
         if ( color != null )
         {
@@ -95,6 +97,7 @@ public class DefaultDisplay implements Display
     protected void paintCenteredText(
                     Graphics2D g2, String s, Rectangle rect, double fontHeight, Color color )
     {
+       //COLOR OF TEXT IN A CELL
         g2 = (Graphics2D)g2.create();
         g2.setRenderingHint( RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON );
         g2.setPaint( color );

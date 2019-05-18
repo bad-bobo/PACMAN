@@ -11,12 +11,7 @@ public class Score extends Actor
 {
     //250 pellets at start
     public static int score = 0;
-
-    static
-    {
-        TextCell score = new TextCell( "SCORE:" );
-        score.putSelfInGrid( Main.grid, new Location( 1, 22 ) );
-    }
+    public static int minScore = 250;
 
     public Score()
     {

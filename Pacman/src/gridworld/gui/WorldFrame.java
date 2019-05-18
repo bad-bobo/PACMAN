@@ -19,21 +19,26 @@
 
 package gridworld.gui;
 
-import gridworld.actor.*;
+import gridworld.actor.Pacman;
+import gridworld.actor.Score;
+import gridworld.actor.TextCell;
 import gridworld.grid.Grid;
 import gridworld.grid.Location;
 import gridworld.world.World;
 import project.Main;
+import project.Mechanics;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.Point;
 import java.awt.event.*;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 import java.net.URL;
 import java.text.MessageFormat;
 import java.util.*;
+
+import static gridworld.actor.Pacman.drawPacmanName;
+import static project.Mechanics.getPacmanLocation;
 
 
 /**
@@ -239,53 +244,29 @@ public class WorldFrame<T> extends JFrame
         display.repaint(); // for applet
         super.repaint();
 
-        // Checks to see if there is 3 ghosts
-//        if(Main.currentLevel == 1)
-//        {
-//            int ghostCount = 0;
-//            ArrayList<Location> loc = Main.grid.getOccupiedLocations();
-//            for(Location l: loc)
-//            {
-//                Actor a = (Actor)Main.grid.get( l );
-//                if ( a instanceof Ghost )
-//                {
-//                    ghostCount++;
-//                }
-//            }
-//
-//            while(ghostCount <  3)
-//            {
-//                Inky c = new Inky( );
-//                c.putSelfInGrid( Main.grid , new Location(10,11) );
-//                ghostCount--;
-//            }
-//        }
-        if ( Ghost.getPacmanLocation() == null )
+        if ( getPacmanLocation() == null )
         {
+            Mechanics.removeAll();
             String[] arr = { "G", "A", "M", "E", " ", "O", "V", "E", "R", "!" };
-            gridMessage( arr, 13, 7 );
+            Mechanics.gridMessage( 13, 7 , arr);
+            drawPacmanName();
+
         }
-        if ( Score.score == 250 )
+        if ( Score.score >= Score.minScore )
         {
             String[] arr = { "Y", "O", "U", "", " W", "O", "N", "!", "!" };
-            gridMessage( arr, 13, 9 );
+            Mechanics.gridMessage( 13, 9, arr );
+            drawPacmanName();
+            //Difference between drawPacmanName() vs Pacman.drawPacmanName()
 
         }
 
     }
 
 
-    public static void gridMessage( String[] arr, int row, int col )
-    {
 
-        for ( String m : arr )
-        {
-            TextCell t = new TextCell( m );
-            t.putSelfInGrid( Main.grid, new Location( row, col ) );
-            col++;
-        }
 
-    }
+
 
 
     /**

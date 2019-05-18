@@ -139,4 +139,9 @@ public interface Grid<E>
      * adjacent to <code>loc</code> in this grid
      */
     ArrayList<E> getNeighbors( Location loc );
+
+    /**
+     * Created for pacman, clears the grid
+     */
+    void clearGrid();
 }

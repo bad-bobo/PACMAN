@@ -1,17 +1,10 @@
 package project;
-
-import gridworld.actor.LevelPellet;
-import gridworld.actor.Pacman;
-import gridworld.actor.Pellet;
-import gridworld.actor.Wall;
+import gridworld.actor.*;
+import gridworld.actor.Score;
+import gridworld.actor.TextCell;
 import gridworld.grid.BoundedGrid;
 import gridworld.grid.Location;
 import gridworld.world.PacmanWorld;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 
 
 public class Main
@@ -21,98 +14,74 @@ public class Main
 
     public static final int COL = 24;
 
-
-
     public static final BoundedGrid grid = new BoundedGrid( ROW, COL );
-
 
     public static int currentLevel;
 
-
+    private static PacmanWorld world;
 
 
     public static void main( String[] args )
     {
-        PacmanWorld world = new PacmanWorld( grid );
-
-        initGrid( grid );
-        LevelPellet lp = new LevelPellet("level1");
-
-        Pacman p = new Pacman();
-
-        p.putSelfInGrid( grid, new Location(4,12) );
-
-        world.show();
-
-
-
+        world = new PacmanWorld( grid );
+        loadGame();
     }
 
 
-    private static void initGrid( BoundedGrid grid )
+    public static void loadGame()
     {
 
-        Main m = new Main();
-        try
-        {
+        currentLevel = 0;
+        Score.score = 0;
+        Mechanics.initGrid( Mechanics.loadFile( "LevelSelector", ROW, COL, "" ) );
 
-            InputStream in = m.getClass().getResourceAsStream("/level0.txt");
-            BufferedReader br = new BufferedReader(new InputStreamReader(in));
-            String line;
+        TextCell one = new TextCell( "1" );
+        one.putSelfInGrid( grid, new Location( 23,4 ) );
 
-            for ( int i = 0; i < Main.ROW - 1; i++ )
-            {
-                do
-                {
-                    //find next good line
-                    line = br.readLine();
-                    line = line.replaceAll( "[^a-z]",
-                                    "" );
+        TextCell two = new TextCell( "2" );
+        two.putSelfInGrid( grid, new Location( 23,12 ) );
 
-                } while ( line.length() <= 0 );
-                for ( int j = 0; j < Main.COL ; j++ )
+        TextCell three = new TextCell( "3" );
+        three.putSelfInGrid( grid, new Location( 23,19 ) );
 
-                {
-                    if ( line.charAt( j ) == 'x' )
-                    {
-                        Wall w = new Wall();
-                        w.putSelfInGrid( grid, new Location( i , j ) );
-
-                    }
-                    else if ( line.charAt( j ) == 'o' )
-                    {
-                        Pellet p = new Pellet();
-                        p.putSelfInGrid( grid, new Location( i , j ) );
-                    }
-                }
-            }
-        }
-        catch ( IOException e )
-        {
-            e.printStackTrace();
-            System.err.println( "Brad says \"shet2\"" );
-            System.exit( -1 );
-        }
 
         //Left pellet
-        LevelPellet level1 = new LevelPellet( "level1" );
+        Bush level1 = new Bush( 1 );
         level1.putSelfInGrid( grid, new Location( 20, 4 ) );
 
+
+
         //Middle pellet
-        LevelPellet level2 = new LevelPellet( "level2" );
+        Bush level2 = new Bush( 1 );
         level2.putSelfInGrid( grid, new Location( 20, 12 ) );
 
-        //Right pellet
-        LevelPellet level3 = new LevelPellet( "level3" );
-        level3.putSelfInGrid( grid, new Location( 20, 19 ) );
 
+
+        //Right Pellet
+        Bush level3 = new Bush( 1 );
+        level3.putSelfInGrid( grid, new Location( 20, 19) );
+//
+//        Bush bush = new Bush();
+//        bush.putSelfInGrid( grid, new Location(11,11) );
+//
+//        Bush bush2 = new Bush();
+//        bush2.putSelfInGrid( grid, new Location(11,13) );
+
+        Pacman p = new Pacman();
+        p.putSelfInGrid( grid, new Location( 4, 12 ) );
+
+//        String[] welcome = {"W", "E","L","C", "O", "M", "E", " ", "T", "O", " ", "P", "A", "C", "M", "A", "N", "!"};
+//        Mechanics.gridMessage( welcome, 2, 3 );
+
+
+        Mechanics.gridMessage(  4,3 , "W");
+        Mechanics.gridMessage( 5,2, "A", "S", "D" );
+
+        Mechanics.gridMessage(  4,20 , "↑");
+        Mechanics.gridMessage( 5,19, "←", "↓", "→" );
 
         Pacman.drawPacmanName();
-
-
-
+        world.show();
     }
-
-
 
 }

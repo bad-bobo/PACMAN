@@ -16,6 +16,8 @@
 
 package gridworld.grid;
 
+import gridworld.actor.Actor;
+
 import java.util.ArrayList;
 
 
@@ -92,5 +94,19 @@ public abstract class AbstractGrid<E> implements Grid<E>
             s += loc + "=" + get( loc );
         }
         return s + "}";
+    }
+
+
+    /**
+     * Created for Pacman, clears the grid of all actors
+     */
+    public void clearGrid()
+    {
+        ArrayList<Location> locActors = getOccupiedLocations();
+        for ( Location loc : locActors )
+        {
+            Actor actor = (Actor)( get( loc ) );
+            actor.removeSelfFromGrid();
+        }
     }
 }

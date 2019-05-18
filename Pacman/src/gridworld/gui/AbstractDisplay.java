@@ -70,7 +70,7 @@ public abstract class AbstractDisplay implements Display
         g2.translate( rect.x + rect.width / 2.0, rect.y + rect.height / 2.0 );
 
         // Rotate drawing surface before drawing to capture object's
-        // orientation (direction).
+//         orientation (direction).
         if ( obj != null )
         {
             Integer direction = (Integer)getProperty( obj, "direction" );

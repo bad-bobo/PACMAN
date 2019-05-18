@@ -40,6 +40,19 @@ public abstract class Actor
 
 
     /**
+     * Sets the current direction of this actor.
+     * @param newDirection the new direction. The direction of this actor is set
+     * to the angle between 0 and 359 degrees that is equivalent to
+     * <code>newDirection</code>.
+     */
+    public void setDirection(int newDirection)
+    {
+        direction = newDirection % Location.FULL_CIRCLE;
+        if (direction < 0)
+            direction += Location.FULL_CIRCLE;
+    }
+
+    /**
      * Constructs a Yellow actor that is facing north.
      */
     public Actor()

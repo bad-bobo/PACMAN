@@ -53,7 +53,8 @@ public class GridPanel extends JPanel implements Scrollable, PseudoInfiniteViewp
 
     private static final int TIP_DELAY = 1000; //1000 original
 
-    private final Color blue = new Color( 0, 0, 0 );
+    //BACKGROUND COLOR
+    private final Color blue = new Color( 100, 144, 234 );
 
     private Grid<?> grid;
 
@@ -195,7 +196,7 @@ public class GridPanel extends JPanel implements Scrollable, PseudoInfiniteViewp
                     g2.fillRect( x + 1, y + 1, cellSize, cellSize );
             }
 
-        g2.setColor( new Color( 0, 34, 255 ) ); //Grid lines color CHANGE TO BLACK
+        g2.setColor( new Color( 100, 144, 234 ) ); //Grid lines color CHANGE TO BLACK
         for ( int y = miny; y <= maxy; y += cellSize + 1 )
             // draw horizontal lines
             g2.drawLine( minx, y, maxx, y );
@@ -383,44 +384,8 @@ public class GridPanel extends JPanel implements Scrollable, PseudoInfiniteViewp
     }
 
 
-    /**
-     * Zooms in the display by doubling the current cell size.
-     */
-    public void zoomIn()
-    {
-        cellSize *= 2;
-        revalidate();
-    }
 
 
-    /**
-     * Zooms out the display by halving the current cell size.
-     */
-    public void zoomOut()
-    {
-        cellSize = Math.max( cellSize / 2, MIN_CELL_SIZE );
-        revalidate();
-    }
-
-
-    /**
-     * Pans the display back to the origin, so that 0, 0 is at the the upper
-     * left of the visible viewport.
-     */
-    public void recenter( Location loc )
-    {
-        originRow = loc.getRow();
-        originCol = loc.getCol();
-        repaint();
-        JViewport vp = getEnclosingViewport();
-        if ( vp != null )
-        {
-            if ( !isPannableUnbounded() || !( vp instanceof PseudoInfiniteViewport ) )
-                vp.setViewPosition( pointForLocation( loc ) );
-            else
-                showPanTip();
-        }
-    }
 
 
     /**
@@ -520,63 +485,6 @@ public class GridPanel extends JPanel implements Scrollable, PseudoInfiniteViewp
     }
 
 
-    /**
-     * Moves the current location by a given amount.
-     *
-     * @param dr the number of rows by which to move the location
-     * @param dc the number of columns by which to move the location
-     */
-    public void moveLocation( int dr, int dc )
-    {
-        Location newLocation = new Location( currentLocation.getRow() + dr, currentLocation.getCol() + dc );
-        if ( !grid.isValid( newLocation ) )
-            return;
-
-        currentLocation = newLocation;
-
-        JViewport viewPort = getEnclosingViewport();
-        if ( isPannableUnbounded() )
-        {
-            if ( originRow > currentLocation.getRow() )
-                originRow = currentLocation.getRow();
-            if ( originCol > currentLocation.getCol() )
-                originCol = currentLocation.getCol();
-            Dimension dim = viewPort.getSize();
-            int rows = dim.height / ( cellSize + 1 );
-            int cols = dim.width / ( cellSize + 1 );
-            if ( originRow + rows - 1 < currentLocation.getRow() )
-                originRow = currentLocation.getRow() - rows + 1;
-            if ( originCol + rows - 1 < currentLocation.getCol() )
-                originCol = currentLocation.getCol() - cols + 1;
-        }
-        else if ( viewPort != null )
-        {
-            int dx = 0;
-            int dy = 0;
-            Point p = pointForLocation( currentLocation );
-            Rectangle locRect = new Rectangle( p.x - cellSize / 2, p.y - cellSize / 2, cellSize + 1, cellSize + 1 );
-
-            Rectangle viewRect = viewPort.getViewRect();
-            if ( !viewRect.contains( locRect ) )
-            {
-                while ( locRect.x < viewRect.x + dx )
-                    dx -= cellSize + 1;
-                while ( locRect.y < viewRect.y + dy )
-                    dy -= cellSize + 1;
-                while ( locRect.getMaxX() > viewRect.getMaxX() + dx )
-                    dx += cellSize + 1;
-                while ( locRect.getMaxY() > viewRect.getMaxY() + dy )
-                    dy += cellSize + 1;
-
-                Point pt = viewPort.getViewPosition();
-                pt.x += dx;
-                pt.y += dy;
-                viewPort.setViewPosition( pt );
-            }
-        }
-        repaint();
-        showTip( getToolTipText( currentLocation ), pointForLocation( currentLocation ) );
-    }
 
 
     /**

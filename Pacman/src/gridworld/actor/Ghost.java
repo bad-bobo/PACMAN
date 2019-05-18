@@ -29,25 +29,7 @@ public abstract class Ghost extends MovableActor
     }
 
 
-    /**
-     * Gets the currrent Location of Pacman
-     *
-     * @return
-     */
-    public static Location getPacmanLocation()
-    {
-        ArrayList<Location> actors = Main.grid.getOccupiedLocations();
-        for ( Location loc : actors )
-        {
-            if ( Main.grid.get( loc ) instanceof Pacman )
-            {
-                return loc;
-            }
-        }
 
-        return null;
-
-    }
 
 
     /**
@@ -142,8 +124,9 @@ public abstract class Ghost extends MovableActor
     {
         for ( int i = 1; i < path.size(); i++ )
         {
-            Path x = new Path();
-            x.setColor( this.getColor() );
+            Pellet x = new Pellet();
+           x.setColor( this.getColor() );
+//            x.setColor( Color.GREEN );
 
             Location loc = new Location( path.get( i ).getX(), path.get( i ).getY() );
             if ( grid.get( loc ) instanceof Pellet || !( grid.get( loc ) instanceof Actor ) )

@@ -139,7 +139,7 @@ public class ColorEditor extends PropertyEditorSupport
                 g2.fill( r1 );
                 r1.translate( WIDTH / 4, 0 );
             }
-            g2.setColor( Color.BLACK );
+            g2.setColor( Color.BLACK);
             g2.draw( r );
             g2.setColor( oldColor );
         }

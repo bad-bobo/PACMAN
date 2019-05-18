@@ -21,6 +21,7 @@ package gridworld.gui;
 import gridworld.grid.Grid;
 import gridworld.grid.Location;
 import gridworld.world.World;
+import project.Main;
 
 import javax.swing.*;
 import javax.swing.event.ChangeEvent;
@@ -33,6 +34,7 @@ import java.util.Comparator;
 import java.util.ResourceBundle;
 import java.util.Set;
 import java.util.TreeSet;
+
 
 /**
  * The GUIController controls the behavior in a WorldFrame. <br />
@@ -79,8 +81,7 @@ public class GUIController<T>
      * @param displayMap the map for occupant displays
      * @param res        the resource bundle for message display
      */
-    public GUIController
-    (
+    public GUIController(
                     WorldFrame<T> parent, GridPanel disp, DisplayMap displayMap, ResourceBundle res )
     {
         //Initializing the parameters
@@ -88,7 +89,6 @@ public class GUIController<T>
         display = disp;
         parentFrame = parent;
         this.displayMap = displayMap;
-
 
         makeControls();
 
@@ -156,9 +156,9 @@ public class GUIController<T>
         stopButton = new JButton( resources.getString( "button.gui.stop" ) );
 
         //Exit Button
-//        JButton exitButton = new JButton( "\u274C" ); Whats this?
+        //        JButton exitButton = new JButton( "\u274C" ); Whats this?
         JButton exitButton = new JButton( "Exit" );
-
+        JButton restartButton = new JButton( "Restart" );
         controlPanel.setLayout( new BoxLayout( controlPanel, BoxLayout.X_AXIS ) );
         controlPanel.setBorder( BorderFactory.createEtchedBorder() );
 
@@ -167,10 +167,11 @@ public class GUIController<T>
         controlPanel.add( Box.createRigidArea( spacer ) );
         controlPanel.add( runButton );
         controlPanel.add( stopButton );
+        controlPanel.add( restartButton );
         Dimension brad = new Dimension( 50, exitButton.getHeight() );
         controlPanel.add( Box.createRigidArea( spacer ) );
-        runButton.setPreferredSize( brad );
-        stopButton.setPreferredSize( brad );
+        //        runButton.setPreferredSize( brad );
+        //        stopButton.setPreferredSize( brad );
         controlPanel.add( exitButton );
 
         //This line was not there in original brad commit
@@ -202,7 +203,6 @@ public class GUIController<T>
 
         controlPanel.add( Box.createRigidArea( spacer ) );
 
-
         runButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
@@ -213,7 +213,6 @@ public class GUIController<T>
             }
         } );
 
-
         stopButton.addActionListener( new ActionListener()
         {
             public void actionPerformed( ActionEvent e )
@@ -223,7 +222,6 @@ public class GUIController<T>
                 stopButton.setVisible( false );
             }
         } );
-
 
         speedSlider.addChangeListener( new ChangeListener()
         {
@@ -237,7 +235,15 @@ public class GUIController<T>
         {
             public void actionPerformed( ActionEvent e )
             {
+                //                Main.loadGame();
                 System.exit( 0 );
+            }
+        } );
+        restartButton.addActionListener( new ActionListener()
+        {
+            public void actionPerformed( ActionEvent e )
+            {
+                Main.loadGame();
             }
         } );
 
@@ -260,20 +266,21 @@ public class GUIController<T>
 
         speedSlider.setBackground( yello );
 
-        runButton.setBorder( BorderFactory.createEmptyBorder( 3, 5, 3, 5 ) );
-        runButton.setFocusPainted( false );// was false
-        runButton.setForeground( Color.BLACK );
+        //        runButton.setBorder( BorderFactory.createEmptyBorder( 3, 5, 3, 5 ) );
+        //        runButton.setBorder(BorderFactory.createEtchedBorder( ));
+        //        runButton.setFocusPainted( false );// was false
+        //        runButton.setForeground( Color.BLACK );
         //runButton.setForeground( Color.BLACK );
-       runButton.setBackground( Color.BLACK );
+        //        runButton.setBackground( Color.BLACK );
 
-        stopButton.setBorder( BorderFactory.createEmptyBorder( 3, 5, 3, 5 ) );
-        stopButton.setFocusPainted( false );
-        stopButton.setForeground( Color.BLACK );
-//        stopButton.setForeground( yello );
-        stopButton.setBackground( Color.black );
+        //        stopButton.setBorder( BorderFactory.createEmptyBorder( 3, 5, 3, 5 ) );
+        ////        stopButton.setFocusPainted( false );
+        //        stopButton.setForeground( Color.BLACK );
+        //        stopButton.setForeground( yello );
+        //        stopButton.setBackground( Color.black );
 
-        exitButton.setBorder( BorderFactory.createEmptyBorder( 3, 7, 3, 7 ) );
-        exitButton.setFocusPainted( false );
+        //        exitButton.setBorder( BorderFactory.createEmptyBorder( 3, 7, 3, 7 ) );
+        //        exitButton.setFocusPainted( false );
         exitButton.setForeground( Color.red );
         exitButton.setBackground( Color.blue );
         exitButton.setRolloverEnabled( true );
@@ -343,12 +350,6 @@ public class GUIController<T>
     }
 
 
-    public boolean isRunning()
-    {
-        return running;
-    }
-
-
     /**
      * Returns the panel containing the controls.
      *
@@ -359,63 +360,4 @@ public class GUIController<T>
         return controlPanel;
     }
 
-
-    /**
-     * Callback on mousePressed when editing a grid.
-     */
-    private void locationClicked()
-    {
-        World<T> world = parentFrame.getWorld();
-        Location loc = display.getCurrentLocation();
-        if ( loc != null && !world.locationClicked( loc ) )
-            editLocation();
-        parentFrame.repaint();
-    }
-
-
-    /**
-     * Edits the contents of the current location, by displaying the constructor
-     * or method menu.
-     */
-    public void editLocation()
-    {
-        World<T> world = parentFrame.getWorld();
-
-        Location loc = display.getCurrentLocation();
-        if ( loc != null )
-        {
-            T occupant = world.getGrid().get( loc );
-            if ( occupant == null )
-            {
-                MenuMaker<T> maker = new MenuMaker<T>( parentFrame, resources, displayMap );
-                JPopupMenu popup = maker.makeConstructorMenu( occupantClasses, loc );
-                Point p = display.pointForLocation( loc );
-                popup.show( display, p.x, p.y );
-            }
-            else
-            {
-                MenuMaker<T> maker = new MenuMaker<T>( parentFrame, resources, displayMap );
-                JPopupMenu popup = maker.makeMethodMenu( occupant, loc );
-                Point p = display.pointForLocation( loc );
-                popup.show( display, p.x, p.y );
-            }
-        }
-        parentFrame.repaint();
-    }
-
-
-    /**
-     * Edits the contents of the current location, by displaying the constructor
-     * or method menu.
-     */
-    public void deleteLocation()
-    {
-        World<T> world = parentFrame.getWorld();
-        Location loc = display.getCurrentLocation();
-        if ( loc != null )
-        {
-            world.remove( loc );
-            parentFrame.repaint();
-        }
-    }
 }

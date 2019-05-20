@@ -1,5 +1,6 @@
 package gridworld.actor;
 
+import gridworld.grid.Grid;
 import gridworld.grid.Location;
 import project.Main;
 import project.Mechanics;
@@ -19,7 +20,8 @@ public class Dijkstra extends Ghost
     List<Integer> path = new ArrayList<>();
 
     private int levelNumber;
-
+    Actor prevActor;
+    Location prevLoc;
 
     /**
      * Creates a Pink Ghost with Dijkstra's greedy algorithm
@@ -69,7 +71,16 @@ public class Dijkstra extends Ghost
             visualizePath( pathOfPoints );
         }
         Location nextLoc = Mechanics.convertToLocation( path.remove( 0 ), levelNumber );
-        moveTo( nextLoc );
+        Actor pa=prevActor;
+        Location pl=prevLoc;
+        prevActor=getGrid().get(nextLoc);
+        prevLoc=nextLoc;
+        if(prevActor!=null){
+            prevActor.removeSelfFromGrid();}
+
+        moveTo(nextLoc);
+        if (pa==null)pa=new Pellet();
+        pa.putSelfInGrid(getGrid(),pl);
 
     }
 
@@ -184,5 +195,18 @@ public class Dijkstra extends Ghost
         arr.add( destinationVertex );
 
     }
-
+    public void putSelfInGrid( Grid<Actor> gr, Location loc )
+    {
+        if ( grid != null )
+            throw new IllegalStateException( "This actor is already contained in a grid." );
+        prevActor =gr.get(loc);
+        prevLoc=loc;
+        prevActor.removeSelfFromGrid();
+        Actor actor = gr.get( loc );
+        if ( actor != null )
+            actor.removeSelfFromGrid();
+        gr.put( loc, this );
+        grid = gr;
+        location = loc;
+    }
 }

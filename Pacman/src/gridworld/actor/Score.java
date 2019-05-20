@@ -27,6 +27,14 @@ public class Score extends Actor
         score++;
     }
 
+    /**
+     * increments score by inc
+     * @param inc score increase
+     */
+    public static void inc(int inc){
+    score+=inc;
+    }
+
 
     /**
      * Deletes the old score and puts the new score
@@ -36,6 +44,7 @@ public class Score extends Actor
         removeSelfFromGrid();
         Score s = new Score();
         s.putSelfInGrid( Main.grid, new Location( 1, 23 ) );
+//getGrid().;
 
     }
 

@@ -171,6 +171,12 @@ public abstract class Mechanics
                     p.putSelfInGrid( Main.grid, new Location( r, c ) );
 
                 }
+                else if ( map[r][c] == 4 )
+                {
+                    Pineapple p = new Pineapple();
+                    p.putSelfInGrid( Main.grid, new Location( r, c ) );
+
+                }
 
             }
         }

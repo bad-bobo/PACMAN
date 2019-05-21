@@ -177,6 +177,12 @@ public abstract class Mechanics
                     p.putSelfInGrid( Main.grid, new Location( r, c ) );
 
                 }
+                else if ( map[r][c] == 5 )
+                {
+                    PowerPellet p = new PowerPellet();
+                    p.putSelfInGrid( Main.grid, new Location( r, c ) );
+
+                }
 
             }
         }
@@ -198,8 +204,8 @@ public abstract class Mechanics
 //                }
 //        return new Wall();
 double rand=Math.random();
-if (rand>=.95)return new Pineapple();
-if (rand>=.85) System.out.println("pwoer pellet");//todo FOR POWER PELLET LATER
+if (rand>=.97)return new Pineapple();
+if (rand>=.91) return new PowerPellet();
 return new Pellet();
     }
 

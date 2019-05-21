@@ -129,7 +129,8 @@ public abstract class Ghost extends MovableActor
 //            x.setColor( Color.GREEN );
 
             Location loc = new Location( path.get( i ).getX(), path.get( i ).getY() );
-            if ( grid.get( loc ) instanceof Pellet || !( grid.get( loc ) instanceof Actor ) )
+            Actor next=grid.get( loc );
+            if ( (next instanceof Pellet && !(next instanceof PowerPellet))  || !( next instanceof Actor ) )
             {
                 x.putSelfInGrid( grid, loc );
             }

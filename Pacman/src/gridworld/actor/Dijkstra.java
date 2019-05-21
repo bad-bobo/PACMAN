@@ -20,8 +20,10 @@ public class Dijkstra extends Ghost
     List<Integer> path = new ArrayList<>();
 
     private int levelNumber;
-    Actor prevActor;
-    Location prevLoc;
+    private Actor prevActor;
+    private Location prevLoc;
+    private static int scareTime=0;
+    private static Color currentCol=Color.green;
 
     /**
      * Creates a Pink Ghost with Dijkstra's greedy algorithm
@@ -41,10 +43,19 @@ public class Dijkstra extends Ghost
         }
 
     }
-
+    public static void scare(){
+        scareTime=Ghost.SCARE_TIME;
+        currentCol=Color.blue;
+    }
 
     @Override public void act()
     {
+        if (scareTime<0){currentCol=Color.green;}
+        else{
+            scareTime--;
+        }
+        setColor(currentCol);
+
         if ( path.size() < 1 )
         {
             path.clear();
@@ -213,4 +224,5 @@ public class Dijkstra extends Ghost
         grid = gr;
         location = loc;
     }
+
 }

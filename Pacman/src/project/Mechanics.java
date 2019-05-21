@@ -204,8 +204,8 @@ public abstract class Mechanics
 //                }
 //        return new Wall();
 double rand=Math.random();
-if (rand>=.97)return new Pineapple();
-if (rand>=.91) return new PowerPellet();
+if (rand>=.98)return new Pineapple();
+if (rand>=.94) return new PowerPellet();
 return new Pellet();
     }
 

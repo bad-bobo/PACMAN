@@ -7,10 +7,9 @@ import project.Main;
 import java.awt.*;
 import java.util.ArrayList;
 
-
 public abstract class Ghost extends MovableActor
 {
-
+public static final int SCARE_TIME=30;//30
     /**
      * The previous cell
      */

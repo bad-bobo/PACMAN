@@ -11,7 +11,7 @@ public class Score extends Actor
 {
     //250 pellets at start
     public static int score = 0;
-    public static int minScore = 250;
+    public static int minScore = 5000;
 
     public Score()
     {

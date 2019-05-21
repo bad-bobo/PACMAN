@@ -5,8 +5,10 @@ import gridworld.grid.Location;
 import project.Main;
 import project.Mechanics;
 
+import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
 
 
@@ -20,8 +22,10 @@ public class Casper extends Ghost
     private static int[][] map = new int[Main.ROW][Main.COL];
 
     private ArrayList<Point> path = new ArrayList<>();
-Actor prevActor;
-Location prevLoc;
+    private Actor prevActor;
+    private Location prevLoc;
+    private static int scareTime=0;
+    private static Color currentCol=Color.pink;
 
     /**
      * Creates a Pink Ghost
@@ -35,12 +39,21 @@ Location prevLoc;
 //        Mechanics.print2DArray( map ,"");
     }
 
-
+public static void scare(){
+    scareTime=Ghost.SCARE_TIME;
+    currentCol=Color.blue;
+}
     /**
      * Just goes to the pacman, but doesnt find the shortest path
      */
     @Override public void act()
     {
+
+        if (scareTime<0){currentCol=Color.pink;}
+        else{
+            scareTime--;
+        }
+        setColor(currentCol);
         Location pacmanLocation = Mechanics.getPacmanLocation();
         if ( pacmanLocation == null ||    map[pacmanLocation.getRow()][pacmanLocation.getCol()] == 2)
         {

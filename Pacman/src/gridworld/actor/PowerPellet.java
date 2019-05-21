@@ -20,5 +20,7 @@ public class PowerPellet extends Pellet implements Edible
     public void action( Grid grid )
     {
         System.out.println( "u r strong" );
+        Dijkstra.scare();
+        Casper.scare();
     }
 }

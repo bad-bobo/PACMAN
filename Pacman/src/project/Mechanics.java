@@ -182,6 +182,26 @@ public abstract class Mechanics
         }
     }
 
+    public static Actor repopulate( Location loc )
+    {
+//        int r=loc.getRow();
+//        int c=loc.getCol();
+//        int[][] array=Mechanics.loadFile( "Map_level" + Main.currentLevel, Main.ROW, Main.COL, "" );
+//        System.out.println(array[r][c]);
+//                if ( array[r][c] == 0 )
+//                {
+//                    return new Pellet();
+//                }
+//                else if ( array[r][c] == 4 )
+//                {
+//                    return new Pineapple();
+//                }
+//        return new Wall();
+double rand=Math.random();
+if (rand>=.95)return new Pineapple();
+if (rand>=.85) System.out.println("pwoer pellet");//todo FOR POWER PELLET LATER
+return new Pellet();
+    }
 
     /**
      * Copies one array into another

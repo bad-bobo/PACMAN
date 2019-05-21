@@ -60,8 +60,11 @@ Location next=DFS();
         prevActor.removeSelfFromGrid();}
 
         moveTo(next);
-        if (pa==null)pa=new Pellet();
-        pa.putSelfInGrid(getGrid(),pl);
+        Actor shouldBe=Mechanics.repopulate(pl);
+        //if (pa==null||getGrid().getClass()!=shouldBe.getClass() ){
+            //pa=shouldBe;
+        //}
+        shouldBe.putSelfInGrid(getGrid(),pl);
         map[pacmanLocation.getRow()][pacmanLocation.getCol()] = 0 ;
 
     }
@@ -171,6 +174,7 @@ Location next=DFS();
             throw new IllegalStateException( "This actor is already contained in a grid." );
         prevActor =gr.get(loc);
         prevLoc=loc;
+        if (prevActor!=null)
         prevActor.removeSelfFromGrid();
         Actor actor = gr.get( loc );
         if ( actor != null )

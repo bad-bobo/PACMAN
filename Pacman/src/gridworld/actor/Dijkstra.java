@@ -79,8 +79,11 @@ public class Dijkstra extends Ghost
             prevActor.removeSelfFromGrid();}
 
         moveTo(nextLoc);
-        if (pa==null)pa=new Pellet();
-        pa.putSelfInGrid(getGrid(),pl);
+        Actor shouldBe=Mechanics.repopulate(pl);
+        //if (pa==null||getGrid().getClass()!=shouldBe.getClass() ){
+        //pa=shouldBe;
+        //}
+        shouldBe.putSelfInGrid(getGrid(),pl);
 
     }
 
@@ -201,6 +204,7 @@ public class Dijkstra extends Ghost
             throw new IllegalStateException( "This actor is already contained in a grid." );
         prevActor =gr.get(loc);
         prevLoc=loc;
+        if (prevActor!=null)
         prevActor.removeSelfFromGrid();
         Actor actor = gr.get( loc );
         if ( actor != null )

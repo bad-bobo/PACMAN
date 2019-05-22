@@ -19,6 +19,7 @@
 
 package gridworld.gui;
 
+import gridworld.actor.Ghost;
 import gridworld.actor.Pacman;
 import gridworld.actor.Score;
 import gridworld.actor.TextCell;
@@ -241,6 +242,7 @@ public class WorldFrame<T> extends JFrame
      */
     public void repaint()
     {
+    if (Ghost.Scared>=0)Ghost.Scared--;
         display.repaint(); // for applet
         super.repaint();
 

@@ -55,7 +55,6 @@ public class Main
         Bush level2 = new Bush( 1 );
         level2.putSelfInGrid( grid, new Location( 20, 12 ) );
 
-
         //Right Pellet
         Bush level3 = new Bush( 1 );
         level3.putSelfInGrid( grid, new Location( 20, 19) );

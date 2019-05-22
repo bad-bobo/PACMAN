@@ -24,8 +24,6 @@ public class Casper extends Ghost
     private ArrayList<Point> path = new ArrayList<>();
     private Location prevLoc;
     private Actor prevActor;
-    private static int scareTime=0;
-    private static Color currentCol=Color.pink;
 
     /**
      * Creates a Pink Ghost
@@ -39,21 +37,16 @@ public class Casper extends Ghost
 //        Mechanics.print2DArray( map ,"");
     }
 
-public static void scare(){
-    scareTime=Ghost.SCARE_TIME;
-    currentCol=Color.blue;
-}
     /**
      * Just goes to the pacman, but doesnt find the shortest path
      */
     @Override public void act()
     {
-
-        if (scareTime<0){currentCol=Color.pink;}
-        else{
-            scareTime--;
+        if (isScared()){
+            setColor(Color.blue);
+        }else{
+            setColor(Color.pink);
         }
-        setColor(currentCol);
         Location pacmanLocation = Mechanics.getPacmanLocation();
         if ( pacmanLocation == null ||    map[pacmanLocation.getRow()][pacmanLocation.getCol()] == 2)
         {

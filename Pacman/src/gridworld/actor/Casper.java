@@ -23,6 +23,7 @@ public class Casper extends Ghost
 
     private ArrayList<Point> path = new ArrayList<>();
     private Location prevLoc;
+    private Actor prevActor;
     private static int scareTime=0;
     private static Color currentCol=Color.pink;
 
@@ -62,10 +63,15 @@ public static void scare(){
         }
 
         map[pacmanLocation.getRow()][pacmanLocation.getCol()] = 9;
-
+Actor pa=prevActor;
 Location next=DFS();
+prevActor=grid.get(next);
+if (prevActor!=null)prevActor.removeSelfFromGrid();
         moveTo(next);
-        if(prevLoc!=null&&(grid.get(prevLoc) ==null||grid.get(prevLoc) instanceof Pellet))Mechanics.repopulate().putSelfInGrid(grid,prevLoc);
+        if(prevLoc!=null&&(pa ==null||pa instanceof Pellet))Mechanics.repopulate().putSelfInGrid(grid,prevLoc);
+        else if (prevLoc!=null){
+            pa.putSelfInGrid(grid,prevLoc);
+        }
         //if (pa==null||getGrid().getClass()!=shouldBe.getClass() ){
         //pa=shouldBe;
         //}

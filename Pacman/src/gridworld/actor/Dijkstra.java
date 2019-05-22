@@ -20,7 +20,7 @@ public class Dijkstra extends Ghost
     List<Integer> path = new ArrayList<>();
 
     private int levelNumber;
-
+private Actor prevActor;
     private Location prevLoc;
     private static int scareTime=0;
     private static Color currentCol=Color.green;
@@ -82,9 +82,16 @@ public class Dijkstra extends Ghost
             visualizePath( pathOfPoints );
         }
         Location nextLoc = Mechanics.convertToLocation( path.remove( 0 ), levelNumber );
+        Actor pa=prevActor;
 
+
+        prevActor=grid.get(nextLoc);
+        if (prevActor!=null)prevActor.removeSelfFromGrid();
         moveTo(nextLoc);
-        if(prevLoc!=null&&(grid.get(prevLoc) ==null||grid.get(prevLoc) instanceof Pellet))Mechanics.repopulate().putSelfInGrid(grid,prevLoc);
+        if(prevLoc!=null&&(pa ==null||pa instanceof Pellet))Mechanics.repopulate().putSelfInGrid(grid,prevLoc);
+        else if (prevLoc!=null){
+            pa.putSelfInGrid(grid,prevLoc);
+        }
         //if (pa==null||getGrid().getClass()!=shouldBe.getClass() ){
         //pa=shouldBe;
         //}

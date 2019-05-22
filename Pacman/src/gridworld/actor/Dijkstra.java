@@ -84,7 +84,7 @@ public class Dijkstra extends Ghost
         Location nextLoc = Mechanics.convertToLocation( path.remove( 0 ), levelNumber );
 
         moveTo(nextLoc);
-        if(prevLoc!=null&&grid.get(prevLoc) ==null||grid.get(prevLoc) instanceof Pellet)Mechanics.repopulate().putSelfInGrid(grid,prevLoc);
+        if(prevLoc!=null&&(grid.get(prevLoc) ==null||grid.get(prevLoc) instanceof Pellet))Mechanics.repopulate().putSelfInGrid(grid,prevLoc);
         //if (pa==null||getGrid().getClass()!=shouldBe.getClass() ){
         //pa=shouldBe;
         //}

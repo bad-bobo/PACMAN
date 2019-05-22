@@ -65,7 +65,7 @@ public static void scare(){
 
 Location next=DFS();
         moveTo(next);
-        if(prevLoc!=null&&grid.get(prevLoc) ==null||grid.get(prevLoc) instanceof Pellet)Mechanics.repopulate().putSelfInGrid(grid,prevLoc);
+        if(prevLoc!=null&&(grid.get(prevLoc) ==null||grid.get(prevLoc) instanceof Pellet))Mechanics.repopulate().putSelfInGrid(grid,prevLoc);
         //if (pa==null||getGrid().getClass()!=shouldBe.getClass() ){
         //pa=shouldBe;
         //}

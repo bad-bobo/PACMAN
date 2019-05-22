@@ -11,7 +11,9 @@ public class Score extends Actor
 {
     //250 pellets at start
     public static int score = 0;
+
     public static int minScore = 5000;
+
 
     public Score()
     {
@@ -27,12 +29,15 @@ public class Score extends Actor
         score++;
     }
 
+
     /**
      * increments score by inc
+     *
      * @param inc score increase
      */
-    public static void inc(int inc){
-    score+=inc;
+    public static void inc( int inc )
+    {
+        score += inc;
     }
 
 
@@ -44,7 +49,7 @@ public class Score extends Actor
         removeSelfFromGrid();
         Score s = new Score();
         s.putSelfInGrid( Main.grid, new Location( 1, 23 ) );
-//getGrid().;
+        //getGrid().;
 
     }
 

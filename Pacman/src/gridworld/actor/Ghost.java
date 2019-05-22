@@ -56,6 +56,13 @@ public abstract class Ghost extends MovableActor {
         grid.remove(location);
         Actor other = grid.get(newLocation);
         if (other != null) {
+            if(other instanceof Pacman)
+            {
+                if(isScared())
+                {
+                    this.removeSelfFromGrid();
+                }
+            }
             if (other instanceof PowerPellet) {
                 PowerPellet p = new PowerPellet();
                 other.removeSelfFromGrid();

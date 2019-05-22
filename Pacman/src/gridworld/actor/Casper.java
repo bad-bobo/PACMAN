@@ -22,7 +22,6 @@ public class Casper extends Ghost
     private static int[][] map = new int[Main.ROW][Main.COL];
 
     private ArrayList<Point> path = new ArrayList<>();
-    private Actor prevActor;
     private Location prevLoc;
     private static int scareTime=0;
     private static Color currentCol=Color.pink;
@@ -64,20 +63,13 @@ public static void scare(){
 
         map[pacmanLocation.getRow()][pacmanLocation.getCol()] = 9;
 
-Actor pa=prevActor;
-Location pl=prevLoc;
 Location next=DFS();
-        prevActor=getGrid().get(next);
-        prevLoc=next;
-        if(prevActor!=null){
-        prevActor.removeSelfFromGrid();}
-
         moveTo(next);
-        Actor shouldBe=Mechanics.repopulate(pl);
+        if(prevLoc!=null&&grid.get(prevLoc) ==null||grid.get(prevLoc) instanceof Pellet)Mechanics.repopulate().putSelfInGrid(grid,prevLoc);
         //if (pa==null||getGrid().getClass()!=shouldBe.getClass() ){
-            //pa=shouldBe;
+        //pa=shouldBe;
         //}
-        shouldBe.putSelfInGrid(getGrid(),pl);
+        prevLoc=next;
         map[pacmanLocation.getRow()][pacmanLocation.getCol()] = 0 ;
 
     }
@@ -181,19 +173,5 @@ Location next=DFS();
         return false;
 
     }
-    public void putSelfInGrid( Grid<Actor> gr, Location loc )
-    {
-        if ( grid != null )
-            throw new IllegalStateException( "This actor is already contained in a grid." );
-        prevActor =gr.get(loc);
-        prevLoc=loc;
-        if (prevActor!=null)
-        prevActor.removeSelfFromGrid();
-        Actor actor = gr.get( loc );
-        if ( actor != null )
-            actor.removeSelfFromGrid();
-        gr.put( loc, this );
-        grid = gr;
-        location = loc;
-    }
+
 }

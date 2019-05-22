@@ -41,7 +41,7 @@ public class Pacman extends MovableActor
      */
     public void moveTo( Location newLocation )
     {
-        if ( newLocation.equals( new Location( 12, 1 ) ) )
+        if ( newLocation.equals( new Location( 12, 1 ) ) )//pipes
         {
             grid.remove( location );
             location = new Location( 12, 22 );
@@ -49,10 +49,9 @@ public class Pacman extends MovableActor
             p.setDirection( this.getDirection() );
             p.putSelfInGrid( grid, location );
             return;
-
         }
 
-        if ( newLocation.equals( new Location( 12, 22 ) ) )
+        if ( newLocation.equals( new Location( 12, 22 ) ) )//pipes
         {
             grid.remove( location );
             location = new Location( 12, 1 );

@@ -1,6 +1,5 @@
 package gridworld.actor;
 
-import gridworld.grid.Grid;
 import gridworld.grid.Location;
 import project.Main;
 import project.Mechanics;
@@ -20,7 +19,9 @@ public class Dijkstra extends Ghost
     List<Integer> path = new ArrayList<>();
 
     private int levelNumber;
-private Actor prevActor;
+
+    private Actor prevActor;
+
     private Location prevLoc;
 
 
@@ -29,8 +30,8 @@ private Actor prevActor;
      */
     public Dijkstra( int levelNumber )
     {
-//        super( new Color( 57, 255, 108 ) );
-        super(Color.GREEN);
+        //        super( new Color( 57, 255, 108 ) );
+        super( Color.GREEN );
         this.levelNumber = levelNumber;
         map = Mechanics.loadFile( "Map_level" + levelNumber, Main.ROW, Main.COL, "" );
 
@@ -43,13 +44,17 @@ private Actor prevActor;
 
     }
 
+
     @Override public void act()
     {
-    if (isScared()){
-        setColor(Color.blue);
-    }else{
-        setColor(Color.green);
-    }
+        if ( isScared() )
+        {
+            setColor( Color.blue );
+        }
+        else
+        {
+            setColor( Color.green );
+        }
         if ( path.size() < 1 )
         {
             path.clear();
@@ -65,7 +70,7 @@ private Actor prevActor;
             }
             int startNode = Mechanics.convertToNode( getLocation(), levelNumber );
             path = dijkstra( adjMatrix, startNode, destNode );
-//
+            //
             path.remove( 0 );
             ArrayList<Point> pathOfPoints = new ArrayList<>();
             for ( int node : path )
@@ -76,20 +81,22 @@ private Actor prevActor;
             visualizePath( pathOfPoints );
         }
         Location nextLoc = Mechanics.convertToLocation( path.remove( 0 ), levelNumber );
-        Actor pa=prevActor;
+        Actor pa = prevActor;
 
-
-        prevActor=grid.get(nextLoc);
-        if (prevActor!=null)prevActor.removeSelfFromGrid();
-        moveTo(nextLoc);
-        if(prevLoc!=null&&(pa ==null||pa instanceof Pellet))Mechanics.repopulate().putSelfInGrid(grid,prevLoc);
-        else if (prevLoc!=null){
-            pa.putSelfInGrid(grid,prevLoc);
+        prevActor = grid.get( nextLoc );
+        if ( prevActor != null )
+            prevActor.removeSelfFromGrid();
+        moveTo( nextLoc );
+        if ( prevLoc != null && ( pa == null || pa instanceof Pellet ) )
+            Mechanics.repopulate().putSelfInGrid( grid, prevLoc );
+        else if ( prevLoc != null )
+        {
+            pa.putSelfInGrid( grid, prevLoc );
         }
         //if (pa==null||getGrid().getClass()!=shouldBe.getClass() ){
         //pa=shouldBe;
         //}
-prevLoc=nextLoc;
+        prevLoc = nextLoc;
     }
 
 
@@ -203,6 +210,5 @@ prevLoc=nextLoc;
         arr.add( destinationVertex );
 
     }
-
 
 }

@@ -7,7 +7,7 @@ import java.util.Locale;
 
 public class Pipe extends Actor
 {
-    int direction;
+
 
 
     public Pipe(  )

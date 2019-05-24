@@ -54,27 +54,4 @@ public class PacmanWorld extends ActorWorld
         }
 
     }
-
-
-    private void score()
-    {
-        ArrayList<Location> actors = getGrid().getOccupiedLocations();
-
-    }
-
-
-    private void pacmanKeyHelper(
-                    ArrayList<Location> actors, Grid<Actor> grid, int loc )
-    {
-        for ( Location l : actors )
-        {
-            if ( grid.get( l ) instanceof Pacman )
-            {
-                Pacman pacman = ( (Pacman)grid.get( l ) );
-                pacman.setDirection( loc );
-
-            }
-        }
-
-    }
 }

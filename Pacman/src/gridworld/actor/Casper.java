@@ -1,14 +1,11 @@
 package gridworld.actor;
 
-import gridworld.grid.Grid;
 import gridworld.grid.Location;
 import project.Main;
 import project.Mechanics;
 
-import javax.swing.plaf.ColorUIResource;
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.List;
 
 
@@ -22,8 +19,11 @@ public class Casper extends Ghost
     private static int[][] map = new int[Main.ROW][Main.COL];
 
     private ArrayList<Point> path = new ArrayList<>();
+
     private Location prevLoc;
+
     private Actor prevActor;
+
 
     /**
      * Creates a Pink Ghost
@@ -34,42 +34,48 @@ public class Casper extends Ghost
         map = Mechanics.loadFile( "Map_level" + levelNumber, Main.ROW, Main.COL, "" );
         map[12][4] = 1;
         map[12][19] = 1;
-//        Mechanics.print2DArray( map ,"");
+        //        Mechanics.print2DArray( map ,"");
     }
+
 
     /**
      * Just goes to the pacman, but doesnt find the shortest path
      */
     @Override public void act()
     {
-        if (isScared()){
-            setColor(Color.blue);
-        }else{
-            setColor(Color.pink);
+        if ( isScared() )
+        {
+            setColor( Color.blue );
+        }
+        else
+        {
+            setColor( Color.pink );
         }
         Location pacmanLocation = Mechanics.getPacmanLocation();
-        if ( pacmanLocation == null ||    map[pacmanLocation.getRow()][pacmanLocation.getCol()] == 2)
+        if ( pacmanLocation == null || map[pacmanLocation.getRow()][pacmanLocation.getCol()] == 2 )
         {
 
             System.out.println( "Casper.act: No Pacman found" );
             return;
         }
-
         map[pacmanLocation.getRow()][pacmanLocation.getCol()] = 9;
-Actor pa=prevActor;
-Location next=DFS();
-prevActor=grid.get(next);
-if (prevActor!=null)prevActor.removeSelfFromGrid();
-        moveTo(next);
-        if(prevLoc!=null&&(pa ==null||pa instanceof Pellet))Mechanics.repopulate().putSelfInGrid(grid,prevLoc);
-        else if (prevLoc!=null){
-            pa.putSelfInGrid(grid,prevLoc);
+        Location next = DFS();
+
+        Actor pa = prevActor;
+        prevActor = grid.get( next );
+        if ( prevActor != null )
+        {
+            prevActor.removeSelfFromGrid();
         }
-        //if (pa==null||getGrid().getClass()!=shouldBe.getClass() ){
-        //pa=shouldBe;
-        //}
-        prevLoc=next;
-        map[pacmanLocation.getRow()][pacmanLocation.getCol()] = 0 ;
+        moveTo( next );
+        if ( prevLoc != null && ( pa == null || pa instanceof Pellet ) )
+            Mechanics.repopulate().putSelfInGrid( grid, prevLoc );
+        else if ( prevLoc != null )
+        {
+            pa.putSelfInGrid( grid, prevLoc );
+        }
+        prevLoc = next;
+        map[pacmanLocation.getRow()][pacmanLocation.getCol()] = 0;
 
     }
 
@@ -87,18 +93,7 @@ if (prevActor!=null)prevActor.removeSelfFromGrid();
         {
             path.clear();
             DFS( mapCopy, location.getRow(), location.getCol(), path );
-
-            //removes the last index, which is the current location of the Ghost
             path.remove( path.size() - 1 );
-            int size = path.size();
-
-            //shortens the path to 1/3, this will refresh the path
-            //            for ( int i = 0; i < size / 3; i++ )
-            //            {
-            //                path.remove( 0 );
-            //            }
-
-            //Visualizing the path
             visualizePath( path );
 
         }

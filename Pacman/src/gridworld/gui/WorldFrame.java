@@ -20,13 +20,10 @@
 package gridworld.gui;
 
 import gridworld.actor.Ghost;
-import gridworld.actor.Pacman;
 import gridworld.actor.Score;
-import gridworld.actor.TextCell;
 import gridworld.grid.Grid;
 import gridworld.grid.Location;
 import gridworld.world.World;
-import project.Main;
 import project.Mechanics;
 
 import javax.swing.*;
@@ -242,7 +239,7 @@ public class WorldFrame<T> extends JFrame
      */
     public void repaint()
     {
-    if (Ghost.Scared>=0)Ghost.Scared--;
+    if (Ghost.ScaredTimer >=0)Ghost.ScaredTimer--;
         display.repaint(); // for applet
         super.repaint();
 

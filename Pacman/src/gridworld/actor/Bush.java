@@ -57,8 +57,13 @@ public class Bush extends Actor implements Edible
 
             Casper capser = new Casper( 1 );
             capser.putSelfInGrid( grid, new Location( 22, 22 ) );
+
             Dijkstra dijkstra = new Dijkstra( 1 );
             dijkstra.putSelfInGrid( grid, new Location( 3, 2 ) );
+
+            Inky inky = new Inky();
+            inky.putSelfInGrid( grid, new Location(10,10) );
+
 
             Pacman.drawPacmanName();
         }

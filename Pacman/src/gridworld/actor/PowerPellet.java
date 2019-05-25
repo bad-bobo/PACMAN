@@ -19,10 +19,12 @@ public class PowerPellet extends Actor implements Edible
 
     public void action( Grid grid )
     {
-        System.out.println( "u r strong" );
         Dijkstra.scare();
         Casper.scare();
     }
 
-    public void act(){}
+
+    public void act()
+    {
+    }
 }

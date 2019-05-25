@@ -1,7 +1,6 @@
 package gridworld.actor;
 
 import gridworld.grid.Location;
-import project.Main;
 import project.Mechanics;
 
 import java.awt.*;
@@ -9,38 +8,49 @@ import java.util.ArrayList;
 import java.util.List;
 
 
+/**
+ * Dijkstra is a very smart Ghost. He uses Dijkstra's shortest path algorithm with the graph represented as an adjacency matrix.
+ */
 public class Dijkstra extends Ghost
 {
 
+    /**
+     * The adjacency matrix
+     */
     private static int[][] adjMatrix;
 
-    private static int[][] map = new int[Main.ROW][Main.COL];
-
-    List<Integer> path = new ArrayList<>();
-
-    private int levelNumber;
-
-    private Actor prevActor;
-
-    private Location prevLoc;
-
+    /**
+     * the path of nodes leading upto a destination.
+     */
+    private List<Integer> path = new ArrayList<>();
 
     /**
-     * Creates a Pink Ghost with Dijkstra's greedy algorithm
+     * The map Level of this ghost.
+     */
+    private final int levelNumber;
+
+    /**
+     * The previous Actor
+     */
+    private Actor prevActor;
+
+    /**
+     * The next Actor
+     */
+    private Location prevLoc;
+
+    private static final int NO_PARENT = -1;
+
+    /**
+     * Creates a Pink Ghost with Dijkstra's algorithm
+     *
+     * @param levelNumber level number (for future updates)
      */
     public Dijkstra( int levelNumber )
     {
-        //        super( new Color( 57, 255, 108 ) );
         super( Color.GREEN );
         this.levelNumber = levelNumber;
-        map = Mechanics.loadFile( "Map_level" + levelNumber, Main.ROW, Main.COL, "" );
-
-        if ( levelNumber == 1 )
-        {
-            //236 nodes
-            adjMatrix = Mechanics.loadFile( "AdjMatrix_level" + levelNumber, 236, 236, "" );
-
-        }
+        adjMatrix = Mechanics.loadFile( "AdjMatrix_level" + levelNumber, 236, 236, "" );
 
     }
 
@@ -70,7 +80,6 @@ public class Dijkstra extends Ghost
             }
             int startNode = Mechanics.convertToNode( getLocation(), levelNumber );
             path = dijkstra( adjMatrix, startNode, destNode );
-            //
             path.remove( 0 );
             ArrayList<Point> pathOfPoints = new ArrayList<>();
             for ( int node : path )
@@ -81,26 +90,37 @@ public class Dijkstra extends Ghost
             visualizePath( pathOfPoints );
         }
         Location nextLoc = Mechanics.convertToLocation( path.remove( 0 ), levelNumber );
-        Actor pa = prevActor;
+        repopulateHelper( nextLoc );
+    }
 
-        prevActor = grid.get( nextLoc );
+
+    /**
+     * Repopulates the previous cell if a mixture of pellets, powerpellet or Pineapple
+     * @param next
+     */
+    public void repopulateHelper( Location next )
+    {
+        Actor pa = prevActor;
+        prevActor = grid.get( next );
         if ( prevActor != null )
+        {
             prevActor.removeSelfFromGrid();
-        moveTo( nextLoc );
+        }
+        moveTo( next );
         if ( prevLoc != null && ( pa == null || pa instanceof Pellet ) )
+        {
             Mechanics.repopulate().putSelfInGrid( grid, prevLoc );
+        }
         else if ( prevLoc != null )
         {
             pa.putSelfInGrid( grid, prevLoc );
         }
-        //if (pa==null||getGrid().getClass()!=shouldBe.getClass() ){
-        //pa=shouldBe;
-        //}
-        prevLoc = nextLoc;
+        prevLoc = next;
+
     }
 
 
-    private static final int NO_PARENT = -1;
+
 
 
     // Function that implements Dijkstra's
@@ -108,6 +128,7 @@ public class Dijkstra extends Ghost
     // algorithm for a graph represented
     // using adjacency matrix
     // representation
+    //Todo: Shams: redo
     private static List<Integer> dijkstra(
                     int[][] adjacencyMatrix, int startVertex, int destinationVertex )
     {

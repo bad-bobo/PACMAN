@@ -10,85 +10,99 @@ import java.util.List;
 
 
 /**
- * Uses Depth First Search to find a path to Pacman, not the best path if p. Fixes the path and the endpoint, evem if pacman has moved from there.
- * TODO: error when two ghost get on the same path
+ * Casper is a Blue Ghost with Depth first search capabilities. This Ghost finds a path to pacman, but not the best path.
  */
 public class Casper extends Ghost
 {
 
+    /**
+     * The map of the game in 0'a and 1's
+     */
     private static int[][] map = new int[Main.ROW][Main.COL];
 
+    /**
+     * The path of the Ghost in points.
+     */
     private ArrayList<Point> path = new ArrayList<>();
 
+    /**
+     * The previous Location.
+     */
     private Location prevLoc;
 
+    /**
+     * The previous Actor.
+     */
     private Actor prevActor;
 
 
     /**
-     * Creates a Pink Ghost
+     * Creates a new Ghost, with DFS. Sets the color to blue.
+     * Loads map from resource folder.
+     * sets map at some locations to 1, because This ghost is restricted from going into the pipes.
+     *
+     * @param levelNumber
      */
     public Casper( int levelNumber )
     {
-        super( Color.PINK );
+        super( Color.CYAN );
         map = Mechanics.loadFile( "Map_level" + levelNumber, Main.ROW, Main.COL, "" );
         map[12][4] = 1;
         map[12][19] = 1;
-        //        Mechanics.print2DArray( map ,"");
     }
 
 
     /**
-     * Just goes to the pacman, but doesnt find the shortest path
+     * If the ghost is scared, scatters. Else finds a path to the Pacman and moves.
      */
     @Override public void act()
     {
         if ( isScared() )
         {
             setColor( Color.blue );
+            //TODO: Brad: make ghosts scatter
         }
         else
         {
             setColor( Color.pink );
+            Location pacmanLocation = Mechanics.getPacmanLocation();
+            if ( pacmanLocation == null || map[pacmanLocation.getRow()][pacmanLocation.getCol()] == 2 )
+            {
+                System.out.println( "Casper.act: No Pacman found" );
+                return;
+            }
+            createNewPath( pacmanLocation );
+            Point p = path.remove( path.size() - 1 );
+            Location next = new Location( p.getX(), p.getY() );
+            Actor pa = this.prevActor;
+            this.prevActor = (Actor)Main.grid.get( next );
+            if ( this.prevActor != null )
+            {
+                this.prevActor.removeSelfFromGrid();
+            }
+            moveTo( next );
+            if ( this.prevLoc != null && ( pa == null || pa instanceof Pellet ) )
+            {
+                Mechanics.repopulate().putSelfInGrid( Main.grid, this.prevLoc );
+            }
+            else if ( this.prevLoc != null )
+            {
+                pa.putSelfInGrid( Main.grid, this.prevLoc );
+            }
+            this.prevLoc = next;
         }
-        Location pacmanLocation = Mechanics.getPacmanLocation();
-        if ( pacmanLocation == null || map[pacmanLocation.getRow()][pacmanLocation.getCol()] == 2 )
-        {
-
-            System.out.println( "Casper.act: No Pacman found" );
-            return;
-        }
-        map[pacmanLocation.getRow()][pacmanLocation.getCol()] = 9;
-        Location next = DFS();
-
-        Actor pa = prevActor;
-        prevActor = grid.get( next );
-        if ( prevActor != null )
-        {
-            prevActor.removeSelfFromGrid();
-        }
-        moveTo( next );
-        if ( prevLoc != null && ( pa == null || pa instanceof Pellet ) )
-            Mechanics.repopulate().putSelfInGrid( grid, prevLoc );
-        else if ( prevLoc != null )
-        {
-            pa.putSelfInGrid( grid, prevLoc );
-        }
-        prevLoc = next;
-        map[pacmanLocation.getRow()][pacmanLocation.getCol()] = 0;
 
     }
 
 
     /**
-     * Helper method
-     *
-     * @return
+     * Creates a path to the destination. If the path arraylist already contains items, it doesnt create a new path.
+     * Sets destination on map  to 9, then calls dfs, which finds a path to 9. Then sets map[destination] to 0.
      */
-    private Location DFS()
+    public void createNewPath( Location destination )
     {
+        map[destination.getRow()][destination.getCol()] = 9;
         int[][] mapCopy = Mechanics.copyArray( map );
-
         if ( path.size() < 1 )
         {
             path.clear();
@@ -97,16 +111,18 @@ public class Casper extends Ghost
             visualizePath( path );
 
         }
-
-        Point p = path.remove( path.size() - 1 );
-
-        return new Location( p.getX(), p.getY() );
-
+        map[destination.getRow()][destination.getCol()] = 0;
     }
+
+
 
 
     /**
      * Uses Depth first search to find a path to Pacman.
+     * 9 in the map is the destination
+     * 2 in the map is a visited site
+     * 1 in the map is a wall
+     * 0 in the map is a open path.
      *
      * @param map  The 2d array
      * @param x    The current row of the Ghost

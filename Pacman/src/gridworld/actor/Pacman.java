@@ -41,7 +41,6 @@ public class Pacman extends MovableActor
      */
     public void moveTo( Location newLocation )
     {
-        System.out.println( Ghost.isScared() );
         if ( newLocation.equals( new Location( 12, 1 ) ) )//pipes
         {
             grid.remove( location );

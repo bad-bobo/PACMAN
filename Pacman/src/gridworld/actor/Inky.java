@@ -7,34 +7,19 @@ import java.awt.*;
 
 /**
  * Inky is a simple Ghost, Inky goes anywhere
- * TODO: Soham
+ * TODO: Brad, implement inky scatter/blue
+ *
  */
 public class Inky extends Ghost
 {
 
     public Inky()
     {
-        super( Color.BLUE );
+        super( Color.WHITE );
 
     }
 
-    /**
-     * Moves the Ghost the the new Location by
-     * 1) deleting this Ghost
-     * 2) If the new Location hold no Actor, creates a new Ghost there
-     * 2) If there is a pellet in the new Location, deletes the pellet and puts a pellet in this location
-     * 3) Put a new Ghost in the new Location
-     *
-     * @param newLocation the new location
-     */
-    public void moveTo( Location newLocation )
-    {
-        if(grid.get( newLocation ) instanceof Ghost)
-        {
-            removeSelfFromGrid();
-        }
-        super.moveTo( newLocation );
-    }
+
 
 
     /**

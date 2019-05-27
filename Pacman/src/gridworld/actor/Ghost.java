@@ -12,12 +12,12 @@ public abstract class Ghost extends MovableActor
     /**
      * Time amout of "acts" the Ghost is scared for.
      */
-    public static final int SCARE_TIME = 30;
+    protected static final int SCARE_TIME = 30;
 
     /**
      * The current timer for the Ghost being scared.
      */
-    public static int ScaredTimer = -1;
+    protected static int scaredTimer = -1;
 
     /**
      * The previous cell
@@ -44,7 +44,7 @@ public abstract class Ghost extends MovableActor
      */
     public static boolean isScared()
     {
-        return ScaredTimer >= 0;
+        return scaredTimer >= 0;
     }
 
 
@@ -53,7 +53,7 @@ public abstract class Ghost extends MovableActor
      */
     public static void scare()
     {
-        ScaredTimer = SCARE_TIME;
+        scaredTimer = SCARE_TIME;
     }
 
 
@@ -129,8 +129,9 @@ public abstract class Ghost extends MovableActor
      *
      * @param next The next Location
      * @return True if can move, false otherwise.
+     *
      */
-    protected boolean canMove( Location next )
+    public boolean canMove( Location next )
     {
 
         //The pipe entrances
@@ -179,6 +180,16 @@ public abstract class Ghost extends MovableActor
             }
 
         }
+    }
+
+    public static int getScaredTimer()
+    {
+        return scaredTimer;
+    }
+
+    public static void decScaredTimer()
+    {
+        scaredTimer--;
     }
 
 }

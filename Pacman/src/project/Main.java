@@ -49,21 +49,13 @@ public class Main
         Bush level1 = new Bush( 1 );
         level1.putSelfInGrid( grid, new Location( 20, 4 ) );
 
-
-
         //Middle pellet
-        Bush level2 = new Bush( 1 );
+        Bush level2 = new Bush( 2 );
         level2.putSelfInGrid( grid, new Location( 20, 12 ) );
 
         //Right Pellet
-        Bush level3 = new Bush( 1 );
+        Bush level3 = new Bush( 3 );
         level3.putSelfInGrid( grid, new Location( 20, 19) );
-//
-//        Bush bush = new Bush();
-//        bush.putSelfInGrid( grid, new Location(11,11) );
-//
-//        Bush bush2 = new Bush();
-//        bush2.putSelfInGrid( grid, new Location(11,13) );
 
         Pacman p = new Pacman();
         p.putSelfInGrid( grid, new Location( 4, 12 ) );

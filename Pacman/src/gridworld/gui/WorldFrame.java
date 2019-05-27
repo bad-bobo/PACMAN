@@ -239,7 +239,10 @@ public class WorldFrame<T> extends JFrame
      */
     public void repaint()
     {
-    if (Ghost.ScaredTimer >=0)Ghost.ScaredTimer--;
+        if ( Ghost.getScaredTimer() >= 0 )
+        {
+            Ghost.decScaredTimer();
+        }
         display.repaint(); // for applet
         super.repaint();
 
@@ -247,7 +250,7 @@ public class WorldFrame<T> extends JFrame
         {
             Mechanics.removeAll();
             String[] arr = { "G", "A", "M", "E", " ", "O", "V", "E", "R", "!" };
-            Mechanics.gridMessage( 13, 7 , arr);
+            Mechanics.gridMessage( 13, 7, arr );
             drawPacmanName();
 
         }
@@ -261,11 +264,6 @@ public class WorldFrame<T> extends JFrame
         }
 
     }
-
-
-
-
-
 
 
     /**

@@ -52,13 +52,7 @@ public abstract class MovableActor extends Actor
     public abstract void moveTo( Location newLocation );
 
 
-    /**
-     * Turns the bug 45 degrees to the right without changing its location.
-     */
-    public void turn()
-    {
-        setDirection( getDirection() + Location.RIGHT );
-    }
+
 
 
     /**

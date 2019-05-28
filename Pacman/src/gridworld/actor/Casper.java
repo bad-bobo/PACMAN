@@ -1,5 +1,7 @@
 package gridworld.actor;
 
+import gridworld.grid.BoundedGrid;
+import gridworld.grid.Grid;
 import gridworld.grid.Location;
 import project.Main;
 import project.Mechanics;
@@ -57,15 +59,20 @@ public class Casper extends Ghost
      */
     @Override public void act()
     {
+        Grid<Actor> gr = getGrid();
+        if(gr == null)
+        {
+            return;
+        }
         if ( isScared() )
         {
-            setColor( Color.blue );
+            setColor( Color.BLUE );
             return;
         }
         else
         {
-            setColor( Color.pink );
-            Location pacmanLocation = Mechanics.getPacmanLocation();
+            setColor( Color.CYAN );
+            Location pacmanLocation = Mechanics.getPacmanLocation(( BoundedGrid)gr);
             if ( pacmanLocation == null || map[pacmanLocation.getRow()][pacmanLocation.getCol()] == 2 )
             {
                 System.out.println( "Casper.act: No Pacman found" );
@@ -108,9 +115,7 @@ public class Casper extends Ghost
             path.clear();
             DFS( mapCopy, location.getRow(), location.getCol(), path );
             path.remove( path.size() - 1 );
-            visualizePath( path );
-            System.out.println( path.size() );
-            System.out.println(path);
+            visualizePath( path , (BoundedGrid) getGrid());
         }
         map[destination.getRow()][destination.getCol()] = 0;
 

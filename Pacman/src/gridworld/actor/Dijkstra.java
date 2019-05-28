@@ -96,10 +96,10 @@ public class Dijkstra extends Ghost
 
 
     /**
-     * Repopulates the previous cell if a mixture of pellets, powerpellet or Pineapple
+     * Repopulates the previous cell with a mixture of pellets, powerpellet or Pineapple
      * @param next
      */
-    public void repopulateHelper( Location next )
+    private void repopulateHelper( Location next )
     {
         Actor pa = prevActor;
         prevActor = grid.get( next );

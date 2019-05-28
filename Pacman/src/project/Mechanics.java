@@ -1,6 +1,8 @@
 package project;
 
+import gridworld.actor.Point;
 import gridworld.actor.*;
+import gridworld.grid.BoundedGrid;
 import gridworld.grid.Grid;
 import gridworld.grid.Location;
 
@@ -22,10 +24,11 @@ public abstract class Mechanics
 
 
     /**
-     *  Not a test, just
+     * Not a test, just
+     *
      * @param num
      */
-    public static void sleep(int num)
+    public static void sleep( int num )
     {
         try
         {
@@ -36,6 +39,7 @@ public abstract class Mechanics
             e.printStackTrace();
         }
     }
+
 
     /**
      * pacman
@@ -80,19 +84,29 @@ public abstract class Mechanics
      *
      * @return
      */
-    public static Location getPacmanLocation()
+    public static Location getPacmanLocation( BoundedGrid grid )
     {
-        ArrayList<Location> actors = Main.grid.getOccupiedLocations();
+        ArrayList<Location> actors = grid.getOccupiedLocations();
         for ( Location loc : actors )
         {
-            if ( Main.grid.get( loc ) instanceof Pacman )
+            if ( grid.get( loc ) instanceof Pacman )
             {
                 return loc;
             }
         }
 
         return null;
+    }
 
+
+    /**
+     * Created to protected older method calls w/o parameter.
+     *
+     * @return pacman location in Main.grid.
+     */
+    public static Location getPacmanLocation()
+    {
+        return getPacmanLocation( Main.grid );
     }
 
 
@@ -114,8 +128,9 @@ public abstract class Mechanics
 
     /**
      * Loads a 2d array into the grid
+     *
      * @param grid the grid to load the mao into
-     * @param map the map
+     * @param map  the map
      */
     public static void initGrid( int[][] map, Grid grid )
     {
@@ -165,6 +180,7 @@ public abstract class Mechanics
 
     /**
      * Loads the map into the Main.grid
+     *
      * @param map the map
      */
     public static void initGrid( int[][] map )
@@ -302,6 +318,24 @@ public abstract class Mechanics
         }
 
         return null;
+
+    }
+
+
+    /**
+     * Converts a ArrayList of Points into an ArrayList of Locations
+     *
+     * @param arr An arrayList of Points
+     * @return an ArrayList of Location.
+     */
+    public static ArrayList<Location> convertToLocation( ArrayList<Point> arr )
+    {
+        ArrayList<Location> locs = new ArrayList<>( arr.size() );
+        for ( Point p : arr )
+        {
+            locs.add( new Location( p.getX(), p.getY() ) );
+        }
+        return locs;
 
     }
 }

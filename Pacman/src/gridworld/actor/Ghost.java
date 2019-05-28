@@ -1,7 +1,7 @@
 package gridworld.actor;
 
-import gridworld.grid.Grid;
-import gridworld.grid.Location;
+import gridworld.grid.*;
+import project.Main;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -164,7 +164,7 @@ public abstract class Ghost extends MovableActor
      *
      * @param path The path of the Ghost, in points.
      */
-    protected void visualizePath( ArrayList<Point> path )
+    protected void visualizePath( ArrayList<Point> path , BoundedGrid grid)
     {
         for ( int i = 1; i < path.size(); i++ )
         {
@@ -172,13 +172,23 @@ public abstract class Ghost extends MovableActor
             x.setColor( this.getColor() );
 
             Location loc = new Location( path.get( i ).getX(), path.get( i ).getY() );
-            Actor next = grid.get( loc );
+            Actor next = (Actor) grid.get( loc );
             if ( ( next instanceof Pellet && !( next instanceof PowerPellet ) ) || !( next instanceof Actor ) )
             {
                 x.putSelfInGrid( grid, loc );
             }
 
         }
+    }
+
+
+    /**
+     * Created to protect existing calls
+     * @param path Path of points
+     */
+    protected void visualizePath( ArrayList<Point> path)
+    {
+        visualizePath( path, Main.grid);
     }
 
 

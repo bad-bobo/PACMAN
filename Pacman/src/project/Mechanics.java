@@ -1,6 +1,7 @@
 package project;
 
 import gridworld.actor.*;
+import gridworld.grid.Grid;
 import gridworld.grid.Location;
 
 import java.awt.*;
@@ -14,11 +15,27 @@ import java.util.ArrayList;
 /**
  * Holds useful methods
  */
-public abstract class Mechanics {
-    public static Color[] colorValues =
-            {Color.BLUE, Color.CYAN, Color.GREEN, Color.GREEN, Color.MAGENTA,
-                    Color.ORANGE, Color.PINK, Color.RED};
+public abstract class Mechanics
+{
+    public static Color[] colorValues = { Color.BLUE, Color.CYAN, Color.GREEN, Color.GREEN, Color.MAGENTA, Color.ORANGE,
+                    Color.PINK, Color.RED };
 
+
+    /**
+     *  Not a test, just
+     * @param num
+     */
+    public static void sleep(int num)
+    {
+        try
+        {
+            Thread.sleep( num );
+        }
+        catch ( InterruptedException e )
+        {
+            e.printStackTrace();
+        }
+    }
 
     /**
      * pacman
@@ -27,25 +44,31 @@ public abstract class Mechanics {
      * @param row
      * @param col
      */
-    public static void gridMessage(int row, int col, String... arr) {
+    public static void gridMessage( int row, int col, String... arr )
+    {
 
-        for (String m : arr) {
-            TextCell t = new TextCell(m);
-            t.putSelfInGrid(Main.grid, new Location(row, col));
+        for ( String m : arr )
+        {
+            TextCell t = new TextCell( m );
+            t.putSelfInGrid( Main.grid, new Location( row, col ) );
             col++;
         }
 
     }
+
 
     /**
      * Prints a 2d array with no spaces
      *
      * @param arr a 2d array of ints
      */
-    public static void print2DArray(int[][] arr, String delim) {
-        for (int r = 0; r < arr.length; r++) {
-            for (int c = 0; c < arr[0].length; c++) {
-                System.out.print(arr[r][c] + delim);
+    public static void print2DArray( int[][] arr, String delim )
+    {
+        for ( int r = 0; r < arr.length; r++ )
+        {
+            for ( int c = 0; c < arr[0].length; c++ )
+            {
+                System.out.print( arr[r][c] + delim );
             }
             System.out.println();
         }
@@ -57,10 +80,13 @@ public abstract class Mechanics {
      *
      * @return
      */
-    public static Location getPacmanLocation() {
+    public static Location getPacmanLocation()
+    {
         ArrayList<Location> actors = Main.grid.getOccupiedLocations();
-        for (Location loc : actors) {
-            if (Main.grid.get(loc) instanceof Pacman) {
+        for ( Location loc : actors )
+        {
+            if ( Main.grid.get( loc ) instanceof Pacman )
+            {
                 return loc;
             }
         }
@@ -70,49 +96,65 @@ public abstract class Mechanics {
     }
 
 
-    public static void removeAll() {
+    public static void removeAll()
+    {
         ArrayList<Location> actorLocs = Main.grid.getOccupiedLocations();
-        for (Location loc : actorLocs) {
-            Actor a = (Actor) Main.grid.get(loc);
+        for ( Location loc : actorLocs )
+        {
+            Actor a = (Actor)Main.grid.get( loc );
 
-            if (!(a instanceof Wall || a instanceof Pipe)) {
+            if ( !( a instanceof Wall || a instanceof Pipe ) )
+            {
 
-                Main.grid.remove(loc);
+                Main.grid.remove( loc );
             }
         }
     }
 
+
     /**
      * Loads a 2d array into the grid
-     *
-     * @param map
+     * @param grid the grid to load the mao into
+     * @param map the map
      */
-    public static void initGrid(int[][] map) {
-        for (int r = 0; r < map.length; r++) {
-            for (int c = 0; c < map[0].length; c++) {
+    public static void initGrid( int[][] map, Grid grid )
+    {
+        for ( int r = 0; r < map.length; r++ )
+        {
+            for ( int c = 0; c < map[0].length; c++ )
+            {
 
-                if (map[r][c] == 1) {
+                if ( map[r][c] == 1 )
+                {
                     Wall wall = new Wall();
-                    wall.putSelfInGrid(Main.grid, new Location(r, c));
-                } else if (map[r][c] == 0) {
+                    wall.putSelfInGrid( grid, new Location( r, c ) );
+                }
+                else if ( map[r][c] == 0 )
+                {
                     Pellet p = new Pellet();
 
-                    if (Main.currentLevel == 0) {
-                        p.setColor(colorValues[(int) (Math.random() *
-                                colorValues.length)]);
+                    if ( Main.currentLevel == 0 )
+                    {
+                        p.setColor( colorValues[(int)( Math.random() * colorValues.length )] );
                     }
-                    p.putSelfInGrid(Main.grid, new Location(r, c));
-                } else if (map[r][c] == 3) {
+                    p.putSelfInGrid( grid, new Location( r, c ) );
+                }
+                else if ( map[r][c] == 3 )
+                {
                     Pipe p = new Pipe();
-                    p.putSelfInGrid(Main.grid, new Location(r, c));
+                    p.putSelfInGrid( grid, new Location( r, c ) );
 
-                } else if (map[r][c] == 4) {
+                }
+                else if ( map[r][c] == 4 )
+                {
                     Pineapple p = new Pineapple();
-                    p.putSelfInGrid(Main.grid, new Location(r, c));
+                    p.putSelfInGrid( grid, new Location( r, c ) );
 
-                } else if (map[r][c] == 5) {
+                }
+                else if ( map[r][c] == 5 )
+                {
                     PowerPellet p = new PowerPellet();
-                    p.putSelfInGrid(Main.grid, new Location(r, c));
+                    p.putSelfInGrid( grid, new Location( r, c ) );
 
                 }
 
@@ -120,12 +162,27 @@ public abstract class Mechanics {
         }
     }
 
-    public static Actor repopulate() {
+
+    /**
+     * Loads the map into the Main.grid
+     * @param map the map
+     */
+    public static void initGrid( int[][] map )
+    {
+        initGrid( map, Main.grid );
+    }
+
+
+    public static Actor repopulate()
+    {
         double rand = Math.random();
-        if (rand >= .98) return new Pineapple();
-        if (rand >= .94) return new PowerPellet();
+        if ( rand >= .98 )
+            return new Pineapple();
+        if ( rand >= .94 )
+            return new PowerPellet();
         return new Pellet();
     }
+
 
     /**
      * Copies one array into another
@@ -133,17 +190,21 @@ public abstract class Mechanics {
      * @param array
      * @return
      */
-    public static int[][] copyArray(int[][] array) {
+    public static int[][] copyArray( int[][] array )
+    {
         int[][] newArray = new int[array.length][array[0].length];
 
-        for (int r = 0; r < array.length; r++) {
-            for (int c = 0; c < array[0].length; c++) {
+        for ( int r = 0; r < array.length; r++ )
+        {
+            for ( int c = 0; c < array[0].length; c++ )
+            {
                 newArray[r][c] = array[r][c];
             }
 
         }
         return newArray;
     }
+
 
     /**
      * Converts a Location to a node number
@@ -154,50 +215,59 @@ public abstract class Mechanics {
      * @param levelNumber the level number
      * @return a node number
      */
-    public static int convertToNode(Location loc, int levelNumber) {
-        int[][] map = Mechanics.loadFile("NodeMatrix_level" + levelNumber,
-                                         Main.ROW, Main.COL, "\t");
+    public static int convertToNode( Location loc, int levelNumber )
+    {
+        int[][] map = Mechanics.loadFile( "NodeMatrix_level" + levelNumber, Main.ROW, Main.COL, "\t" );
 
         int x = loc.getRow();
         int y = loc.getCol();
-        if (map[x][y] == -1) {
-            System.err.println("Mechanics.convertToNode: Not a valid location");
+        if ( map[x][y] == -1 )
+        {
+            System.err.println( "Mechanics.convertToNode: Not a valid location" );
             return -1;
 
-        } else {
+        }
+        else
+        {
             return map[x][y];
         }
     }
+
 
     /**
      * Converts the txt file into an 2d array of ints
      *
      * @param fileName the number of the level
      */
-    public static int[][] loadFile(String fileName, int arrWidth, int arrHeight,
-            String delim) {
+    public static int[][] loadFile(
+                    String fileName, int arrWidth, int arrHeight, String delim )
+    {
         int[][] map = new int[arrWidth][arrHeight];
         Main m = new Main();
-        InputStream in = m.getClass().getResourceAsStream(
-                "/" + fileName + ".txt");
-        BufferedReader br = new BufferedReader(new InputStreamReader(in));
+        InputStream in = m.getClass().getResourceAsStream( "/" + fileName + ".txt" );
+        BufferedReader br = new BufferedReader( new InputStreamReader( in ) );
 
-        for (int r = 0; r < map.length; r++) {
+        for ( int r = 0; r < map.length; r++ )
+        {
             String line = null;
 
-            try {
+            try
+            {
                 line = br.readLine();
-            } catch (IOException e) {
+            }
+            catch ( IOException e )
+            {
                 e.printStackTrace();
-                System.err.println("***Brad says \"shet\"***");
+                System.err.println( "***Brad says \"shet\"***" );
             }
 
-            String[] nums = line.split(delim);
+            String[] nums = line.split( delim );
             int c = 0;
-            for (String num : nums) {
+            for ( String num : nums )
+            {
 
                 num = num.trim();
-                map[r][c] = Integer.parseInt(num);
+                map[r][c] = Integer.parseInt( num );
 
                 c++;
             }
@@ -208,6 +278,7 @@ public abstract class Mechanics {
 
     }
 
+
     /**
      * Converts a node number to a location
      *
@@ -215,14 +286,17 @@ public abstract class Mechanics {
      * @param levelNumber the level Number
      * @return a Location
      */
-    public static Location convertToLocation(int node, int levelNumber) {
-        int[][] map = Mechanics.loadFile("NodeMatrix_level" + levelNumber,
-                                         Main.ROW, Main.COL, "\t");
+    public static Location convertToLocation( int node, int levelNumber )
+    {
+        int[][] map = Mechanics.loadFile( "NodeMatrix_level" + levelNumber, Main.ROW, Main.COL, "\t" );
 
-        for (int r = 0; r < map.length; r++) {
-            for (int c = 0; c < map[0].length; c++) {
-                if (map[r][c] == node) {
-                    return new Location(r, c);
+        for ( int r = 0; r < map.length; r++ )
+        {
+            for ( int c = 0; c < map[0].length; c++ )
+            {
+                if ( map[r][c] == node )
+                {
+                    return new Location( r, c );
                 }
             }
         }

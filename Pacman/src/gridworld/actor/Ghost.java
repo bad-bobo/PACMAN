@@ -65,7 +65,6 @@ public abstract class Ghost extends MovableActor
      * puts a pellet in this location
      * 3) Put a new Ghost in the new Location
      *
-     *
      * @param newLocation the new location
      */
     public void moveTo( Location newLocation )
@@ -90,7 +89,7 @@ public abstract class Ghost extends MovableActor
             {
                 if ( isScared() )
                 {
-                    this.removeSelfFromGrid();
+                    return;
                 }
             }
             if ( other instanceof PowerPellet )
@@ -129,13 +128,12 @@ public abstract class Ghost extends MovableActor
      *
      * @param next The next Location
      * @return True if can move, false otherwise.
-     *
      */
     public boolean canMove( Location next )
     {
 
         //The pipe entrances
-        if(next.equals( new Location( 12,4 ) ) || next.equals( new Location( 12, 19 ) ))
+        if ( next.equals( new Location( 12, 4 ) ) || next.equals( new Location( 12, 19 ) ) )
         {
             return false;
         }
@@ -163,6 +161,7 @@ public abstract class Ghost extends MovableActor
 
     /**
      * Helper Method to visualize the path of a Ghost. Turns the pellets into the color of the Ghost.
+     *
      * @param path The path of the Ghost, in points.
      */
     protected void visualizePath( ArrayList<Point> path )
@@ -182,14 +181,32 @@ public abstract class Ghost extends MovableActor
         }
     }
 
+
+    /**
+     * Returjs timer
+     * @return returns timer (int)
+     */
     public static int getScaredTimer()
     {
         return scaredTimer;
     }
 
+
+    /**
+     * Decrements the timer
+     */
     public static void decScaredTimer()
     {
         scaredTimer--;
+    }
+
+
+    /**
+     * Clears the timer, sets it to -1.
+     */
+    public static void clearScaredTimer()
+    {
+        scaredTimer = -1;
     }
 
 }

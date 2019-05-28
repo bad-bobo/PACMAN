@@ -60,7 +60,7 @@ public class Casper extends Ghost
         if ( isScared() )
         {
             setColor( Color.blue );
-            //TODO: Brad: make ghosts scatter
+            return;
         }
         else
         {
@@ -99,7 +99,7 @@ public class Casper extends Ghost
      * Creates a path to the destination. If the path arraylist already contains items, it doesnt create a new path.
      * Sets destination on map  to 9, then calls dfs, which finds a path to 9. Then sets map[destination] to 0.
      */
-    public void createNewPath( Location destination )
+    private void createNewPath( Location destination )
     {
         map[destination.getRow()][destination.getCol()] = 9;
         int[][] mapCopy = Mechanics.copyArray( map );
@@ -113,8 +113,6 @@ public class Casper extends Ghost
         }
         map[destination.getRow()][destination.getCol()] = 0;
     }
-
-
 
 
     /**
@@ -184,4 +182,15 @@ public class Casper extends Ghost
 
     }
 
+
+    public static int[][] getMap()
+    {
+        return map;
+    }
+
+
+    public ArrayList<Point> getPath()
+    {
+        return path;
+    }
 }

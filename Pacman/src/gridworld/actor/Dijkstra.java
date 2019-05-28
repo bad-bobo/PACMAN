@@ -60,6 +60,7 @@ public class Dijkstra extends Ghost
         if ( isScared() )
         {
             setColor( Color.blue );
+            return;
         }
         else
         {

@@ -198,6 +198,18 @@ class CasperTest
     //==================================================================================================================
     @Test void visualizePath()
     {
+        BoundedGrid grid = new BoundedGrid( Main.ROW, Main.COL );
+        Main.currentLevel = 1;
+        Mechanics.initGrid( Mechanics.loadFile( "Map_level1", Main.ROW, Main.COL, "" ), grid );
+        PacmanWorld world = new PacmanWorld( grid );
+
+        Casper casper = new Casper( 1 );
+        casper.putSelfInGrid( grid, new Location( 22, 22 ) );
+
+        //Path should be null b/c no path is made
+        assertNull( casper.getPath() );
+        casper.act();
+
 
     }
 
@@ -207,7 +219,7 @@ class CasperTest
      */
     @Test void act()
     {
-    }
 
+    }
 
 }

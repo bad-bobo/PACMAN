@@ -109,9 +109,11 @@ public class Casper extends Ghost
             DFS( mapCopy, location.getRow(), location.getCol(), path );
             path.remove( path.size() - 1 );
             visualizePath( path );
-
+            System.out.println( path.size() );
+            System.out.println(path);
         }
         map[destination.getRow()][destination.getCol()] = 0;
+
     }
 
 

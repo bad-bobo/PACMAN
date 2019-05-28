@@ -4,6 +4,7 @@ import gridworld.grid.Location;
 import project.Mechanics;
 
 import java.awt.*;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public class Dijkstra extends Ghost
     /**
      * the path of nodes leading upto a destination.
      */
-    private List<Integer> path = new ArrayList<>();
+    private ArrayList<Integer> path = new ArrayList<>();
 
     /**
      * The map Level of this ghost.
@@ -40,6 +41,7 @@ public class Dijkstra extends Ghost
     private Location prevLoc;
 
     private static final int NO_PARENT = -1;
+
 
     /**
      * Creates a Pink Ghost with Dijkstra's algorithm
@@ -89,6 +91,9 @@ public class Dijkstra extends Ghost
                 pathOfPoints.add( new Point( loc.getRow(), loc.getCol() ) );
             }
             visualizePath( pathOfPoints );
+            System.out.println( pathOfPoints.size() );
+            System.out.println( pathOfPoints
+            );
         }
         Location nextLoc = Mechanics.convertToLocation( path.remove( 0 ), levelNumber );
         repopulateHelper( nextLoc );
@@ -97,6 +102,7 @@ public class Dijkstra extends Ghost
 
     /**
      * Repopulates the previous cell with a mixture of pellets, powerpellet or Pineapple
+     *
      * @param next
      */
     private void repopulateHelper( Location next )
@@ -120,36 +126,42 @@ public class Dijkstra extends Ghost
 
     }
 
-
-
-
-
     // Function that implements Dijkstra's
     // single source shortest path
     // algorithm for a graph represented
     // using adjacency matrix
     // representation
-    //Todo: Shams: redo
-    private static List<Integer> dijkstra(
-                    int[][] adjacencyMatrix, int startVertex, int destinationVertex )
+
+
+    /**
+     * This  Algorithm is adapted from -=geeksforgeek.org (Linked down [1])=-
+     *
+     * @param adjacencyMatrix
+     * @param startNode
+     * @param destinationNode
+     * @return
+     * TODO: Comment
+     */
+    private static ArrayList<Integer> dijkstra(
+                    int[][] adjacencyMatrix, int startNode, int destinationNode )
     {
 
         //Number of vertices
-        int nVertices = adjacencyMatrix.length;
+        int numberOfNodes = adjacencyMatrix.length;
 
         // shortestDistances[i] will hold the
         // shortest distance from src to i
-        int[] shortestDistances = new int[nVertices];
+        int[] shortestDistances = new int[numberOfNodes];
 
         // added[i] will true if vertex i is
         // included  in shortest path tree
         // or shortest distance from src to
         // i is finalized
-        boolean[] added = new boolean[nVertices];
+        boolean[] added = new boolean[numberOfNodes];
 
         // Initialize all distances as
         // INFINITE and added[] as false
-        for ( int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++ )
+        for ( int vertexIndex = 0; vertexIndex < numberOfNodes; vertexIndex++ )
         {
             shortestDistances[vertexIndex] = Integer.MAX_VALUE;
             added[vertexIndex] = false;
@@ -157,19 +169,19 @@ public class Dijkstra extends Ghost
 
         // Distance of source vertex from
         // itself is always 0
-        shortestDistances[startVertex] = 0;
+        shortestDistances[startNode] = 0;
 
         // Parent array to store shortest
         // path tree
-        int[] parents = new int[nVertices];
+        int[] parents = new int[numberOfNodes];
 
         // The starting vertex does not
         // have a parent
-        parents[startVertex] = NO_PARENT;
+        parents[startNode] = NO_PARENT;
 
         // Find shortest path for all
         // vertices
-        for ( int i = 1; i < nVertices; i++ )
+        for ( int i = 1; i < numberOfNodes; i++ )
         {
 
             // Pick the minimum distance vertex
@@ -177,11 +189,15 @@ public class Dijkstra extends Ghost
             // processed. nearestVertex is
             // always equal to startNode in
             // first iteration.
+            /*
+             * Like basic selection sort, finds the smallest
+             */
             int nearestVertex = -1;
             int shortestDistance = Integer.MAX_VALUE;
-            for ( int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++ )
+            for ( int vertexIndex = 0; vertexIndex < numberOfNodes; vertexIndex++ )
             {
-                if ( !added[vertexIndex] && shortestDistances[vertexIndex] < shortestDistance )
+                /* If not visited and distance is smaller than shortestDistance*/
+                if ( (added[vertexIndex] == false) && shortestDistances[vertexIndex] < shortestDistance )
                 {
                     nearestVertex = vertexIndex;
                     shortestDistance = shortestDistances[vertexIndex];
@@ -195,7 +211,7 @@ public class Dijkstra extends Ghost
             // Update dist value of the
             // adjacent vertices of the
             // picked vertex.
-            for ( int vertexIndex = 0; vertexIndex < nVertices; vertexIndex++ )
+            for ( int vertexIndex = 0; vertexIndex < numberOfNodes; vertexIndex++ )
             {
                 int edgeDistance = adjacencyMatrix[nearestVertex][vertexIndex];
 
@@ -207,8 +223,8 @@ public class Dijkstra extends Ghost
             }
         }
 
-        List<Integer> arr = new ArrayList<>( destinationVertex );
-        createPath( destinationVertex, parents, arr );
+        ArrayList<Integer> arr = new ArrayList<>( destinationNode );
+        createPath( destinationNode, parents, arr );
         //        System.out.println( "Dijkstra.dijkstrea: Path: " + arr );
         return arr;
     }
@@ -231,6 +247,21 @@ public class Dijkstra extends Ghost
         //        System.out.print( destinationVertex + " " );
         arr.add( destinationVertex );
 
+
     }
 
+    /**
+     * Returns path of nodes
+     * @return
+     */
+    public ArrayList<Integer> getPath()
+    {
+        return path;
+    }
+
+    /*
+     * Sources:
+     * [1] https://www.geeksforgeeks.org/printing-paths-dijkstras-shortest-path-algorithm/
+     *
+     */
 }

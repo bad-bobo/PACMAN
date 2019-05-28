@@ -24,9 +24,9 @@ public abstract class Mechanics
 
 
     /**
-     * Not a test, just
+     * Sleeps the thread
      *
-     * @param num
+     * @param num Number of Milliseconds to make the thread sleep
      */
     public static void sleep( int num )
     {
@@ -42,11 +42,11 @@ public abstract class Mechanics
 
 
     /**
-     * pacman
+     * Creates a message on the grid with one letter in a cell
      *
-     * @param arr
-     * @param row
-     * @param col
+     * @param arr the array of strings
+     * @param row  the start row
+     * @param col   the start column
      */
     public static void gridMessage( int row, int col, String... arr )
     {
@@ -54,7 +54,7 @@ public abstract class Mechanics
         for ( String m : arr )
         {
             TextCell t = new TextCell( m );
-            t.putSelfInGrid( Main.grid, new Location( row, col ) );
+            t.putSelfInGrid( (Grid)Main.grid, new Location( row, col ) );
             col++;
         }
 
@@ -82,7 +82,7 @@ public abstract class Mechanics
     /**
      * Gets the currrent Location of Pacman
      *
-     * @return
+     * @return the current pacman Location in the grid, null if not found.
      */
     public static Location getPacmanLocation( BoundedGrid grid )
     {
@@ -338,4 +338,17 @@ public abstract class Mechanics
         return locs;
 
     }
+
+    public static ArrayList<Location> convertNodeToLocations( ArrayList<Integer> arr )
+    {
+        ArrayList<Location> locs = new ArrayList<>( arr.size() );
+        for(Integer node: arr)
+        {
+            Location loc = Mechanics.convertToLocation( node,  1);
+            locs.add( loc );
+        }
+
+        return  locs;
+    }
+
 }

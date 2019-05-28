@@ -123,6 +123,7 @@ public class Casper extends Ghost
 
 
     /**
+     * -=This Algorithm was adapted from leonardo-ono (linked down [1])=-
      * Uses Depth first search to find a path to Pacman.
      * 9 in the map is the destination
      * 2 in the map is a visited site
@@ -190,14 +191,27 @@ public class Casper extends Ghost
     }
 
 
+    /**
+     * returns map
+     * @return
+     */
     public static int[][] getMap()
     {
         return map;
     }
 
 
+    /**
+     * Returns path
+     * @return
+     */
     public ArrayList<Point> getPath()
     {
         return path;
     }
+
+    /*
+     * Sources:
+     * [1]https://github.com/leonardo-ono/JavaMazeSolverTest/blob/master/src/mazesolver/DepthFirst.java
+     */
 }

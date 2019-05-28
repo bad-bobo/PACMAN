@@ -239,7 +239,7 @@ public abstract class Mechanics
         int y = loc.getCol();
         if ( map[x][y] == -1 )
         {
-            System.err.println( "Mechanics.convertToNode: Not a valid location" );
+            //System.err.println( "Mechanics.convertToNode: Not a valid location" );
             return -1;
 
         }

@@ -10,6 +10,8 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.awt.Color.yellow;
+
 
 /**
  * Casper is a Blue Ghost with Depth first search capabilities. This Ghost finds a path to pacman, but not the best path.
@@ -73,35 +75,86 @@ public class Casper extends Ghost
         {
             setColor( Color.CYAN );
             Location pacmanLocation = Mechanics.getPacmanLocation(( BoundedGrid)gr);
-            if ( pacmanLocation == null || map[pacmanLocation.getRow()][pacmanLocation.getCol()] == 2 )
+            if ( pacmanLocation == null || pacmanLocation.getCol()<5||pacmanLocation.getCol()>18 )
             {
-                System.out.println( "Casper.act: No Pacman found" );
-                return;
+            clearPath(path);
+                if (prevActor instanceof Pellet)prevActor.setColor(Color.yellow);
+
+                System.out.println( "Casper: Pacman where u at????" );
+                path.clear();
+                while (true) {
+                    int rand = (int) (Math.random() * (4));
+
+                    switch (rand) {
+                        case 0:
+                            if (canMove(new Location(location.getRow() + 1,
+                                                     location.getCol()))) {
+                                moveHelper(new Location(location.getRow() + 1,
+                                                        location.getCol()));
+                                return;
+                            }
+                            break;
+
+                        case 1:
+                            if (canMove(new Location(location.getRow() - 1,
+                                                     location.getCol()))) {
+                                moveHelper(new Location(location.getRow() - 1,
+                                                        location.getCol()));
+                                return;
+                            }
+                            break;
+                        case 2:
+                            if (canMove(new Location(location.getRow(),
+                                                     location.getCol() + 1))) {
+                                moveHelper(new Location(location.getRow(),
+                                                        location.getCol() + 1));
+                                return;
+                            }
+                            break;
+                        case 3:
+                            if (canMove(new Location(location.getRow(),
+                                                     location.getCol() - 1))) {
+                                moveHelper(new Location(location.getRow(),
+                                                        location.getCol() - 1));
+                                return;
+                            }
+                            break;
+
+                    }
+                }
+
             }
             createNewPath( pacmanLocation );
             Point p = path.remove( path.size() - 1 );
             Location next = new Location( p.getX(), p.getY() );
-            Actor pa = this.prevActor;
-            this.prevActor = (Actor)Main.grid.get( next );
-            if ( this.prevActor != null )
-            {
-                this.prevActor.removeSelfFromGrid();
-            }
-            moveTo( next );
-            if ( this.prevLoc != null && ( pa == null || pa instanceof Pellet ) )
-            {
-                Mechanics.repopulate().putSelfInGrid( Main.grid, this.prevLoc );
-            }
-            else if ( this.prevLoc != null )
-            {
-                pa.putSelfInGrid( Main.grid, this.prevLoc );
-            }
-            this.prevLoc = next;
+           moveHelper(next);
         }
 
     }
 
+    /**
+     * moves and Repopulates the previous empty spaces or normal dot with a
+     * mixture of pellets, powerpellet or Pineapple
+     *
+     * also prevents eating pineapples, powerpellets, and other ghosts.
+     *
+     * @param next
+     */
+    private void moveHelper(Location next) {
+        Actor pa = this.prevActor;
+        this.prevActor = (Actor) Main.grid.get(next);
+        if (this.prevActor != null) {
+            this.prevActor.removeSelfFromGrid();
+        }
+        moveTo(next);
+        if (this.prevLoc != null && (pa == null || pa instanceof Pellet)) {
+            Mechanics.repopulate().putSelfInGrid(Main.grid, this.prevLoc);
+        } else if (this.prevLoc != null) {
+            pa.putSelfInGrid(Main.grid, this.prevLoc);
+        }
+        this.prevLoc = next;
 
+    }
     /**
      * Creates a path to the destination. If the path arraylist already contains items, it doesnt create a new path.
      * Sets destination on map  to 9, then calls dfs, which finds a path to 9. Then sets map[destination] to 0.

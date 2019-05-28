@@ -173,7 +173,7 @@ public abstract class Ghost extends MovableActor
 
             Location loc = new Location( path.get( i ).getX(), path.get( i ).getY() );
             Actor next = (Actor) grid.get( loc );
-            if ( ( next instanceof Pellet && !( next instanceof PowerPellet ) ) || !( next instanceof Actor ) )
+            if ( ( next instanceof Pellet ) ||next==null)
             {
                 x.putSelfInGrid( grid, loc );
             }
@@ -181,6 +181,35 @@ public abstract class Ghost extends MovableActor
         }
     }
 
+    /**
+     * Created to protect existing calls
+     * @param path Path of points
+     */
+    protected void clearPath( ArrayList<Point> path)
+    {
+        clearPath( path, Main.grid);
+    }
+
+    /**
+     * Helper Method to clear the path of a Ghost when it is disrupted (like when pacman hides). Turns the pellets back to white.
+     *
+     * @param path The path of the Ghost, in points.
+     */
+    protected void clearPath( ArrayList<Point> path , BoundedGrid grid)
+    {
+        for ( int i = 1; i < path.size(); i++ )
+        {
+            Pellet x = new Pellet();
+
+            Location loc = new Location( path.get( i ).getX(), path.get( i ).getY() );
+            Actor next = (Actor) grid.get( loc );
+            if ( ( next instanceof Pellet ))
+            {
+                x.putSelfInGrid( grid, loc );
+            }
+
+        }
+    }
 
     /**
      * Created to protect existing calls
@@ -190,6 +219,11 @@ public abstract class Ghost extends MovableActor
     {
         visualizePath( path, Main.grid);
     }
+
+    /**
+     * Created to protect existing calls
+     * @param path Path of points
+     */
 
 
     /**

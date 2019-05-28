@@ -45,7 +45,7 @@ public class Dijkstra extends Ghost {
      * @param levelNumber level number (for future updates)
      */
     public Dijkstra(int levelNumber) {
-        super(Color.GREEN);
+        super(Color.red);
         this.levelNumber = levelNumber;
         adjMatrix = Mechanics.loadFile("AdjMatrix_level" + levelNumber, 236,
                                        236, "");
@@ -173,22 +173,19 @@ public class Dijkstra extends Ghost {
     @Override
     public void act() {
         if (isScared()) {
-            setColor(Color.blue);
+            Color yello=new Color(255,200,0);
+            if (getColor()!=Color.blue)
+                setColor( Color.blue );
+            else setColor(yello);
             return;
         } else {
-            setColor(Color.green);
+            setColor(Color.red);
         }
         if (Mechanics.convertToNode(Mechanics.getPacmanLocation(),
                                     levelNumber) <
                 0) { //wander when pacman hiding
             System.out.println("Blinky: bruh where tf is Pacman");
-            ArrayList<Point> pathOfPoints = new ArrayList<>();
-            for (int node : path) {
-                Location loc = Mechanics.convertToLocation(node, levelNumber);
-                pathOfPoints.add(new Point(loc.getRow(), loc.getCol()));
-            }
-            if (prevActor instanceof Pellet)prevActor.setColor(Color.yellow);
-            clearPath(pathOfPoints);
+            clearPath();
             path.clear();
             while (true) {
                 int rand = (int) (Math.random() * (4));
@@ -261,6 +258,16 @@ public class Dijkstra extends Ghost {
                                                        levelNumber);
         moveHelper(nextLoc);
     }
+
+public void clearPath(){
+    ArrayList<Point> pathOfPoints = new ArrayList<>();
+    for (int node : path) {
+        Location loc = Mechanics.convertToLocation(node, levelNumber);
+        pathOfPoints.add(new Point(loc.getRow(), loc.getCol()));
+    }
+    if (prevActor instanceof Pellet)prevActor.setColor(Color.yellow);
+    super.clearPath(pathOfPoints);
+}
 
     /**
      * moves and Repopulates the previous empty spaces or normal dot with a

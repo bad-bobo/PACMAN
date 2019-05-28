@@ -220,6 +220,7 @@ public abstract class Ghost extends MovableActor
         visualizePath( path, Main.grid);
     }
 
+abstract void clearPath();
     /**
      * Created to protect existing calls
      * @param path Path of points

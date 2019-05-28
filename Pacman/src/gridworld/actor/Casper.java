@@ -10,6 +10,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import static java.awt.Color.blue;
 import static java.awt.Color.yellow;
 
 
@@ -49,7 +50,7 @@ public class Casper extends Ghost
      */
     public Casper( int levelNumber )
     {
-        super( Color.CYAN );
+        super( Color.pink );
         map = Mechanics.loadFile( "Map_level" + levelNumber, Main.ROW, Main.COL, "" );
         map[12][4] = 1;
         map[12][19] = 1;
@@ -68,16 +69,20 @@ public class Casper extends Ghost
         }
         if ( isScared() )
         {
+        Color yello=new Color(255,200,0);
+        if (getColor()!=Color.blue)
             setColor( Color.BLUE );
+        else setColor(yello);
             return;
         }
         else
         {
-            setColor( Color.CYAN );
+            setColor( Color.pink );
             Location pacmanLocation = Mechanics.getPacmanLocation(( BoundedGrid)gr);
-            if ( pacmanLocation == null || pacmanLocation.getCol()<5||pacmanLocation.getCol()>18 )
+            System.out.println(pacmanLocation.getRow());
+            if ( pacmanLocation == null || ((pacmanLocation.getCol()<5||pacmanLocation.getCol()>18)&&pacmanLocation.getRow()>9&&pacmanLocation.getRow()<15 ))
             {
-            clearPath(path);
+                clearPath(path);
                 if (prevActor instanceof Pellet)prevActor.setColor(Color.yellow);
 
                 System.out.println( "Casper: Pacman where u at????" );
@@ -131,6 +136,10 @@ public class Casper extends Ghost
         }
 
     }
+
+public void clearPath(){
+super.clearPath(path);
+}
 
     /**
      * moves and Repopulates the previous empty spaces or normal dot with a

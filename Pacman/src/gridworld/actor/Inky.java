@@ -24,11 +24,13 @@ public class Inky extends Ghost
 
     public Inky()
     {
-        super( Color.yellow );
+        super( Color.green );
 
     }
 
-
+public void clearPath(){
+//no path
+}
     /**
      * Randomly chooses a location to move
      */
@@ -36,12 +38,15 @@ public class Inky extends Ghost
     {
         if ( isScared() )
         {
-            setColor( Color.BLUE );
-            return;
+            Color yello=new Color(255,200,0);
+            if (getColor()!=Color.blue)
+                setColor( Color.blue );
+            else setColor(yello);
+                        return;
         }
         else
         {
-            setColor( Color.YELLOW );
+            setColor(Color.green);
         }
         while (true) {
             int rand = (int) (Math.random() * (4));

@@ -13,7 +13,7 @@ public class PowerPellet extends Actor implements Edible
     public PowerPellet()
     {
         super();
-        setColor( new Color( 247, 255, 160 ) );
+        setColor(new Color(150,250,255) );
     }
 
 

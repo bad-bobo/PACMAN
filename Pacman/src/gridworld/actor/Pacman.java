@@ -79,6 +79,7 @@ public class Pacman extends MovableActor
         {
             if(Ghost.isScared())
             {
+                ((Ghost)other).clearPath();
                 other.removeSelfFromGrid();
                 return;
             }

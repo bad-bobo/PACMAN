@@ -4,9 +4,9 @@ import gridworld.grid.Grid;
 
 public class Pineapple extends Actor implements Food {
 
-public Pineapple(){
-setColor(null);
-}
+    public Pineapple() {
+        setColor(null);
+    }
 
     @Override
     public void eatAction(Grid grid) {

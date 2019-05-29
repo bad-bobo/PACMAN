@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * A pellet can be eaten only by Pacman and increases the score
  */
-public class Pellet extends Actor implements Edible
+public class Pellet extends Actor implements Food
 {
     /**
      * Creates a new Pellet, sets the color to yello
@@ -33,7 +33,7 @@ public class Pellet extends Actor implements Edible
      * Increments the score by 1.
      * @param grid
      */
-    public void action( Grid grid )
+    public void eatAction( Grid grid )
     {
         Score.inc();
     }

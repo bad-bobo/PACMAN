@@ -145,9 +145,9 @@ public class Pacman extends MovableActor
         }
         Location next = loc.getAdjacentLocation( getDirection() );
 
-        if ( gr.isValid( next ) && gr.get( next ) instanceof Edible )
+        if ( gr.isValid( next ) && gr.get( next ) instanceof Food)
         {
-            ( (Edible)gr.get( next ) ).action( gr );
+            ( (Food)gr.get(next ) ).eatAction(gr );
         }
         if ( !gr.isValid( next ) )
             return false;

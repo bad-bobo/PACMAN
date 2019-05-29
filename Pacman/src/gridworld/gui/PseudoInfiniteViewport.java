@@ -86,7 +86,7 @@ public class PseudoInfiniteViewport extends JViewport
             else if ( vDelta != 0 && hDelta == 0 )
                 getPannableView().panBy( hDelta, vDelta );
             else
-                changed = false; // no pan action was taken
+                changed = false; // no pan eatAction was taken
             panPoint = pt;
             if ( !panPoint.equals( getPanCenterPoint() ) && !isAdjusting )
             { // needs recentering

@@ -149,7 +149,7 @@ public class World<T>
      *
      * @param loc the grid location that the user selected
      * @return true if the world consumes the click, or false if the GUI should
-     * invoke the Location->Edit menu action
+     * invoke the Location->Edit menu eatAction
      */
     public boolean locationClicked( Location loc )
     {

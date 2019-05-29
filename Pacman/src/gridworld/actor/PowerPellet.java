@@ -8,7 +8,7 @@ import java.awt.*;
 /**
  * When eaten by pacman, makes the Ghosts Scatter
  */
-public class PowerPellet extends Actor implements Edible
+public class PowerPellet extends Actor implements Food
 {
     public PowerPellet()
     {
@@ -17,7 +17,7 @@ public class PowerPellet extends Actor implements Edible
     }
 
 
-    public void action( Grid grid )
+    public void eatAction( Grid grid )
     {
         Ghost.scare();
     }

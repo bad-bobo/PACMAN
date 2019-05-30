@@ -15,6 +15,7 @@ import static gridworld.actor.Ghost.isScared;
 public class Inky extends Ghost
 {
 
+    public int  testCountOf1 = 0;
     /**
      * The previous Actor
      */
@@ -76,6 +77,8 @@ public class Inky extends Ghost
                     if ( canMove( new Location( location.getRow() - 1, location.getCol() ) ) )
                     {
                         moveHelper( new Location( location.getRow() - 1, location.getCol() ) );
+                        testCountOf1++;
+
                         return;
                     }
                     break;
@@ -115,7 +118,6 @@ public class Inky extends Ghost
         this.prevActor = (Actor)Main.grid.get( next );
         if ( this.prevActor != null )
         {
-
             this.prevActor.removeSelfFromGrid();
         }
         moveTo( next );

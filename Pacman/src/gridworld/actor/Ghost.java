@@ -1,6 +1,8 @@
 package gridworld.actor;
 
-import gridworld.grid.*;
+import gridworld.grid.BoundedGrid;
+import gridworld.grid.Grid;
+import gridworld.grid.Location;
 import project.Main;
 
 import java.awt.*;
@@ -155,8 +157,7 @@ public abstract class Ghost extends MovableActor
             return false;
         }
 
-
-//        return !( neighbor instanceof Ghost );
+        //        return !( neighbor instanceof Ghost );
 
         return true;
     }
@@ -167,7 +168,7 @@ public abstract class Ghost extends MovableActor
      *
      * @param path The path of the Ghost, in points.
      */
-    protected void visualizePath( ArrayList<Point> path , BoundedGrid grid)
+    protected void visualizePath( ArrayList<Point> path, BoundedGrid grid )
     {
         for ( int i = 1; i < path.size(); i++ )
         {
@@ -175,8 +176,8 @@ public abstract class Ghost extends MovableActor
             x.setColor( this.getColor() );
 
             Location loc = new Location( path.get( i ).getX(), path.get( i ).getY() );
-            Actor next = (Actor) grid.get( loc );
-            if ( ( next instanceof Pellet ) ||next==null)
+            Actor next = (Actor)grid.get( loc );
+            if ( ( next instanceof Pellet ) || next == null )
             {
                 x.putSelfInGrid( grid, loc );
             }
@@ -184,29 +185,32 @@ public abstract class Ghost extends MovableActor
         }
     }
 
+
     /**
      * Created to protect existing calls
+     *
      * @param path Path of points
      */
-    protected void clearPath( ArrayList<Point> path)
+    protected void clearPath( ArrayList<Point> path )
     {
-        clearPath( path, Main.grid);
+        clearPath( path, Main.grid );
     }
+
 
     /**
      * Helper Method to clear the path of a Ghost when it is disrupted (like when pacman hides). Turns the pellets back to white.
      *
      * @param path The path of the Ghost, in points.
      */
-    protected void clearPath( ArrayList<Point> path , BoundedGrid grid)
+    protected void clearPath( ArrayList<Point> path, BoundedGrid grid )
     {
         for ( int i = 1; i < path.size(); i++ )
         {
             Pellet x = new Pellet();
 
             Location loc = new Location( path.get( i ).getX(), path.get( i ).getY() );
-            Actor next = (Actor) grid.get( loc );
-            if ( ( next instanceof Pellet ))
+            Actor next = (Actor)grid.get( loc );
+            if ( ( next instanceof Pellet ) )
             {
                 x.putSelfInGrid( grid, loc );
             }
@@ -214,24 +218,27 @@ public abstract class Ghost extends MovableActor
         }
     }
 
+
     /**
      * Created to protect existing calls
+     *
      * @param path Path of points
      */
-    protected void visualizePath( ArrayList<Point> path)
+    protected void visualizePath( ArrayList<Point> path )
     {
-        visualizePath( path, Main.grid);
+        visualizePath( path, Main.grid );
     }
 
-abstract void clearPath();
+
+    abstract void clearPath();
     /**
      * Created to protect existing calls
      * @param path Path of points
      */
-
 
     /**
      * Returjs timer
+     *
      * @return returns timer (int)
      */
     public static int getScaredTimer()

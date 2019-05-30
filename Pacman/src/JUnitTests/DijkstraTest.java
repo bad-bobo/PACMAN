@@ -1,5 +1,6 @@
 package JUnitTests;
 
+import gridworld.actor.Casper;
 import gridworld.actor.Dijkstra;
 import gridworld.actor.Ghost;
 import gridworld.actor.Pacman;
@@ -10,6 +11,7 @@ import org.junit.jupiter.api.Test;
 import project.Main;
 import project.Mechanics;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -73,6 +75,25 @@ class DijkstraTest
         //Testing visualization
         {
             //Already done in CasperTest.java, they both inherit the same method.
+        }
+
+
+        Dijkstra.clearScaredTimer();
+        Dijkstra.scare();
+        dijkstra.setColor( Color.BLACK );
+        dijkstra.act();
+        dijkstra.act();
+
+        Casper.clearScaredTimer();
+
+        dijkstra.removeSelfFromGrid();
+        dijkstra.putSelfInGrid( grid, new Location( 22, 22 ) );
+        pacman.removeSelfFromGrid();
+        pacman.putSelfInGrid( grid, new Location( 12, 1 ) );
+
+        for ( int i = 0; i < 30; i++ )
+        {
+            dijkstra.act();
         }
     }
 }

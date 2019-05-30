@@ -18,7 +18,7 @@ public class Main
 
     public static int currentLevel;
 
-    private static PacmanWorld world;
+    public static PacmanWorld world;
 
 
     public static void main( String[] args )

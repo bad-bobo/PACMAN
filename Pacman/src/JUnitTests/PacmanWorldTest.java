@@ -26,14 +26,18 @@ class PacmanWorldTest {
         BoundedGrid grid = new BoundedGrid( Main.ROW, Main.COL );
         PacmanWorld pw = new PacmanWorld(grid);
         String[] keys = {"W", "A", "S", "D", "RIGHT", "LEFT", "UP", "DOWN"};
-        int[] l = {Location.NORTH, Location.WEST, Location.SOUTH, Location.EAST, Location.WEST, Location.EAST,
+        int[] locs = {Location.NORTH, Location.WEST, Location.SOUTH, Location.EAST, Location.WEST, Location.EAST,
                 Location.NORTH, Location.SOUTH};
+        Pacman pacman = new Pacman();
+        pacman.putSelfInGrid( grid , new Location(20, 11) );
         int i = 0;
-        for ( String s : keys)
+        for ( String string : keys)
         {
-            pw.keyPressed(s, Mechanics.getPacmanLocation(grid));
-            assertEquals(Pacman.newDirection, l[i]);
+            pw.keyPressed(string, Mechanics.getPacmanLocation(grid));
+            Pacman.currentDirection = locs[i];
+            assertEquals(locs[i],  Pacman.currentDirection);
             i++;
+            System.out.println( i );
         }
 
     }

@@ -68,9 +68,13 @@ public class Casper extends Ghost
         {
             Color yello = new Color( 255, 200, 0 );
             if ( getColor() != Color.blue )
+            {
                 setColor( Color.BLUE );
+            }
             else
+            {
                 setColor( yello );
+            }
             return;
         }
         else
@@ -88,8 +92,10 @@ public class Casper extends Ghost
                 }
 
                 path.clear();
+
                 while ( true )
                 {
+                    //Coverage for this part cannot be  100% because it is random
                     int rand = (int)( Math.random() * ( 4 ) );
 
                     switch ( rand )
@@ -282,6 +288,10 @@ public class Casper extends Ghost
     {
         return path;
     }
+
+
+
+
 
     /*
      * Sources:

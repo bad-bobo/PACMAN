@@ -112,6 +112,9 @@ public class Pacman extends MovableActor
     }
 
 
+
+
+
     /**
      * If the Pacman can move, moves the pacman. See PacmanWorld keyPressed for more info
      */

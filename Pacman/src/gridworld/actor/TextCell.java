@@ -30,12 +30,20 @@ public class TextCell extends Actor
     }
 
 
+    /**
+     * Stub, a textCell does not move
+     */
     @Override public void act()
     {
 
     }
 
 
+    /**
+     * Converts the textcell string to a string that can fit in the cell
+     * This is from the original gridworld
+     * @return a String
+     */
     @Override public String toString()
     {
         if ( text.length() == 1 )

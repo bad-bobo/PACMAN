@@ -56,13 +56,37 @@ public abstract class MovableActor extends Actor
     /**
      * Moves this actor forward, if possible. Not implemented yet.
      */
-    public abstract void move();
-
     /**
-     * Tests whether this actor can move forward into a location that is empty or is not a wall. Not implemented.
-     *
-     * @return true if this actor can move.
+     * Moves forward, if possible.
+     * Moves this actor forward, if possible. Not implemented yet.
      */
-    public abstract boolean canMove();
+    void move()
+    {
+        Grid<Actor> gr = getGrid();
+        if ( gr == null )
+            return;
+        Location loc = getLocation();
+        Location next = loc.getAdjacentLocation( getDirection() );
+        if ( gr.isValid( next ) )
+            moveTo( next );
+        else
+            removeSelfFromGrid();
+    }
+
+
+    public boolean canMove()
+    {
+        Grid<Actor> gr = getGrid();
+        if ( gr == null )
+            return false;
+        Location loc = getLocation();
+        Location next = loc.getAdjacentLocation( getDirection() );
+        if ( !gr.isValid( next ) )
+            return false;
+        Actor neighbor = gr.get( next );
+        // return ( neighbor == null ) || ( neighbor instanceof Flower );
+        return ( !( neighbor instanceof Wall ) );
+
+    }
 
 }

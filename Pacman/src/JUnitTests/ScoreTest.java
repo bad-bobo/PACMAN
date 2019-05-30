@@ -28,6 +28,7 @@ class ScoreTest {
     @Test
     void inc() {
         Score s = new Score();
+        s.clear();
         s.inc();
         assertEquals(1, s.score);
     }
@@ -79,5 +80,7 @@ class ScoreTest {
         s.inc(101);
         assertEquals("111", s.toString());
     }
+
+
 
 }

@@ -29,7 +29,13 @@ public class Score extends Actor
         score++;
     }
 
-public static void clear(){score=0;}
+
+    public static void clear()
+    {
+        score = 0;
+    }
+
+
     /**
      * increments score by inc
      *

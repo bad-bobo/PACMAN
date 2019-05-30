@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 import project.Main;
 import project.Mechanics;
 
+import java.awt.*;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -259,6 +260,50 @@ public class CasperTest
                 assertEquals( ( (Actor)grid.get( loc ) ).getColor(), casper.getColor() );
 
             }
+        }
+
+        Casper.clearScaredTimer();
+        Casper.scare();
+        casper.setColor( Color.BLACK );
+        casper.act();
+        casper.act();
+
+        Casper.clearScaredTimer();
+
+        casper.removeSelfFromGrid();
+        casper.putSelfInGrid( grid, new Location( 22, 22 ) );
+        pacman.removeSelfFromGrid();
+        pacman.putSelfInGrid( grid, new Location( 12, 1 ) );
+
+        for ( int i = 0; i < 35; i++ )
+        {
+            casper.act();
+        }
+
+        //Testing map
+        {
+            int[][] actualMap = casper.getMap();
+            int[][] expectedMap = Mechanics.loadFile( "Map_level" + 1, Main.ROW, Main.COL, "");
+
+            expectedMap[12][4] = 1;
+            expectedMap[12][19] = 1;
+            for(int r = 0; r < expectedMap.length; r++)
+            {
+                for(int c = 0; c < expectedMap[0].length; c++)
+                {
+                    assertEquals( expectedMap[r][c], actualMap[r][c] );
+                }
+            }
+        }
+
+        //Testing movable actor methods
+        {
+            //This method is being overriden in all classes, but is there for a general reference and maybe for future classes, it was written by gridworld
+            casper.removeSelfFromGrid();
+            casper.putSelfInGrid( grid, new Location( 22,22 ) );
+//            world.show();
+//            Mechanics.sleep( 1000 );
+            assertTrue( casper.canMove() );
         }
 
     }

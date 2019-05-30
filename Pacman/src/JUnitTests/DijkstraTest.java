@@ -1,6 +1,7 @@
 package JUnitTests;
 
 import gridworld.actor.Dijkstra;
+import gridworld.actor.Ghost;
 import gridworld.actor.Pacman;
 import gridworld.grid.BoundedGrid;
 import gridworld.grid.Location;
@@ -12,6 +13,7 @@ import project.Mechanics;
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
 
 
 class DijkstraTest
@@ -20,9 +22,10 @@ class DijkstraTest
     @Test void act()
     {
 
+        Ghost.clearScaredTimer();
         ArrayList<Location> expectedPath = new ArrayList<Location>( 19 );
         {
-            expectedPath.add( new Location( 21, 22 ) );
+//            expectedPath.add( new Location( 21, 22 ) );
             expectedPath.add( new Location( 21, 21 ) );
             expectedPath.add( new Location( 21, 20 ) );
             expectedPath.add( new Location( 21, 19 ) );
@@ -30,7 +33,6 @@ class DijkstraTest
             expectedPath.add( new Location( 21, 17 ) );
             expectedPath.add( new Location( 20, 17 ) );
             expectedPath.add( new Location( 19, 17 ) );
-            expectedPath.add( new Location( 19, 16 ) );
             expectedPath.add( new Location( 19, 16 ) );
             expectedPath.add( new Location( 19, 15 ) );
             expectedPath.add( new Location( 19, 14 ) );
@@ -55,7 +57,14 @@ class DijkstraTest
         Pacman pacman = new Pacman();
         pacman.putSelfInGrid( grid, new Location( 20, 11 ) );
 
+        world.show();
+//        Mechanics.sleep( 1000 );
+
+        assertFalse( Dijkstra.isScared() );
+
         dijkstra.act();
+//        Mechanics.sleep( 10000 );
+        System.out.println( dijkstra.getPath() );
         ArrayList<Location> actualPath = Mechanics.convertNodeToLocations( ( dijkstra.getPath() ) );
 
         //Testing act path

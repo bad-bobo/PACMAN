@@ -57,17 +57,17 @@ public class Bush extends Actor implements Food
         {
             Main.currentLevel = 1;
 
-            Inky inky1 = new Inky();
-            inky1.putSelfInGrid( grid, new Location( 22, 22 ) );
+//            Inky inky1 = new Inky();
+//            inky1.putSelfInGrid( grid, new Location( 22, 22 ) );
+//
+//            Inky inky2 = new Inky();
+//            inky2.putSelfInGrid( grid, new Location( 3, 2 ) );
+//
+//            Inky inky3 = new Inky();
+//            inky3.putSelfInGrid( grid, new Location( 10, 10 ) );
 
-            Inky inky2 = new Inky();
-            inky2.putSelfInGrid( grid, new Location( 3, 2 ) );
-
-            Inky inky3 = new Inky();
-            inky3.putSelfInGrid( grid, new Location( 10, 10 ) );
-
-//            Dijkstra dijkstra = new Dijkstra(1);
-//            dijkstra.putSelfInGrid( grid, new Location( 22, 22 ) );
+            Dijkstra dijkstra = new Dijkstra(1);
+            dijkstra.putSelfInGrid( grid, new Location( 22, 22 ) );
 
 
 

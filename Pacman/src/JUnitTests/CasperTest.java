@@ -26,6 +26,7 @@ public class CasperTest
      */
     @Test void isScared()
     {
+        Ghost.clearScaredTimer();
         assertFalse( Casper.isScared() );
         Casper.scare();
         assertTrue( Casper.isScared() );
@@ -55,6 +56,7 @@ public class CasperTest
      */
     @Test void scare()
     {
+        Ghost.clearScaredTimer();
         assertFalse( Casper.isScared() );
         Casper.scare();
         assertTrue( Casper.isScared() );

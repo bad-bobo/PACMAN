@@ -84,7 +84,7 @@ public abstract class Mechanics
      *
      * @return the current pacman Location in the grid, null if not found.
      */
-    public static Location getPacmanLocation( BoundedGrid grid )
+    public static Location getPacmanLocation( Grid grid )
     {
         ArrayList<Location> actors = grid.getOccupiedLocations();
         for ( Location loc : actors )
@@ -233,6 +233,10 @@ public abstract class Mechanics
      */
     public static int convertToNode( Location loc, int levelNumber )
     {
+        if(loc == null)
+        {
+            return -1;
+        }
         int[][] map = Mechanics.loadFile( "NodeMatrix_level" + levelNumber, Main.ROW, Main.COL, "\t" );
 
         int x = loc.getRow();

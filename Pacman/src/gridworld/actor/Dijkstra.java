@@ -1,5 +1,6 @@
 package gridworld.actor;
 
+import gridworld.grid.BoundedGrid;
 import gridworld.grid.Location;
 import project.Main;
 import project.Mechanics;
@@ -191,8 +192,10 @@ public class Dijkstra extends Ghost
         {
             setColor( Color.red );
         }
-        if ( Mechanics.convertToNode( Mechanics.getPacmanLocation(), levelNumber ) < 0 )
-        { //wander when pacman hiding
+        if ( Mechanics.convertToNode( Mechanics.getPacmanLocation(( BoundedGrid)getGrid()), levelNumber ) < 0 )
+        {
+            System.out.println( "Dijkstra.act: PACMAN LOCATION: " +  Mechanics.getPacmanLocation(( BoundedGrid)getGrid()) );
+            //wander when pacman hiding
             System.out.println( "Blinky: bruh where tf is Pacman" );
             clearPath();
             path.clear();
@@ -239,8 +242,10 @@ public class Dijkstra extends Ghost
 
         if ( path.size() < 1 )
         {
+            System.out.println( "Hello" );
+
             path.clear();
-            Location pacmanLoc = Mechanics.getPacmanLocation();
+            Location pacmanLoc = Mechanics.getPacmanLocation(getGrid());
             if ( pacmanLoc == null )
             {
                 return;

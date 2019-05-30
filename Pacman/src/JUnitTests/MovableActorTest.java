@@ -43,22 +43,4 @@ class MovableActorTest {
         ma.setDirection(90);
         assertEquals(90, ma.getDirection());
     }
-
-    /**
-     * This tests (returns true no matter what) the move method from MovableActor, as it is not implemented in any of
-     * the abstract classes subclasses.
-     */
-    @Test
-    void move() {
-        assertTrue(true);
-    }
-
-    /**
-     * This tests (returns true no matter what) the canMove method from MovableActor, as it is not implemented in any of
-     * the abstract classes subclasses.
-     */
-    @Test
-    void canMove() {
-        assertTrue(true);
-    }
 }

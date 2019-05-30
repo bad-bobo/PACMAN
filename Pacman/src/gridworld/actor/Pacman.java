@@ -147,7 +147,7 @@ public class Pacman extends MovableActor
 
         if ( gr.isValid( next ) && gr.get( next ) instanceof Food)
         {
-            ( (Food)gr.get(next ) ).eatAction(gr );
+            ( (Food)gr.get(next ) ).eatAction( gr );
         }
         if ( !gr.isValid( next ) )
             return false;

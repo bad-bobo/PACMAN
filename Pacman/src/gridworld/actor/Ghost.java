@@ -155,7 +155,10 @@ public abstract class Ghost extends MovableActor
             return false;
         }
 
-        return !( neighbor instanceof Ghost );
+
+//        return !( neighbor instanceof Ghost );
+
+        return true;
     }
 
 

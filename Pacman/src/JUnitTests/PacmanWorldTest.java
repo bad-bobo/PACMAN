@@ -12,6 +12,9 @@ import javax.swing.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class tests the class PacmanWorld
+ */
 class PacmanWorldTest {
 
     @org.junit.jupiter.api.Test

@@ -35,9 +35,11 @@ public abstract class MovableActor extends Actor
      */
     public void setDirection( int newDirection )
     {
-        direction = newDirection % Location.FULL_CIRCLE;
+        direction = newDirection;
         if ( direction < 0 )
             direction += Location.FULL_CIRCLE;
+        if (direction > 359)
+            direction -= Location.FULL_CIRCLE;
     }
 
 
@@ -56,8 +58,7 @@ public abstract class MovableActor extends Actor
 
 
     /**
-     * Moves the bug forward, putting a flower into the location it previously
-     * occupied.
+     * Moves forward, if possible.
      */
     void move()
     {
@@ -74,8 +75,7 @@ public abstract class MovableActor extends Actor
 
 
     /**
-     * Tests whether this bug can move forward into a location that is empty or
-     * contains a flower.
+     * Tests whether this actor can move forward into a location that is empty or is not a wall.
      *
      * @return true if this bug can move.
      */

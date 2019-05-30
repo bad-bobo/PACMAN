@@ -9,6 +9,9 @@ import gridworld.grid.*;
 import project.Main;
 import project.Mechanics;
 
+/**
+ * This class tests the Pacman class.
+ */
 class PacmanTest {
 
     /**
@@ -121,7 +124,7 @@ class PacmanTest {
     void getDirection() {
         Pacman p = new Pacman();
         assertEquals(0, p.getDirection());
-        Pacman.currentDirection = 90;
+        Pacman.newDirection = 90;
         assertEquals(90, p.getDirection());
     }
 

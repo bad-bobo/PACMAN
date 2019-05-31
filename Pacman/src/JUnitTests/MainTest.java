@@ -17,7 +17,7 @@ class MainTest
     {
         Main.main(new String[]{});
         Main.world.show();
-        Mechanics.sleep( 5000 );
+        Mechanics.sleep( 1000 );
     }
 
 

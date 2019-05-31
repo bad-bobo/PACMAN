@@ -37,7 +37,7 @@ class PacmanWorldTest {
             Pacman.currentDirection = locs[i];
             assertEquals(locs[i],  Pacman.currentDirection);
             i++;
-            System.out.println( i );
+//            System.out.println( i );
         }
 
     }

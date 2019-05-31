@@ -6,10 +6,13 @@ import java.awt.*;
 
 
 /**
- * When eaten by pacman, makes the Ghosts Scatter
+ * When eaten by pacman, makes the Ghosts idle
  */
 public class PowerPellet extends Actor implements Food
 {
+    /**
+     * Default constructor, sets color to blue
+     */
     public PowerPellet()
     {
         super();
@@ -17,12 +20,19 @@ public class PowerPellet extends Actor implements Food
     }
 
 
+    /**
+     * Scares the ghost
+     * @param grid the grid in which the object is
+     */
     public void eatAction( Grid grid )
     {
         Ghost.scare();
     }
 
 
+    /**
+     * Stub
+     */
     public void act()
     {
 

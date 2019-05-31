@@ -9,11 +9,14 @@ import java.awt.*;
 
 
 /**
- * TODO: Brad
+ * A Bush is sort of a level selector, it is only there in level 0 and when the pacman eats it, the level materializes
  */
 public class Bush extends Actor implements Food
 {
 
+    /**
+     * The level number corresponding to the difficulty
+     */
     private int levelNumber;
 
 
@@ -47,6 +50,9 @@ public class Bush extends Actor implements Food
 
         //Loads new map, for now only 1 type of map (Map_level1"
         Mechanics.initGrid( Mechanics.loadFile( "Map_level1", Main.ROW, Main.COL, "" ) );
+
+        Score score = new Score();
+        score.putSelfInGrid( grid, new Location(1, 23) );
 
         //Puts pacman in the game
         Pacman pacman = new Pacman();
@@ -101,6 +107,9 @@ public class Bush extends Actor implements Food
     }
 
 
+    /**
+     * Stub, no  code in method
+     */
     @Override public void act()
     {
 

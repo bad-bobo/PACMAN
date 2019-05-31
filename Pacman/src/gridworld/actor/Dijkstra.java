@@ -62,10 +62,10 @@ public class Dijkstra extends Ghost
     /**
      * This  Algorithm is adapted from -=geeksforgeek.org (Linked down [1])=-
      *
-     * @param adjacencyMatrix
-     * @param startNode
-     * @param destinationNode
-     * @return TODO: Comment
+     * @param adjacencyMatrix the adjacency Matrix
+     * @param startNode The start node
+     * @param destinationNode the destination node
+     * @return  an arraylist of nodes leading to pacman
      */
     private static ArrayList<Integer> dijkstra(
                     int[][] adjacencyMatrix, int startNode, int destinationNode )
@@ -156,7 +156,6 @@ public class Dijkstra extends Ghost
     }
 
 
-
     private static void createPath(
                     int destinationVertex, int[] parents, List<Integer> arr )
     {
@@ -174,7 +173,9 @@ public class Dijkstra extends Ghost
     }
 
 
-
+    /**
+     * If the ghost is scared, switches colors otherwise calls the dijstra method to find best path
+     */
     @Override public void act()
     {
         if ( isScared() )
@@ -192,11 +193,11 @@ public class Dijkstra extends Ghost
         {
             setColor( Color.red );
         }
-        if ( Mechanics.convertToNode( Mechanics.getPacmanLocation(( BoundedGrid)getGrid()), levelNumber ) < 0 )
+        if ( Mechanics.convertToNode( Mechanics.getPacmanLocation( (BoundedGrid)getGrid() ), levelNumber ) < 0 )
         {
-            System.out.println( "Dijkstra.act: PACMAN LOCATION: " +  Mechanics.getPacmanLocation(( BoundedGrid)getGrid()) );
+//            System.out.println( "Dijkstra.act: PACMAN LOCATION: " + Mechanics.getPacmanLocation( (BoundedGrid)getGrid() ) );
             //wander when pacman hiding
-            System.out.println( "Blinky: bruh where tf is Pacman" );
+//            System.out.println( "Blinky: bruh where tf is Pacman" );
             clearPath();
             path.clear();
             while ( true )
@@ -240,12 +241,13 @@ public class Dijkstra extends Ghost
 
         }
 
+        // Doesnt refresh the path everytime, only when the path is  <1
         if ( path.size() < 1 )
         {
-            System.out.println( "Hello" );
+//            System.out.println( "Hello" );
 
             path.clear();
-            Location pacmanLoc = Mechanics.getPacmanLocation(getGrid());
+            Location pacmanLoc = Mechanics.getPacmanLocation( getGrid() );
             if ( pacmanLoc == null )
             {
                 return;
@@ -266,8 +268,8 @@ public class Dijkstra extends Ghost
                 pathOfPoints.add( new Point( loc.getRow(), loc.getCol() ) );
             }
             visualizePath( pathOfPoints );
-            System.out.println( pathOfPoints.size() );
-            System.out.println( pathOfPoints );
+//            System.out.println( pathOfPoints.size() );
+//            System.out.println( pathOfPoints );
 
         }
         Location nextLoc = Mechanics.convertToLocation( path.remove( 0 ), levelNumber );
@@ -275,6 +277,9 @@ public class Dijkstra extends Ghost
     }
 
 
+    /**
+     * Clears the path
+     */
     public void clearPath()
     {
         ArrayList<Point> pathOfPoints = new ArrayList<>();
@@ -295,7 +300,7 @@ public class Dijkstra extends Ghost
      * <p>
      * also prevents eating pineapples, powerpellets, and other ghosts.
      *
-     * @param next
+     * @param next the next location
      */
     private void moveHelper( Location next )
     {
@@ -322,7 +327,7 @@ public class Dijkstra extends Ghost
     /**
      * Returns path of nodes
      *
-     * @return
+     * @return a path arraylist
      */
     public ArrayList<Integer> getPath()
     {

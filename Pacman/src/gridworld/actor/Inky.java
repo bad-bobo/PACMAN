@@ -15,6 +15,9 @@ import static gridworld.actor.Ghost.isScared;
 public class Inky extends Ghost
 {
 
+    /**
+     * for testing randomness in act method
+     */
     public int  testCountOf1 = 0;
     /**
      * The previous Actor
@@ -33,8 +36,9 @@ public class Inky extends Ghost
     }
 
 
-
-
+    /**
+     * Stub method
+     */
     public void clearPath()
     {
         //no path

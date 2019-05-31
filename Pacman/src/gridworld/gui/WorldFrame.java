@@ -24,6 +24,7 @@ import gridworld.actor.Score;
 import gridworld.grid.Grid;
 import gridworld.grid.Location;
 import gridworld.world.World;
+import project.Main;
 import project.Mechanics;
 
 import javax.swing.*;
@@ -50,6 +51,7 @@ import static project.Mechanics.getPacmanLocation;
 public class WorldFrame<T> extends JFrame
 {
     private static int count = 0;
+
 
     private GUIController<T> control;
 
@@ -239,26 +241,34 @@ public class WorldFrame<T> extends JFrame
      */
     public void repaint()
     {
+        display.repaint(); // for applet
+        super.repaint();
+
         if ( Ghost.getScaredTimer() >= 0 )
         {
             Ghost.decScaredTimer();
         }
-        display.repaint(); // for applet
-        super.repaint();
+
 
         if ( getPacmanLocation() == null )
         {
             Mechanics.removeAll();
+            Mechanics.removeAll();
             String[] arr = { "G", "A", "M", "E", " ", "O", "V", "E", "R", "!" };
             Mechanics.gridMessage( 13, 7, arr );
+
             drawPacmanName();
 
         }
         if ( Score.score >= Score.minScore )
         {
-            String[] arr = { "Y", "O", "U", "", " W", "O", "N", "!", "!" };
-            Mechanics.gridMessage( 13, 9, arr );
+            String[] arr = { "Y", "O", "U", "", " W", "O", "N",  "!" };
+            Mechanics.removeAll();
+            Mechanics.gridMessage( 13, 8, arr );
+
             drawPacmanName();
+
+
             //Difference between drawPacmanName() vs Pacman.drawPacmanName()
 
         }

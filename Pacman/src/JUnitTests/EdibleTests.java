@@ -19,6 +19,8 @@ class EdibleTests
         Pineapple pineapple = new Pineapple();
         pineapple.eatAction( grid );
         assertEquals( 500, Score.score );
+        //Stub
+        pineapple.act();
     }
 
 

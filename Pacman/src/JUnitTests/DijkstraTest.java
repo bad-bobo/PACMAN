@@ -66,7 +66,7 @@ class DijkstraTest
 
         dijkstra.act();
 //        Mechanics.sleep( 10000 );
-        System.out.println( dijkstra.getPath() );
+//        System.out.println( dijkstra.getPath() );
         ArrayList<Location> actualPath = Mechanics.convertNodeToLocations( ( dijkstra.getPath() ) );
 
         //Testing act path

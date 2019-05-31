@@ -12,7 +12,7 @@ import java.util.List;
 
 
 /**
- * Casper is a Blue Ghost with Depth first search capabilities. This Ghost finds a path to pacman, but not the best path.
+ * Casper is a pink Ghost with Depth first search capabilities. This Ghost finds a path to pacman, but not the best path.
  */
 public class Casper extends Ghost
 {
@@ -43,7 +43,7 @@ public class Casper extends Ghost
      * Loads map from resource folder.
      * sets map at some locations to 1, because This ghost is restricted from going into the pipes.
      *
-     * @param levelNumber
+     * @param levelNumber the level number
      */
     public Casper( int levelNumber )
     {
@@ -81,7 +81,7 @@ public class Casper extends Ghost
         {
             setColor( Color.pink );
             Location pacmanLocation = Mechanics.getPacmanLocation( (BoundedGrid)gr );
-            System.out.println( pacmanLocation.getRow() );
+//            System.out.println( pacmanLocation.getRow() );
             if ( pacmanLocation == null || ( ( pacmanLocation.getCol() < 5 || pacmanLocation.getCol() > 18 ) && pacmanLocation
                             .getRow() > 9 && pacmanLocation.getRow() < 15 ) )
             {
@@ -143,6 +143,9 @@ public class Casper extends Ghost
     }
 
 
+    /**
+     * Clears the path
+     */
     public void clearPath()
     {
         super.clearPath( path );
@@ -155,7 +158,7 @@ public class Casper extends Ghost
      * <p>
      * also prevents eating pineapples, powerpellets, and other ghosts.
      *
-     * @param next
+     * @param next the next location
      */
     private void moveHelper( Location next )
     {
@@ -191,6 +194,8 @@ public class Casper extends Ghost
         {
             path.clear();
             DFS( mapCopy, location.getRow(), location.getCol(), path );
+            if ( path.size() == 1 )
+                return;
             path.remove( path.size() - 1 );
             visualizePath( path, (BoundedGrid)getGrid() );
         }
@@ -211,7 +216,7 @@ public class Casper extends Ghost
      * @param x    The current row of the Ghost
      * @param y    The current col of the Ghost
      * @param path A list of Points
-     * @return
+     * @return a true if path found, false otherwise. But the path is changed
      */
     private boolean DFS(
                     int[][] map, int x, int y, List<Point> path )
@@ -271,7 +276,7 @@ public class Casper extends Ghost
     /**
      * returns map
      *
-     * @return
+     * @return The map
      */
     public static int[][] getMap()
     {
@@ -282,7 +287,7 @@ public class Casper extends Ghost
     /**
      * Returns path
      *
-     * @return
+     * @return the map
      */
     public ArrayList<Point> getPath()
     {

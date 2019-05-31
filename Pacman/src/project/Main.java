@@ -7,11 +7,20 @@ import gridworld.grid.Location;
 import gridworld.world.PacmanWorld;
 
 
+/**
+ * Main Class to run everything
+ */
 public class Main
 {
 
+    /**
+     * Number of rows in the grid
+     */
     public static final int ROW = 27;
 
+    /**
+     * Number of columns in the grid
+     */
     public static final int COL = 24;
 
     public static final BoundedGrid grid = new BoundedGrid( ROW, COL );
@@ -21,6 +30,10 @@ public class Main
     public static PacmanWorld world;
 
 
+    /**
+     * Main method
+     * @param args string passed through command line
+     */
     public static void main( String[] args )
     {
         world = new PacmanWorld( grid );
@@ -28,6 +41,9 @@ public class Main
     }
 
 
+    /**
+     * Loads the game level 0 (selector level)
+     */
     public static void loadGame()
     {
 

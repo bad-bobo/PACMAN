@@ -74,6 +74,10 @@ public abstract class MovableActor extends Actor
     }
 
 
+    /**
+     * Overridden in all subclasses at the moment
+     * @return true if can move,
+     */
     public boolean canMove()
     {
         Grid<Actor> gr = getGrid();

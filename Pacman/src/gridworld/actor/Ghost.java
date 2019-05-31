@@ -9,6 +9,9 @@ import java.awt.*;
 import java.util.ArrayList;
 
 
+/**
+ * This class sets the base for all common ghost abilities.
+ */
 public abstract class Ghost extends MovableActor
 {
     /**

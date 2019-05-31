@@ -47,7 +47,7 @@ public class Casper extends Ghost
      */
     public Casper( int levelNumber )
     {
-        super( Color.pink );
+        super( Color.CYAN );
         map = Mechanics.loadFile( "Map_level" + levelNumber, Main.ROW, Main.COL, "" );
         map[12][4] = 1;
         map[12][19] = 1;
@@ -79,7 +79,7 @@ public class Casper extends Ghost
         }
         else
         {
-            setColor( Color.pink );
+            setColor( Color.CYAN );
             Location pacmanLocation = Mechanics.getPacmanLocation( (BoundedGrid)gr );
 //            System.out.println( pacmanLocation.getRow() );
             if ( pacmanLocation == null || ( ( pacmanLocation.getCol() < 5 || pacmanLocation.getCol() > 18 ) && pacmanLocation
